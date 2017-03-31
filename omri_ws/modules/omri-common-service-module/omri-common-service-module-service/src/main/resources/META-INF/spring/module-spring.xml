@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean class="com.omri.service.common.service.impl.ClinicLocalServiceImpl" id="com.omri.service.common.service.ClinicLocalService" />
+	<bean class="com.omri.service.common.service.persistence.impl.ClinicPersistenceImpl" id="com.omri.service.common.service.persistence.ClinicPersistence" parent="basePersistence" />
+	<bean class="com.omri.service.common.service.impl.Clinic_ResourceLocalServiceImpl" id="com.omri.service.common.service.Clinic_ResourceLocalService" />
+	<bean class="com.omri.service.common.service.persistence.impl.Clinic_ResourcePersistenceImpl" id="com.omri.service.common.service.persistence.Clinic_ResourcePersistence" parent="basePersistence" />
+	<bean class="com.omri.service.common.service.impl.CustomUserLocalServiceImpl" id="com.omri.service.common.service.CustomUserLocalService" />
+	<bean class="com.omri.service.common.service.persistence.impl.CustomUserPersistenceImpl" id="com.omri.service.common.service.persistence.CustomUserPersistence" parent="basePersistence" />
+	<bean class="com.omri.service.common.service.impl.ResourceLocalServiceImpl" id="com.omri.service.common.service.ResourceLocalService" />
+	<bean class="com.omri.service.common.service.persistence.impl.ResourcePersistenceImpl" id="com.omri.service.common.service.persistence.ResourcePersistence" parent="basePersistence" />
+	<bean class="com.omri.service.common.service.impl.Resource_SpecificationLocalServiceImpl" id="com.omri.service.common.service.Resource_SpecificationLocalService" />
+	<bean class="com.omri.service.common.service.persistence.impl.Resource_SpecificationPersistenceImpl" id="com.omri.service.common.service.persistence.Resource_SpecificationPersistence" parent="basePersistence" />
+	<bean class="com.omri.service.common.service.impl.SpecificationLocalServiceImpl" id="com.omri.service.common.service.SpecificationLocalService" />
+	<bean class="com.omri.service.common.service.persistence.impl.SpecificationPersistenceImpl" id="com.omri.service.common.service.persistence.SpecificationPersistence" parent="basePersistence" />
+</beans>

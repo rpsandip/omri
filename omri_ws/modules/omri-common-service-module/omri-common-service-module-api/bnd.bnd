@@ -1,0 +1,7 @@
+Bundle-SymbolicName: omri.common.service.module-api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.omri.service.common.exception,\
+	com.omri.service.common.model,\
+	com.omri.service.common.service,\
+	com.omri.service.common.service.persistence

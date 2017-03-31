@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping auto-import="false" default-lazy="false">
+	<import class="com.omri.service.common.model.Clinic" />
+	<import class="com.omri.service.common.model.Clinic_Resource" />
+	<import class="com.omri.service.common.model.CustomUser" />
+	<import class="com.omri.service.common.model.Resource" />
+	<import class="com.omri.service.common.model.Resource_Specification" />
+	<import class="com.omri.service.common.model.Specification" />
+	<class name="com.omri.service.common.model.impl.ClinicImpl" table="OMRI_Clinic">
+		<id name="clinicId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="clinicorganizationId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="clinicorganizationGroupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="clinicName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="clinicAdminId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="addressLine1" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="addressLine2" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="city" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property column="state_" name="state" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="zipcode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="country" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="phoneNo" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="faxNo" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="createdBy" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="modifiedBy" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+	<class name="com.omri.service.common.model.impl.Clinic_ResourceImpl" table="OMRI_Clinic_Resource">
+		<composite-id class="com.omri.service.common.service.persistence.Clinic_ResourcePK" name="primaryKey">
+			<key-property name="clinicId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="specificationId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="resourceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		</composite-id>
+		<property name="operationTime" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+	</class>
+	<class name="com.omri.service.common.model.impl.CustomUserImpl" table="OMRI_CustomUser">
+		<id name="customUserId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="organizationId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="organizationGroupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="lrUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="parentUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="addressLine1" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="addressLine2" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="city" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property column="state_" name="state" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="zipcode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="phone" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="createdBy" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="modifiedBy" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+	<class name="com.omri.service.common.model.impl.ResourceImpl" table="OMRI_Resource">
+		<id name="resourceId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="resourceName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="com.omri.service.common.model.impl.Resource_SpecificationImpl" table="OMRI_Resource_Specification">
+		<composite-id class="com.omri.service.common.service.persistence.Resource_SpecificationPK" name="primaryKey">
+			<key-property name="resourceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="specificationId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		</composite-id>
+	</class>
+	<class name="com.omri.service.common.model.impl.SpecificationImpl" table="OMRI_Specification">
+		<id name="specificationId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="specificationName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+</hibernate-mapping>

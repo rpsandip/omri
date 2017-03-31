@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.omri.service.common.model.Clinic">
+		<field name="clinicId" type="long" />
+		<field name="clinicorganizationId" type="long" />
+		<field name="clinicorganizationGroupId" type="long" />
+		<field name="clinicName" type="String" />
+		<field name="clinicAdminId" type="long" />
+		<field name="addressLine1" type="String" />
+		<field name="addressLine2" type="String" />
+		<field name="city" type="String" />
+		<field name="state" type="String" />
+		<field name="zipcode" type="String" />
+		<field name="country" type="String" />
+		<field name="phoneNo" type="String" />
+		<field name="faxNo" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="createdBy" type="long" />
+		<field name="modifiedBy" type="long" />
+	</model>
+	<model name="com.omri.service.common.model.Clinic_Resource">
+		<field name="clinicId" type="long" />
+		<field name="specificationId" type="long" />
+		<field name="resourceId" type="long" />
+		<field name="operationTime" type="int" />
+	</model>
+	<model name="com.omri.service.common.model.CustomUser">
+		<field name="customUserId" type="long" />
+		<field name="organizationId" type="long" />
+		<field name="organizationGroupId" type="long" />
+		<field name="lrUserId" type="long" />
+		<field name="parentUserId" type="long" />
+		<field name="addressLine1" type="String" />
+		<field name="addressLine2" type="String" />
+		<field name="city" type="String" />
+		<field name="state" type="String" />
+		<field name="zipcode" type="String" />
+		<field name="phone" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="createdBy" type="long" />
+		<field name="modifiedBy" type="long" />
+	</model>
+	<model name="com.omri.service.common.model.Resource">
+		<field name="resourceId" type="long" />
+		<field name="resourceName" type="String" />
+	</model>
+	<model name="com.omri.service.common.model.Resource_Specification">
+		<field name="resourceId" type="long" />
+		<field name="specificationId" type="long" />
+	</model>
+	<model name="com.omri.service.common.model.Specification">
+		<field name="specificationId" type="long" />
+		<field name="specificationName" type="String" />
+	</model>
+</model-hints>
