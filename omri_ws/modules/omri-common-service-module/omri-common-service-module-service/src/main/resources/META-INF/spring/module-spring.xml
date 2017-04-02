@@ -7,6 +7,12 @@
 	<bean class="com.omri.service.common.service.persistence.impl.Clinic_ResourcePersistenceImpl" id="com.omri.service.common.service.persistence.Clinic_ResourcePersistence" parent="basePersistence" />
 	<bean class="com.omri.service.common.service.impl.CustomUserLocalServiceImpl" id="com.omri.service.common.service.CustomUserLocalService" />
 	<bean class="com.omri.service.common.service.persistence.impl.CustomUserPersistenceImpl" id="com.omri.service.common.service.persistence.CustomUserPersistence" parent="basePersistence" />
+	<bean class="com.omri.service.common.service.impl.PatientLocalServiceImpl" id="com.omri.service.common.service.PatientLocalService" />
+	<bean class="com.omri.service.common.service.persistence.impl.PatientPersistenceImpl" id="com.omri.service.common.service.persistence.PatientPersistence" parent="basePersistence" />
+	<bean class="com.omri.service.common.service.impl.Patient_ClinicLocalServiceImpl" id="com.omri.service.common.service.Patient_ClinicLocalService" />
+	<bean class="com.omri.service.common.service.persistence.impl.Patient_ClinicPersistenceImpl" id="com.omri.service.common.service.persistence.Patient_ClinicPersistence" parent="basePersistence" />
+	<bean class="com.omri.service.common.service.impl.Patient_Clinic_ResourceLocalServiceImpl" id="com.omri.service.common.service.Patient_Clinic_ResourceLocalService" />
+	<bean class="com.omri.service.common.service.persistence.impl.Patient_Clinic_ResourcePersistenceImpl" id="com.omri.service.common.service.persistence.Patient_Clinic_ResourcePersistence" parent="basePersistence" />
 	<bean class="com.omri.service.common.service.impl.ResourceLocalServiceImpl" id="com.omri.service.common.service.ResourceLocalService" />
 	<bean class="com.omri.service.common.service.persistence.impl.ResourcePersistenceImpl" id="com.omri.service.common.service.persistence.ResourcePersistence" parent="basePersistence" />
 	<bean class="com.omri.service.common.service.impl.Resource_SpecificationLocalServiceImpl" id="com.omri.service.common.service.Resource_SpecificationLocalService" />

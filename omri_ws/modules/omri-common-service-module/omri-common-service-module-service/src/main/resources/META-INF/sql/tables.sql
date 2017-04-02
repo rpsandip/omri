@@ -44,6 +44,51 @@ create table OMRI_CustomUser (
 	modifiedBy LONG
 );
 
+create table OMRI_Patient (
+	patientId LONG not null primary key,
+	firstName VARCHAR(75) null,
+	lastName VARCHAR(75) null,
+	dob DATE null,
+	addressLine1 VARCHAR(75) null,
+	addressLine2 VARCHAR(75) null,
+	phoneNo VARCHAR(75) null,
+	city VARCHAR(75) null,
+	state_ VARCHAR(75) null,
+	country VARCHAR(75) null,
+	zip VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	createdBy LONG,
+	modifiedBy LONG
+);
+
+create table OMRI_Patient_Clinic (
+	clinicId LONG not null,
+	patientId LONG not null,
+	patient_status INTEGER,
+	doctorId LONG,
+	doctorName VARCHAR(75) null,
+	doctorPhoneNo VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	createdBy LONG,
+	modifiedBy LONG,
+	primary key (clinicId, patientId)
+);
+
+create table OMRI_Patient_Clinic_Resource (
+	clinicId LONG not null,
+	patientId LONG not null,
+	resourceId LONG not null,
+	specificationId LONG not null,
+	noOfOccurance INTEGER,
+	createDate DATE null,
+	modifiedDate DATE null,
+	createdBy LONG,
+	modifiedBy LONG,
+	primary key (clinicId, patientId, resourceId, specificationId)
+);
+
 create table OMRI_Resource (
 	resourceId LONG not null primary key,
 	resourceName VARCHAR(75) null

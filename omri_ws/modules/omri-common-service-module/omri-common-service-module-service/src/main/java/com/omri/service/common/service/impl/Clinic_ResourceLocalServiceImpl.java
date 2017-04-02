@@ -16,6 +16,9 @@ package com.omri.service.common.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.omri.service.common.model.Clinic_Resource;
 import com.omri.service.common.service.Clinic_ResourceLocalServiceUtil;
@@ -54,5 +57,11 @@ public class Clinic_ResourceLocalServiceImpl
 		clinicResource.setOperationTime(operationTime);
 		clinicResource = Clinic_ResourceLocalServiceUtil.addClinic_Resource(clinicResource);
 		return clinicResource;
+	}
+	
+	public List<Clinic_Resource> getClinicResources(long clinicId){
+		List<Clinic_Resource> clinicResources = new ArrayList<Clinic_Resource>();
+		clinicResources = clinic_ResourcePersistence.findByClinicId(clinicId);
+		return clinicResources;
 	}
 }

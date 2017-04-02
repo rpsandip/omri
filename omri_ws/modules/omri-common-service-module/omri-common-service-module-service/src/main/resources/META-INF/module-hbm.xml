@@ -5,6 +5,9 @@
 	<import class="com.omri.service.common.model.Clinic" />
 	<import class="com.omri.service.common.model.Clinic_Resource" />
 	<import class="com.omri.service.common.model.CustomUser" />
+	<import class="com.omri.service.common.model.Patient" />
+	<import class="com.omri.service.common.model.Patient_Clinic" />
+	<import class="com.omri.service.common.model.Patient_Clinic_Resource" />
 	<import class="com.omri.service.common.model.Resource" />
 	<import class="com.omri.service.common.model.Resource_Specification" />
 	<import class="com.omri.service.common.model.Specification" />
@@ -51,6 +54,52 @@
 		<property column="state_" name="state" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="zipcode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="phone" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="createdBy" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="modifiedBy" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+	<class name="com.omri.service.common.model.impl.PatientImpl" table="OMRI_Patient">
+		<id name="patientId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="firstName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="lastName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="dob" type="org.hibernate.type.TimestampType" />
+		<property name="addressLine1" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="addressLine2" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="phoneNo" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="city" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property column="state_" name="state" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="country" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="zip" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="createdBy" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="modifiedBy" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+	<class name="com.omri.service.common.model.impl.Patient_ClinicImpl" table="OMRI_Patient_Clinic">
+		<composite-id class="com.omri.service.common.service.persistence.Patient_ClinicPK" name="primaryKey">
+			<key-property name="clinicId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="patientId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		</composite-id>
+		<property name="patient_status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="doctorId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="doctorName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="doctorPhoneNo" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="createdBy" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="modifiedBy" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+	<class name="com.omri.service.common.model.impl.Patient_Clinic_ResourceImpl" table="OMRI_Patient_Clinic_Resource">
+		<composite-id class="com.omri.service.common.service.persistence.Patient_Clinic_ResourcePK" name="primaryKey">
+			<key-property name="clinicId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="patientId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="resourceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="specificationId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		</composite-id>
+		<property name="noOfOccurance" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="createdBy" type="com.liferay.portal.dao.orm.hibernate.LongType" />

@@ -43,6 +43,46 @@
 		<field name="createdBy" type="long" />
 		<field name="modifiedBy" type="long" />
 	</model>
+	<model name="com.omri.service.common.model.Patient">
+		<field name="patientId" type="long" />
+		<field name="firstName" type="String" />
+		<field name="lastName" type="String" />
+		<field name="dob" type="Date" />
+		<field name="addressLine1" type="String" />
+		<field name="addressLine2" type="String" />
+		<field name="phoneNo" type="String" />
+		<field name="city" type="String" />
+		<field name="state" type="String" />
+		<field name="country" type="String" />
+		<field name="zip" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="createdBy" type="long" />
+		<field name="modifiedBy" type="long" />
+	</model>
+	<model name="com.omri.service.common.model.Patient_Clinic">
+		<field name="clinicId" type="long" />
+		<field name="patientId" type="long" />
+		<field name="patient_status" type="int" />
+		<field name="doctorId" type="long" />
+		<field name="doctorName" type="String" />
+		<field name="doctorPhoneNo" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="createdBy" type="long" />
+		<field name="modifiedBy" type="long" />
+	</model>
+	<model name="com.omri.service.common.model.Patient_Clinic_Resource">
+		<field name="clinicId" type="long" />
+		<field name="patientId" type="long" />
+		<field name="resourceId" type="long" />
+		<field name="specificationId" type="long" />
+		<field name="noOfOccurance" type="int" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="createdBy" type="long" />
+		<field name="modifiedBy" type="long" />
+	</model>
 	<model name="com.omri.service.common.model.Resource">
 		<field name="resourceId" type="long" />
 		<field name="resourceName" type="String" />
