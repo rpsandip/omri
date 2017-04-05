@@ -127,10 +127,6 @@ AUI().use('aui-io-request', 'aui-autocomplete' ,'aui-base','aui-form-validator',
 		}
 	});
 	
-	var simpleDatepicker1 = new A.DatePicker({
-		trigger: '#<portlet:namespace />patientDOB',
-		}).render('#<portlet:namespace />startDatePicker');
-	
 	var clinicSelect= A.one("#"+patientRegistrationMouleNS+"clinic");
 	A.one("#"+patientRegistrationMouleNS+"resourceCount").val(resourceCount);
 	clinicSelect.on('change', function(e) {

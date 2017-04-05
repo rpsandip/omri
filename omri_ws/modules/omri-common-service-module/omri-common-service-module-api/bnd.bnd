@@ -4,5 +4,6 @@ Export-Package:\
 	com.omri.service.common.exception,\
 	com.omri.service.common.model,\
 	com.omri.service.common.util,\
+	com.omri.service.common.beans,\
 	com.omri.service.common.service,\
 	com.omri.service.common.service.persistence

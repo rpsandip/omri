@@ -16,7 +16,9 @@ package com.omri.service.common.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.omri.service.common.model.Patient;
@@ -65,4 +67,11 @@ public class PatientLocalServiceImpl extends PatientLocalServiceBaseImpl {
 		patient = PatientLocalServiceUtil.addPatient(patient);
 		return patient;
 	}
+	
+	public List<Patient> getCreatedPatientList(long createdByUserId){
+		List<Patient> patientList = new ArrayList<Patient>();
+		patientList = patientPersistence.findByCreatedBy(createdByUserId);
+		return patientList;
+	}
+
 }

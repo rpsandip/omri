@@ -16,7 +16,13 @@ package com.omri.service.common.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import java.util.List;
+
+import com.omri.service.common.model.Clinic;
+import com.omri.service.common.model.Patient;
 import com.omri.service.common.model.Patient_Clinic_Resource;
+import com.omri.service.common.model.Resource;
+import com.omri.service.common.model.Specification;
 import com.omri.service.common.service.Patient_Clinic_ResourceLocalServiceUtil;
 import com.omri.service.common.service.base.Patient_Clinic_ResourceLocalServiceBaseImpl;
 import com.omri.service.common.service.persistence.Patient_Clinic_ResourcePK;
@@ -57,4 +63,9 @@ public class Patient_Clinic_ResourceLocalServiceImpl
 		patientClinicResource = Patient_Clinic_ResourceLocalServiceUtil.addPatient_Clinic_Resource(patientClinicResource);
 		return patientClinicResource;
 	}
+	
+	public List<Patient_Clinic_Resource> getPatientClinicByPatiendIdAndClinicIdAndCreateUserId(long patientId, long clinicId, long userId){
+		return patient_Clinic_ResourcePersistence.findByPatientIdAndCreatedUserIdAndClinicId(patientId, clinicId, userId);
+	}
+	
 }

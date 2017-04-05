@@ -59,7 +59,7 @@ public class CreatePatientActionCommand extends BaseMVCActionCommand{
 		ThemeDisplay themeDisplay = (ThemeDisplay) actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		String firstName = ParamUtil.getString(actionRequest, "firstName");
 		String lastName = ParamUtil.getString(actionRequest, "lastName");
-		String phoneNo = ParamUtil.getString(actionRequest, "mobile");
+		String phoneNo = ParamUtil.getString(actionRequest, "phoneNo");
 		String birthDate = ParamUtil.getString(actionRequest, "birthDate");
 		String address1 = ParamUtil.getString(actionRequest, "address1");
 		String address2 = ParamUtil.getString(actionRequest, "address2");
