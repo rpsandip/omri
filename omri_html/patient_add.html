@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Medical Pro | Your OneStop Solution Medical Services</title>
+
+    <!--Favicons-->
+    <link rel="apple-touch-icon" sizes="57x57" href="favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+    <link rel="manifest" href="favicon/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="favicon/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <!--Bootstrap and Other Vendors-->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="vendors/owl.carousel/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="vendors/owl.carousel/css/owl.theme.default.min.css">
+    <link rel="stylesheet" type="text/css" href="vendors/flexslider/flexslider.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="vendors/bootstrap-datepicker/css/datepicker3.css" media="screen">
+
+    <!--Fonts-->
+    <link href='http://fonts.googleapis.com/css?family=Karla:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
+
+    <!--Mechanic Styles-->
+    <link rel="stylesheet" href="css/default/style.css">
+    <link rel="stylesheet" href="css/responsive/responsive.css">
+    <link rel="stylesheet" href="css/checkbox.css">
+    <link rel="stylesheet" href="css/Multiselect/bootstrap-multiselect.css">
+    <link rel="stylesheet" href="css/custom.css">
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.min.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+<body class="default about_page">
+
+<nav class="navbar navbar-default navbar-static-top navbar2">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <a class="navbar-brand" href="index.html"><img src="images/logo/3.png" alt=""></a>
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main_nav" aria-expanded="false">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="main_nav">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="user_add.html">Add User</a>
+                </li>
+                <li class="active dropdown">
+                    <a href="patient_add.html">Patient User</a>
+                </li>
+                <li class="dropdown">
+                    <a href="clinic_add.html">Clinic User</a>
+                </li>
+
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container -->
+</nav>
+
+
+<section class="row contact_form_row">
+    <div class="container">
+        <div class="row ">
+            <div class="col-sm-8 contact_form_area">
+                <h3 class="contact_section_title">Add Patient</h3>
+                <div class="contactForm row m0">
+                    <form action="" class="row contact_form" id="contactForm">
+                        <div class="row m0">
+                            <div class="col-sm-6">
+                                <div class="input-group">
+                                    <label for="contact_fname">First Name</label>
+                                    <input type="text" class="form-control" id="contact_fname" name="contact_fname">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="input-group">
+                                    <label for="contact_lname">Last Name</label>
+                                    <input type="text" class="form-control" id="contact_lname" name="contact_lname">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="input-append date input-group">
+                                    <label>Date of Birth</label>
+                                    <input type="text" class="form-control" name="date" id="app_date" placeholder="Date Of Birth">
+                                    <span class="add-on"><i class="icon-th"></i></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="input-group">
+                                    <label for="contact_fphone">Phone Number</label>
+                                    <input type="tel" class="form-control" id="contact_fphone" name="contact_fphone">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="input-group">
+                                    <label>Dr. Name</label>
+                                    <select class="form-control patient_select" id="exampleSelect1">
+                                        <option disabled selected>Doctor</option>
+                                        <option>Doctor 1</option>
+                                        <option>Doctor 2</option>
+                                        <option>Doctor 3</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="input-group">
+                                    <label for="dr_ph_number">Dr. Phone Number</label>
+                                    <input type="tel" class="form-control" id="dr_ph_number" name="contact_fphone">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="input-group">
+                                    <label>Select Clinic</label>
+                                    <select class="form-control patient_select" id="SelectClinic">
+                                        <option disabled selected>Clinic</option>
+                                        <option>Clinic 1</option>
+                                        <option>Clinic 2</option>
+                                        <option>Clinic 3</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 multi-select-patient">
+                                <div class="input-group">
+                                    <label>Select Resource</label>
+                                    <select id="role-checkboxes" multiple="multiple">
+                                        <option>MRI</option>
+                                        <option>CT Scan</option>
+                                        <option>X-Ray</option>
+                                    </select>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row m0">
+                            <div class="col-sm-12">
+                                <label for="Procedure">Procedure</label>
+                                <textarea name="Procedure" id="Procedure" class="form-control"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="row m0">
+                            <div class="col-sm-12">
+                                <input type="submit" class="submit_btn" value="submit">
+                                <input type="reset" class="submit_btn" value="Cancel">
+                            </div>
+                        </div>
+                    </form>
+                    <div id="success">
+                            <span class="green textcenter">
+                                Your message was sent successfully! I will be in touch as soon as I can.
+                            </span>
+                    </div>
+                    <div id="error">
+                            <span>
+                                Something went wrong, try refreshing and submitting the form again.
+                            </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 contact_address">
+                <h3 class="contact_section_title">Address</h3>
+                <div class="row address m0">
+                    <div class="media address_line">
+                        <div class="media-left icon"><i class="fa fa-map-marker"></i></div>
+                        <div class="media-body address_text">Area  51 , Some near unknown, <br>USA 000000</div>
+                    </div>
+                    <div class="media address_line">
+                        <div class="media-left icon"><i class="fa fa-envelope"></i></div>
+                        <div class="media-body address_text">info@medicalprotheme.com</div>
+                    </div>
+                    <div class="media address_line">
+                        <div class="media-left icon"><i class="fa fa-phone"></i></div>
+                        <div class="media-body address_text">123 7890 456</div>
+                    </div>
+                    <a href="#" class="view_all">get directions</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<footer class="row">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8 col-md-6 col-lg-5 footer_menuList">
+                <div class="heading row m0"><img src="images/logo/1.png" alt=""></div>
+                <div class="row menuList">
+                    <ul class="firstOrderList nav">
+                        <li class="active"><a href="#">home</a></li>
+                        <li><a href="#">services</a></li>
+                        <li><a href="#">doctors</a></li>
+                        <li><a href="#">department</a></li>
+                        <li><a href="#">pages</a></li>
+                    </ul>
+                    <ul class="secondOrderList nav">
+                        <li><a href="#">blog</a></li>
+                        <li><a href="#">contact</a></li>
+                        <li><a href="#">shop</a></li>
+                        <li><a href="#">faq</a></li>
+                        <li><a href="#">shortcodes</a></li>
+                    </ul>
+                    <ul class="thirdOrderList nav">
+                        <li><a href="#">terms &amp; condition</a></li>
+                        <li><a href="#">privacy policy</a></li>
+                        <li><a href="#">legal desclaimer</a></li>
+                        <li><a href="#">sitemap</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-4 col-md-6 col-lg-3 footer_address">
+                <div class="heading row m0"></div>
+                <div class="row address m0">
+                    <div class="media address_line">
+                        <div class="media-left icon"><i class="fa fa-map-marker"></i></div>
+                        <div class="media-body address_text">Area  51 , Some near unknown, <br>USA 000000</div>
+                    </div>
+                    <div class="media address_line">
+                        <div class="media-left icon"><i class="fa fa-envelope"></i></div>
+                        <div class="media-body address_text">info@medicalprotheme.com</div>
+                    </div>
+                    <div class="media address_line">
+                        <div class="media-left icon"><i class="fa fa-phone"></i></div>
+                        <div class="media-body address_text">123 7890 456</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-4 newsletter">
+                <div class="heading row m0">
+                    <h3>SIGNUP NEWSLETTER</h3>
+                </div>
+                <form action="#" class="row m0 newsletterForm">
+                    <input type="text" class="form-control" placeholder="Your Name">
+                    <input type="email" class="form-control" placeholder="Enter your Email Address">
+                    <input type="submit" class="form-control" value="submit">
+                </form>
+            </div>
+        </div>
+        <div class="row m0 footer_bottom">
+            <ul class="list-inline social_menu m0 fleft">
+                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                <li><a href="#"><i class="fa fa-youtube"></i></a></li>
+            </ul>
+            <div class="fright copyright">&copy; <a href="index.html">medicalpro 2015</a>. Made with love for great people.</div>
+        </div>
+    </div>
+</footer>
+
+<!--jQuery, Bootstrap and other vendor JS-->
+
+<!--jQuery-->
+<script src="js/jquery-2.1.3.min.js"></script>
+
+<!--Google Map-->
+<script src="https://maps.googleapis.com/maps/api/js"></script>
+
+<!--Bootstrap JS-->
+<script src="js/bootstrap.min.js"></script>
+
+<!--Counter Up-->
+<script src="vendors/counterup/jquery.counterup.min.js"></script>
+
+<!--Bootstrap Date-->
+<script src="vendors/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+
+<!--Form Validation-->
+<script src="js/jquery.form.js"></script>
+<script src="js/jquery.validate.min.js"></script>
+
+<!--Strella JS-->
+<script src="js/theme.js"></script>
+<script src="js/contact.js"></script>
+<script src="css/Multiselect/bootstrap-multiselect.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#role-checkboxes').multiselect({
+            nonSelectedText:'Select Resource'
+        });
+    });
+</script>
+</body>
+</html>
