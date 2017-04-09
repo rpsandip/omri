@@ -14,16 +14,21 @@ import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -48,6 +53,8 @@ public class CreateUserActionCommand extends BaseMVCActionCommand{
 	private static Log _log = LogFactoryUtil.getLog(CreateUserActionCommand.class);
 	@Override
 	protected void doProcessAction(ActionRequest actionRequest, ActionResponse actionResponse)  {
+		ThemeDisplay themeDisplay = (ThemeDisplay) actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
 		User user = null;
 		CustomUser customUser = null;
 		try {
@@ -65,6 +72,11 @@ public class CreateUserActionCommand extends BaseMVCActionCommand{
 			}
 			long organizationGroupId = getOrganizationGroupIdFromOrgId(organizationId);
 			
+			//Associate Liferay default site to user
+			Group omriDefaultSite = GroupLocalServiceUtil.getFriendlyURLGroup(themeDisplay.getCompanyId(),"/guest");
+			GroupLocalServiceUtil.addUserGroup(user.getUserId(), omriDefaultSite.getGroupId());
+			
+			
 			// Create Custom User
 			customUser = createCustomUser(actionRequest, actionResponse, user, parentUserId, organizationId, organizationGroupId);
 			
@@ -73,6 +85,27 @@ public class CreateUserActionCommand extends BaseMVCActionCommand{
 			if(organizationIds.length>0){
 				 UserGroupRoleLocalServiceUtil.addUserGroupRoles(user.getUserId(), organizationGroupId, roleIds);
 			}
+			
+			// Set Clinic admin if selected entity is clinic
+			String entity = ParamUtil.getString(actionRequest, "entity");
+			if(entity.equals("clinic")){
+				Role clinicAdminRole = RoleLocalServiceUtil.getRole(themeDisplay.getCompanyId(), "Clinic Admin");
+				for(int i=0;i<roleIds.length;i++){
+					if(roleIds[i]==clinicAdminRole.getRoleId()){
+						// creating clinic admin user so check selected clinci has any clinic admin or not. If not then
+						// add this user as Clinic admin for selected clinic
+						long clinicId = ParamUtil.getLong(actionRequest, "clinic");
+						Clinic clinic = ClinicLocalServiceUtil.getClinic(clinicId);
+						if(clinic.getClinicAdminId()==0){
+							clinic.setClinicAdminId(user.getUserId());
+							ClinicLocalServiceUtil.updateClinic(clinic);
+						}else{
+							throw new PortalException("Clinic has already clinic admin.");
+						}
+					}
+				}
+			}
+			SessionMessages.add(actionRequest, "user.added.successfully");
 			_log.info("LR User created");
 			
 			

@@ -2,24 +2,44 @@ package com.omri.service.common.beans;
 
 import com.omri.service.common.model.Clinic;
 import com.omri.service.common.model.Patient;
+import com.omri.service.common.model.Patient_Clinic_Resource;
 import com.omri.service.common.model.Resource;
 import com.omri.service.common.model.Specification;
 
 public class PatientResourceBean{
 	private long patientId;
 	private long clinicId;
+	private String clinicName;
 	private String resourceName;
 	private long resourceId;
 	private String specificationName;
 	private long specificationId;
+	private int occurnace;
 	
-	public PatientResourceBean(Patient patient, Clinic clinic,Resource resource, Specification specification){
+	public PatientResourceBean(Patient patient, Clinic clinic,Resource resource, Specification specification, Patient_Clinic_Resource patientClinicResource){
 		this.patientId = patient.getPatientId();
 		this.clinicId = clinic.getClinicId();
 		this.resourceName = resource.getResourceName();
 		this.resourceId = resource.getResourceId();
 		this.specificationId = specification.getSpecificationId();
 		this.specificationName = specification.getSpecificationName();
+		this.occurnace = patientClinicResource.getNoOfOccurance();
+	}
+	
+	public String getClinicName() {
+		return clinicName;
+	}
+
+	public void setClinicName(String clinicName) {
+		this.clinicName = clinicName;
+	}
+	
+	public int getOccurnace() {
+		return occurnace;
+	}
+
+	public void setOccurnace(int occurnace) {
+		this.occurnace = occurnace;
 	}
 	
 	public long getPatientId() {

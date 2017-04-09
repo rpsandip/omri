@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -45,6 +46,7 @@ public class AddClinicActionCommand extends BaseMVCActionCommand{
 			 clinicOrg = createClinicOrganization(actionRequest, actionResponse);
 			 updateClinicToSetLROrganization(clinic,clinicOrg);
 			 addClinicResources(actionRequest, actionResponse,clinic);
+			 SessionMessages.add(actionRequest, "clinc.added.sucessfully");
 		} catch (Exception e) {
 			if(Validator.isNotNull(clinic)){
 				ClinicLocalServiceUtil.deleteClinic(clinic);

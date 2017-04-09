@@ -72,7 +72,7 @@ public class OmriPatientRegistrationModulemvcportletPortlet extends MVCPortlet {
 							Clinic clinic = ClinicLocalServiceUtil.getClinic(patientClinc.getClinicId());
 							Resource resource = ResourceLocalServiceUtil.getResource(patientClinicResource.getResourceId());
 							Specification specification = SpecificationLocalServiceUtil.getSpecification(patientClinicResource.getSpecificationId());
-							PatientResourceBean patientResourceBean = new PatientResourceBean(patient, clinic, resource, specification);
+							PatientResourceBean patientResourceBean = new PatientResourceBean(patient, clinic, resource, specification,patientClinicResource);
 							patientResourceBeanList.add(patientResourceBean);
 						} catch (PortalException e) {
 							_log.error(e.getMessage(), e);

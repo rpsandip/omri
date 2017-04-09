@@ -15,17 +15,17 @@
 <script>
     define.amd = define._amd;
 </script>
+<liferay-ui:success key="patient.added.successfully" message="patient.added.successfully"/>
 <aui:button name="createPatient" value="Create Patient" href="${createPatientURL}"/>
-
+<br/><br/>
 <div>
 	<table id="example" class="display" cellspacing="0" width="100%">
 		<thead>
             <tr>
                 <th>FirstName</th>
                 <th>LastName</th>
-				<th>Procedure</th>
                 <th>Phone No</th>
-				
+				<th>Procedure</th>
             </tr>
         </thead>
         <tbody>
@@ -33,16 +33,18 @@
             <tr>
                 <td>${patientBean.firstName }</td>
                 <td>${patientBean.lastName }</td>
+                <td>${patientBean.phoneNo }</td>
                 <td>
                 	<ul>
                 	<c:forEach items="${patientBean.resourceBeanList }" var="resourceBean">
                 		<li>
-                		 ${resourceBean.resourceName }(${ resourceBean.specificationName})
+                		 ${resourceBean.resourceName }(${ resourceBean.specificationName}) :
+                		 ${resourceBean.occurnace }
                 		</li>
                 	</c:forEach>
                 	</ul>
                 </td>
-                <td>${patientBean.phoneNo }</td>
+                
             </tr>
            </c:forEach>
 	</table>

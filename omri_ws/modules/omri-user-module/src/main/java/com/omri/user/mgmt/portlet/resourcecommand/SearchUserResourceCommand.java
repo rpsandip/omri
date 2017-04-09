@@ -11,6 +11,8 @@ import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
 
+import com.omri.service.common.model.Clinic;
+import com.omri.service.common.service.ClinicLocalServiceUtil;
 import com.omri.user.mgmt.portlet.actioncommand.CreateUserActionCommand;
 import com.omri.user.mgmt.portlet.util.UserModuleContstant;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -49,7 +51,7 @@ public class SearchUserResourceCommand implements MVCResourceCommand{
 		JSONArray userJsonArray = JSONFactoryUtil.createJSONArray();
 		String cmd = ParamUtil.getString(resourceRequest, "adminType");
 		if(cmd.equals("lawyer")){
-			List<User> lawyerAdminUserList = getUsesListOfRole(resourceRequest, "Lawyer Admin");
+			List<User> lawyerAdminUserList = getUsesListOfRoleAndOrganization(resourceRequest, "Lawyer Admin", "Lawyer");
 			for(User user : lawyerAdminUserList){
 				JSONObject userJsonObject = JSONFactoryUtil.createJSONObject();
 				userJsonObject.put("userId",user.getUserId());
@@ -63,7 +65,7 @@ public class SearchUserResourceCommand implements MVCResourceCommand{
 				_log.error(e.getMessage(), e);
 			}
 		}else if(cmd.equals("doctor")){
-			List<User> lawyerAdminUserList = getUsesListOfRole(resourceRequest, "Doctor Admin");
+			List<User> lawyerAdminUserList = getUsesListOfRoleAndOrganization(resourceRequest, "Doctor Admin", "Doctor");
 			for(User user : lawyerAdminUserList){
 				JSONObject userJsonObject = JSONFactoryUtil.createJSONObject();
 				userJsonObject.put("userId",user.getUserId());
@@ -77,13 +79,23 @@ public class SearchUserResourceCommand implements MVCResourceCommand{
 				_log.error(e.getMessage(), e);
 			}
 		}else if(cmd.equals("clinic")){
-			List<User> clinicAdminList = getUsesListOfRole(resourceRequest, "Clinic Admin");
-			for(User user : clinicAdminList){
-				JSONObject userJsonObject = JSONFactoryUtil.createJSONObject();
-				userJsonObject.put("userId",user.getUserId());
-				userJsonObject.put("email",user.getEmailAddress());
-				userJsonObject.put("firstName",user.getFirstName());
-				userJsonArray.put(userJsonObject);
+			long clinicId = ParamUtil.getLong(resourceRequest, "clinicId");
+			Clinic clinic;
+			if(clinicId!=0){
+				try {
+					clinic = ClinicLocalServiceUtil.getClinic(clinicId);
+					Organization clinicOrg = OrganizationLocalServiceUtil.getOrganization(clinic.getClinicorganizationId());
+					List<User> clinicAdminList = getUsesListOfRoleAndOrganization(resourceRequest, "Clinic Admin", clinicOrg.getName());
+					for(User user : clinicAdminList){
+						JSONObject userJsonObject = JSONFactoryUtil.createJSONObject();
+						userJsonObject.put("userId",user.getUserId());
+						userJsonObject.put("email",user.getEmailAddress());
+						userJsonObject.put("firstName",user.getFirstName());
+						userJsonArray.put(userJsonObject);
+					}
+				} catch (PortalException e1) {
+					_log.error(e1.getMessage(), e1);
+				}
 			}
 			try {
 				resourceResponse.getWriter().write(userJsonArray.toString());
@@ -94,11 +106,11 @@ public class SearchUserResourceCommand implements MVCResourceCommand{
 		return true;
 	}
 	
-	private List<User> getUsesListOfRole(ResourceRequest resourceRequest, String roleName){ 
+	private List<User> getUsesListOfRoleAndOrganization(ResourceRequest resourceRequest, String roleName,String organizationName){ 
 		ThemeDisplay themeDisplay = (ThemeDisplay) resourceRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		List<User> userList = new ArrayList<User>();
 	   try{
-		   Organization lawyerORg = OrganizationLocalServiceUtil.getOrganization(themeDisplay.getCompanyId(), "Lawyer");
+		   Organization lawyerORg = OrganizationLocalServiceUtil.getOrganization(themeDisplay.getCompanyId(), organizationName);
 		   Role laywerAdminRole = RoleLocalServiceUtil.getRole(themeDisplay.getCompanyId(), roleName);
 		   List<UserGroupRole> userGroupRoleList=  UserGroupRoleLocalServiceUtil.getUserGroupRolesByGroupAndRole(lawyerORg.getGroupId(), laywerAdminRole.getRoleId());
 		   for(UserGroupRole userGroupRole: userGroupRoleList){

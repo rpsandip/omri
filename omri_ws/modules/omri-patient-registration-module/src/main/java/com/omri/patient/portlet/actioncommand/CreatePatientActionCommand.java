@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -49,8 +50,10 @@ public class CreatePatientActionCommand extends BaseMVCActionCommand{
 				if(Validator.isNotNull(patientClinic)){
 					addPatientClinicResource(actionRequest, patientClinic);
 				}
+				SessionMessages.add(actionRequest, "patient.added.successfully");
 			}
 		} catch (ParseException e) {
+			actionResponse.setRenderParameter("mvcPath", "/user/create_user.jsp");
 			_log.error(e.getMessage(), e);
 		}
 	}
@@ -60,7 +63,7 @@ public class CreatePatientActionCommand extends BaseMVCActionCommand{
 		String firstName = ParamUtil.getString(actionRequest, "firstName");
 		String lastName = ParamUtil.getString(actionRequest, "lastName");
 		String phoneNo = ParamUtil.getString(actionRequest, "phoneNo");
-		String birthDate = ParamUtil.getString(actionRequest, "birthDate");
+		String patientDOB = ParamUtil.getString(actionRequest, "patientDOB");
 		String address1 = ParamUtil.getString(actionRequest, "address1");
 		String address2 = ParamUtil.getString(actionRequest, "address2");
 		String city = ParamUtil.getString(actionRequest, "city");
@@ -68,7 +71,7 @@ public class CreatePatientActionCommand extends BaseMVCActionCommand{
 		String country = ParamUtil.getString(actionRequest, "country");
 		String zip = ParamUtil.getString(actionRequest, "zip");
 		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-		Date dob = dateFormat.parse(birthDate);
+		Date dob = dateFormat.parse(patientDOB);
 		Patient patient = PatientLocalServiceUtil.createPatient(firstName, lastName, dob, phoneNo,address1, address2, city, state, country, zip, themeDisplay.getUserId(), themeDisplay.getUserId());
 		return patient;
 	}
