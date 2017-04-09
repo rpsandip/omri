@@ -1,0 +1,81 @@
+.col-sm-4.select-box .form-control
+{
+    height: 40px;
+    margin-top: 10px;
+}
+
+    .check-box,.multi-select
+{
+    text-align: left;
+    padding: 0 8px;
+    margin: 10px 0;
+}
+.form_row .col-sm-4.select-box:before {
+    content: '';
+    height: 11px;
+    width: 1px;
+    background: #c6cede;
+    display: none;
+    position: absolute;
+    left: 8px;
+    bottom: 10px;
+    z-index: 1;
+}
+.multiselect-native-select .checkbox input[type="checkbox"], .checkbox input[type="radio"]
+{
+    opacity: 1;
+    height: auto;
+}
+.multiselect-native-select .checkbox{
+    padding-left: 15px;
+}
+.button-custom
+{
+    float: right;
+    background: none;
+    padding: 0 45px;
+    line-height: 48px;
+    background: #fe824c;
+    text-transform: uppercase;
+    font-family: 'Karla', sans-serif;
+    color: #fff;
+    border: none;
+    -webkit-transition: all 300ms ease-in-out 0s;
+    transition: all 300ms ease-in-out 0s;
+    margin-left: 10px;
+}
+.pagetitle-padding
+{
+    padding-top:30px;
+}
+.contactForm .contact_form .form-control.patient_select
+{
+    padding: 14px 5px ;
+}
+.multi-select-patient input[type="checkbox"] {
+    border: 1px solid transparent;
+    border-bottom-color: #c6cede;
+    height: 40px;
+    line-height: 40px;
+    padding: 0 17px;
+    border-radius: 0;
+    position: relative;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    margin: 10px 0;
+    color: #8595b1;
+    background: none;
+    z-index: 2;
+}
+.multi-select-patient .multiselect.dropdown-toggle
+{
+    padding: 13px 10px;
+}
+.contactForm .contact_form .submit_btn
+{
+    margin-top: 0;
+}
+
+.portlet-title-text{
+	display:none !important;
+}
