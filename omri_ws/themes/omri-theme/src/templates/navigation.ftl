@@ -14,9 +14,11 @@
 		                    </a>
 		                </li>
 				</#list>
-				<li class="dropdown">
-					<a href="/c/portal/logout">Log out</a>
-				</li>
+				<#if is_signed_in>
+					<li class="dropdown">
+						<a href="/c/portal/logout">Log out</a>
+					</li>
+				</#if>
 			</ul>
 	    </div>
 	</div>

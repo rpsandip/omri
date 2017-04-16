@@ -139,6 +139,10 @@
 			<finder-column name="createdBy"></finder-column>
 		</finder>
 		
+		<finder return-type="Patient_Clinic" name="PatientId">
+			<finder-column name="patientId"></finder-column>
+		</finder>
+		
 	</entity>
 	
 	<entity name="Patient_Clinic_Resource" local-service="true"  remote-service="false">

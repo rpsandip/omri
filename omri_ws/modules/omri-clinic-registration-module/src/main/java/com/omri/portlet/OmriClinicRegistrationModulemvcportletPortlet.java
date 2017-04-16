@@ -4,9 +4,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.omri.service.common.beans.ClientResourceBean;
 import com.omri.service.common.beans.ClinicBean;
+import com.omri.service.common.beans.ClinicResourceBean;
 import com.omri.service.common.model.Clinic;
 import com.omri.service.common.model.Clinic_Resource;
 import com.omri.service.common.model.Resource;
@@ -50,12 +49,12 @@ public class OmriClinicRegistrationModulemvcportletPortlet extends MVCPortlet {
 		List<ClinicBean> clinicBeanList = new ArrayList<ClinicBean>();
 		for(Clinic clinic : clinicList){
 			List<Clinic_Resource> clinicResourceList = Clinic_ResourceLocalServiceUtil.getClinicResources(clinic.getClinicId());
-			List<ClientResourceBean> clinicResourceBeanList = new ArrayList<ClientResourceBean>();
+			List<ClinicResourceBean> clinicResourceBeanList = new ArrayList<ClinicResourceBean>();
 			for(Clinic_Resource clinicResource : clinicResourceList){
 				try {
 					Resource resource = ResourceLocalServiceUtil.getResource(clinicResource.getResourceId());
 					Specification specification = SpecificationLocalServiceUtil.getSpecification(clinicResource.getSpecificationId());
-					ClientResourceBean clinicResourceBean = new ClientResourceBean(clinic,resource,specification, clinicResource);
+					ClinicResourceBean clinicResourceBean = new ClinicResourceBean(clinic,resource,specification, clinicResource);
 					clinicResourceBeanList.add(clinicResourceBean);
 					
 				} catch (PortalException e) {

@@ -2,7 +2,7 @@
 <portlet:renderURL var="createClinicURL">
         <portlet:param name="mvcRenderCommandName" value="/create-clinic" />
 </portlet:renderURL>
-<liferay-ui:message key="clinc.added.sucessfully"></liferay-ui:message>
+<liferay-ui:success key="clinc.added.sucessfully"/>
 <aui:button name="createClinic" value="Create Clinic" href="${createClinicURL}"/>
 <br/><br/>
 <script>

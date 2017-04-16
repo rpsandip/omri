@@ -5,7 +5,7 @@ import com.omri.service.common.model.Clinic_Resource;
 import com.omri.service.common.model.Resource;
 import com.omri.service.common.model.Specification;
 
-public class ClientResourceBean {
+public class ClinicResourceBean {
 		private long clinicId;
 		private String clinicName;
 		private long resourceId;
@@ -14,7 +14,7 @@ public class ClientResourceBean {
 		private String specificationName;
 		private int operationTime;
 		
-		public ClientResourceBean(Clinic clinic, Resource resource, Specification specification, Clinic_Resource clinicResoure){
+		public ClinicResourceBean(Clinic clinic, Resource resource, Specification specification, Clinic_Resource clinicResoure){
 			this.clinicId = clinic.getClinicId();
 			this.clinicName = clinic.getClinicName();
 			this.resourceId = resource.getResourceId();

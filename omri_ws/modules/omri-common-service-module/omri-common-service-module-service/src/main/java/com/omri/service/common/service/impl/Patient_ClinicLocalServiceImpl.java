@@ -73,4 +73,8 @@ public class Patient_ClinicLocalServiceImpl
 	public List<Patient_Clinic> getPatientsOfClinic(long clinicId){
 		return patient_ClinicPersistence.findByClinicId(clinicId);
 	}
+	
+	public Patient_Clinic getPatientClinicByPatientId(long patientId) throws NoSuchPatient_ClinicException{
+		return patient_ClinicPersistence.findByPatientId(patientId);
+	}
 }

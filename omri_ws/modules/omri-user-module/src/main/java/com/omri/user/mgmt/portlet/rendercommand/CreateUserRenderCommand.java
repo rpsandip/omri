@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -42,53 +43,29 @@ public class CreateUserRenderCommand implements MVCRenderCommand{
 			List<Role> roles = new ArrayList<Role>();
 
 			boolean isAdmin= false;
-			boolean isLawyerAdmin = false;
-			boolean isDoctorAdmin = false;
+			boolean hasLawyerRole = false;
+			boolean hasDoctorRole = false;
+			boolean hasClinicRole = false;
 			Role administratorRole = getRoleWithName(themeDisplay.getCompanyId(), RoleConstants.ADMINISTRATOR);
-			Role lawyerAdminRole = getRoleWithName(themeDisplay.getCompanyId(), "Lawyer Admin");
-			Role doctorAdminRole = getRoleWithName(themeDisplay.getCompanyId(), "Doctor Admin");
+			Role lawyerRole = getRoleWithName(themeDisplay.getCompanyId(), "Lawyer");
+			Role doctorRole = getRoleWithName(themeDisplay.getCompanyId(), "Doctor");
+			Role clinicRole = getRoleWithName(themeDisplay.getCompanyId(), "Clinic");
 			if(Validator.isNotNull(administratorRole)){
 				isAdmin = RoleLocalServiceUtil.hasUserRole(themeDisplay.getUserId(),administratorRole.getRoleId());
 			}
-			if(Validator.isNotNull(isLawyerAdmin)){
-				isLawyerAdmin = RoleLocalServiceUtil.hasUserRole(themeDisplay.getUserId(),lawyerAdminRole.getRoleId());
+			if(Validator.isNotNull(lawyerRole)){
+				hasLawyerRole = RoleLocalServiceUtil.hasUserRole(themeDisplay.getUserId(),lawyerRole.getRoleId());
 			}
-			if(Validator.isNotNull(doctorAdminRole)){
-				isDoctorAdmin = RoleLocalServiceUtil.hasUserRole(themeDisplay.getUserId(),doctorAdminRole.getRoleId());
+			if(Validator.isNotNull(doctorRole)){
+				hasDoctorRole = RoleLocalServiceUtil.hasUserRole(themeDisplay.getUserId(),doctorRole.getRoleId());
 			}
-
-//			if(isAdmin){
-//				roles.add(lawyerAdminRole);
-//				roles.add(doctorAdminRole);
-//				
-//			}
-//			if(isLawyerAdmin || isAdmin){
-//				Role receptionistRole = getRoleWithName(themeDisplay.getCompanyId(),"Receptionist");
-//				Role caseManagerRole = getRoleWithName(themeDisplay.getCompanyId(),"Case Manager");
-//				Role attorneyRole = getRoleWithName(themeDisplay.getCompanyId(),"Attorney");
-//				if(Validator.isNotNull(receptionistRole))
-//				roles.add(receptionistRole);
-//				if(Validator.isNotNull(caseManagerRole))
-//				roles.add(caseManagerRole);
-//				if(Validator.isNotNull(attorneyRole));
-//				roles.add(attorneyRole);
-//				
-//			}
-//			if(isDoctorAdmin || isAdmin){
-//				Role receptionistRole = getRoleWithName(themeDisplay.getCompanyId(),"Receptionist");
-//				Role medicalAssistanceRole = getRoleWithName(themeDisplay.getCompanyId(),"Medical Assistants");
-//				Role nurseRole = getRoleWithName(themeDisplay.getCompanyId(),"Nurse");
-//				
-//				if(Validator.isNotNull(receptionistRole))
-//				roles.add(receptionistRole);
-//				if(Validator.isNotNull(medicalAssistanceRole))
-//				roles.add(medicalAssistanceRole);
-//				if(Validator.isNotNull(nurseRole))
-//				roles.add(nurseRole);
-//			}
+			if(Validator.isNotNull(clinicRole)){
+				hasClinicRole = RoleLocalServiceUtil.hasUserRole(themeDisplay.getUserId(),clinicRole.getRoleId());
+			}
 			renderRequest.setAttribute("isAdmin", isAdmin);
-			renderRequest.setAttribute("isLawyerAdmin", isLawyerAdmin);
-			renderRequest.setAttribute("isDoctorAdmin", isDoctorAdmin);
+			renderRequest.setAttribute("hasLawyerRole", hasLawyerRole);
+			renderRequest.setAttribute("hasDoctorRole", hasDoctorRole);
+			renderRequest.setAttribute("hasClinicRole", hasClinicRole);
 		return roles;
 	}
 

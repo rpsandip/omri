@@ -85,9 +85,15 @@
 	                         <div class="input-group">
 	                         	<aui:select name="entity">
 									<aui:option value="">Select Entity</aui:option>
-								    <aui:option value="clinic">Clinic</aui:option>
-								    <aui:option value="lawyer">Lawyer</aui:option>
-								    <aui:option value="doctor">Doctor</aui:option>
+								    <c:if test="${hasClinicRole or isAdmin}">
+								  	  <aui:option value="clinic">Clinic</aui:option>
+								    </c:if>
+								 	<c:if test="${hasLawyerRole or isAdmin}">
+								    	<aui:option value="lawyer">Lawyer</aui:option>
+								    </c:if>
+								    <c:if test="${hasDoctorRole or isAdmin}">	
+								    	<aui:option value="doctor">Doctor</aui:option>
+								    </c:if>
 								</aui:select>
 	                         </div>
 	                    </div>            

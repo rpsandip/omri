@@ -23,9 +23,9 @@ public class ClinicBean {
 	private long createdBy;
 	private Date modifiedDate;
 	private long modifiedBy;
-	private List<ClientResourceBean> clinicResourceBeanList;
+	private List<ClinicResourceBean> clinicResourceBeanList;
 	
-	public ClinicBean(Clinic clinic, List<ClientResourceBean> clinicResourceBeanList){
+	public ClinicBean(Clinic clinic, List<ClinicResourceBean> clinicResourceBeanList){
 		this.clinicId = clinic.getClinicId();
 		this.clinicorganizationId = clinic.getClinicorganizationId();
 		this.clinicorganizationGroupId = clinic.getClinicorganizationGroupId();
@@ -150,10 +150,10 @@ public class ClinicBean {
 	public void setModifiedBy(long modifiedBy) {
 		this.modifiedBy = modifiedBy;
 	}
-	public List<ClientResourceBean> getClinicResourceBeanList() {
+	public List<ClinicResourceBean> getClinicResourceBeanList() {
 		return clinicResourceBeanList;
 	}
-	public void setClinicResourceBeanList(List<ClientResourceBean> clinicResourceBeanList) {
+	public void setClinicResourceBeanList(List<ClinicResourceBean> clinicResourceBeanList) {
 		this.clinicResourceBeanList = clinicResourceBeanList;
 	}
 }
