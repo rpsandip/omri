@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import java.util.Date;
 
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
+import com.omri.service.common.exception.NoSuchClinicException;
 import com.omri.service.common.model.Clinic;
 import com.omri.service.common.service.ClinicLocalServiceUtil;
 import com.omri.service.common.service.base.ClinicLocalServiceBaseImpl;
@@ -39,11 +40,6 @@ import com.omri.service.common.service.base.ClinicLocalServiceBaseImpl;
  */
 @ProviderType
 public class ClinicLocalServiceImpl extends ClinicLocalServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.omri.service.common.service.ClinicLocalServiceUtil} to access the clinic local service.
-	 */
 	
 	public Clinic addClinic(String clinicName, String addressLine1, String addressLine2, String city, String state,
 			String zip, String phone, String fax, long createdBy, long modifiedBy){
@@ -64,5 +60,9 @@ public class ClinicLocalServiceImpl extends ClinicLocalServiceBaseImpl {
 		clinic.setModifiedBy(modifiedBy);
 		clinic = ClinicLocalServiceUtil.addClinic(clinic);
 		return clinic;
+	}
+	
+	public Clinic getClinicByClinicOrganizationId(long clinicOrgId) throws NoSuchClinicException{
+		return clinicPersistence.findByclinicorganizationId(clinicOrgId);
 	}
 }

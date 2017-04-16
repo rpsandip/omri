@@ -3,6 +3,9 @@
 <portlet:renderURL var="createPatientURL">
         <portlet:param name="mvcRenderCommandName" value="/create-patient" />
 </portlet:renderURL>
+
+<aui:button name="createPatient" value="Create Patient" href="${createPatientURL}"/>
+
 <script>
     define._amd = define.amd;
     define.amd = false;
@@ -15,9 +18,7 @@
 <script>
     define.amd = define._amd;
 </script>
-<liferay-ui:success key="patient.added.successfully" message="patient.added.successfully"/>
-<aui:button name="createPatient" value="Create Patient" href="${createPatientURL}"/>
-<br/><br/>
+
 <div>
 	<table id="example" class="display" cellspacing="0" width="100%">
 		<thead>
@@ -26,6 +27,7 @@
                 <th>LastName</th>
                 <th>Phone No</th>
 				<th>Procedure</th>
+				<th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -44,7 +46,13 @@
                 	</c:forEach>
                 	</ul>
                 </td>
-                
+                <td>
+                   <portlet:renderURL var="patientDocumentURL">
+        					<portlet:param name="mvcRenderCommandName" value="/upload-patient-document" />
+        					<portlet:param name="patientId" value="${patientBean.patientId}" />
+					</portlet:renderURL>
+                   <a href="${patientDocumentURL }">Add Patient Document</a>
+                </td>
             </tr>
            </c:forEach>
 	</table>

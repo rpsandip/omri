@@ -18,6 +18,7 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.instanceable=true",
 		"javax.portlet.display-name=omri-user-module Portlet",
 		"javax.portlet.init-param.template-path=/",
+		"com.liferay.portlet.action-url-redirect=true",
 		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user"

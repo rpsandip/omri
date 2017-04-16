@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.omri.service.common.model.Patient;
+import com.omri.service.common.model.Patient_Clinic;
 import com.omri.service.common.model.Resource;
 
 public class PatientBean{
@@ -22,13 +23,15 @@ public class PatientBean{
 	private Date modifiedDate;
 	private long createdBy;
 	private long modifiedBy;
+	private Patient_Clinic patientClinic;
+	
 	private List<PatientResourceBean> resourceBeanList;
 	
 	public PatientBean(){
 		
 	}
 	
-	public PatientBean(Patient patient, List<PatientResourceBean> resourceBeanList){
+	public PatientBean(Patient patient, Patient_Clinic patientClinic ,List<PatientResourceBean> resourceBeanList){
 		this.patientId = patient.getPatientId();
 		this.firstName = patient.getFirstName();
 		this.lastName = patient.getLastName();
@@ -45,6 +48,7 @@ public class PatientBean{
 		this.createdBy = patient.getCreatedBy();
 		this.modifiedBy  = patient.getModifiedBy();
 		this.resourceBeanList = resourceBeanList;
+		this.patientClinic = patientClinic;
 	}
 	
 	public long getPatientId() {
@@ -143,5 +147,11 @@ public class PatientBean{
 	public void setResourceBeanList(List<PatientResourceBean> resourceBeanList) {
 		this.resourceBeanList = resourceBeanList;
 	}
-	
+	public Patient_Clinic getPatientClinic() {
+		return patientClinic;
+	}
+
+	public void setPatientClinic(Patient_Clinic patientClinic) {
+		this.patientClinic = patientClinic;
+	}
 }

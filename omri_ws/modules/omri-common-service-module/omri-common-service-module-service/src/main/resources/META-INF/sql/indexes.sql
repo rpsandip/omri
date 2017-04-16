@@ -1,3 +1,5 @@
+create index IX_1C3D2C42 on OMRI_Clinic (clinicorganizationId);
+
 create index IX_901B57F8 on OMRI_Clinic_Resource (clinicId);
 
 create index IX_9D4A5F8C on OMRI_CustomUser (lrUserId);

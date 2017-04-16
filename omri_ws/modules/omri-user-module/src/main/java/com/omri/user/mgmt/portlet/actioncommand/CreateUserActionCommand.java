@@ -90,6 +90,8 @@ public class CreateUserActionCommand extends BaseMVCActionCommand{
 			String entity = ParamUtil.getString(actionRequest, "entity");
 			if(entity.equals("clinic")){
 				Role clinicAdminRole = RoleLocalServiceUtil.getRole(themeDisplay.getCompanyId(), "Clinic Admin");
+				Role clinicRegularRole = RoleLocalServiceUtil.getRole(themeDisplay.getCompanyId(), "Clinic");
+				RoleLocalServiceUtil.addUserRole(user.getUserId(), clinicRegularRole.getRoleId());
 				for(int i=0;i<roleIds.length;i++){
 					if(roleIds[i]==clinicAdminRole.getRoleId()){
 						// creating clinic admin user so check selected clinci has any clinic admin or not. If not then
@@ -102,9 +104,17 @@ public class CreateUserActionCommand extends BaseMVCActionCommand{
 						}else{
 							throw new PortalException("Clinic has already clinic admin.");
 						}
+						
 					}
 				}
+			}else if(entity.equals("lawyer")){
+				Role LawyerRegularRole = RoleLocalServiceUtil.getRole(themeDisplay.getCompanyId(), "Lawyer");
+				RoleLocalServiceUtil.addUserRole(user.getUserId(), LawyerRegularRole.getRoleId());
+			}else if(entity.equals("doctor")){
+				Role doctorRegularRole = RoleLocalServiceUtil.getRole(themeDisplay.getCompanyId(), "Doctor");
+				RoleLocalServiceUtil.addUserRole(user.getUserId(), doctorRegularRole.getRoleId());
 			}
+			
 			SessionMessages.add(actionRequest, "user.added.successfully");
 			_log.info("LR User created");
 			

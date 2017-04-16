@@ -79,6 +79,10 @@
 		<column name="modifiedDate" type="Date" />
 		<column name="createdBy" type="long" />
 		<column name="modifiedBy" type="long" />
+		
+		<finder return-type="Clinic" name="clinicorganizationId">
+			<finder-column name="clinicorganizationId"></finder-column>
+		</finder>
 	</entity>
 	
 	<entity name="Clinic_Resource" local-service="true"  remote-service="false">
@@ -152,6 +156,11 @@
 			<finder-column name="patientId"></finder-column>
 			<finder-column name="clinicId"></finder-column>
 			<finder-column name="createdBy"></finder-column>
+		</finder>
+		
+		<finder return-type="Collection" name="PatientIdAndClinicId">
+			<finder-column name="patientId"></finder-column>
+			<finder-column name="clinicId"></finder-column>
 		</finder>
 		
 

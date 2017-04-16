@@ -68,4 +68,8 @@ public class Patient_Clinic_ResourceLocalServiceImpl
 		return patient_Clinic_ResourcePersistence.findByPatientIdAndCreatedUserIdAndClinicId(patientId, clinicId, userId);
 	}
 	
+	public List<Patient_Clinic_Resource> getPatientClinicByPatiendIdAndClinicId(long patientId, long clinicId){
+		return patient_Clinic_ResourcePersistence.findByPatientIdAndClinicId(patientId, clinicId);
+	}
+	
 }

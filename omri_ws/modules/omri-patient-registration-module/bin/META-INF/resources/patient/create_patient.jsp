@@ -10,7 +10,24 @@
 		 <div class="col-sm-8 contact_form_area">
 		 	<h3 class="contact_section_title"><liferay-ui:message key="add.patient"/></h3>
 		 	<div class="contactForm row m0">
-				<aui:form name="createPatientForm" action="${createPatientActionURL}" cssClass="row contact_form">
+				<aui:form name="createPatientForm" action="${createPatientActionURL}" cssClass="row contact_form" method="post" enctype="multipart/form-data">
+					<div class="row m0">
+						<aui:select name="patient_status" label="Patient Status">
+							<aui:option value="0">Referral Received</aui:option>
+							<aui:option value="1">Lop Received</aui:option>
+							<aui:option value="2">Patient contacted</aui:option>
+							<aui:option value="3">Patient Scheduled</aui:option>
+							<aui:option value="4">Patient Checked In</aui:option>
+							<aui:option value="5">Patient Canceled</aui:option>
+							<aui:option value="6">Patient Rescheduled</aui:option>
+							<aui:option value="7">Patient No-showed</aui:option>
+							<aui:option value="8">Study Complete</aui:option>
+							<aui:option value="9">Report Received</aui:option>
+							<aui:option value="10">Invoice/Report Sent</aui:option>
+							<aui:option value="11">Payment Received</aui:option>
+							
+						</aui:select>
+					</div>
 					<div class="row m0">
 						 <div class="col-sm-6">
                          	<div class="input-group">
@@ -34,49 +51,42 @@
                             <div class="col-sm-6">
                                 <div class="input-group">
                                     <aui:input name="phoneNo" label="patient.phone" cssClass="form-control">
-										<aui:validator name="required" />
 									</aui:input>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="input-group">
                                     <aui:input name="address1" label="patient.address1" cssClass="form-control">
-										<aui:validator name="required" />
 									</aui:input>
                                 </div>
                             </div>
 							<div class="col-sm-6">
                                 <div class="input-group">
                                     <aui:input name="address2" label="patient.address2" cssClass="form-control">
-										<aui:validator name="required" />
 									</aui:input>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="input-group">
                                    <aui:input name="city" label="patient.city" cssClass="form-control">
-										<aui:validator name="required" />
 									</aui:input>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="input-group">
                                    <aui:input name="state" label="patient.state" cssClass="form-control">
-										<aui:validator name="required" />
 									</aui:input>
                                 </div>
                             </div>
 							<div class="col-sm-6">
                                 <div class="input-group">
                                     <aui:input name="country" label="patient.country" cssClass="form-control">
-										<aui:validator name="required" />
 									</aui:input>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="input-group">
                                     <aui:input name="zip" label="patient.zip" cssClass="form-control">
-										<aui:validator name="required" />
 									</aui:input>
                                 </div>
                             </div>
@@ -171,6 +181,11 @@
 								</div>	
 							</div>	
 					 		<aui:input name="resourceCount" type="hidden"/>	
+					 		<div class="row m0">	
+					 			<input type="file" name="uploadedFile" multiple="multiple"  id="uploadedFile">
+					 		</div>
+					 		<br/>
+					 		<br/>
 							<div class="row m0">
                             	<div class="col-sm-12">
                                 	<aui:button type="button" value="Add Patient"  cssClass="addPatientBtn"/>

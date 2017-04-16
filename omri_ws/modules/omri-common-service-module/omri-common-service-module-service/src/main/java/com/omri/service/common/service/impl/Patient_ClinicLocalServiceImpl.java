@@ -17,6 +17,7 @@ package com.omri.service.common.service.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import java.util.Date;
+import java.util.List;
 
 import com.omri.service.common.exception.NoSuchPatient_ClinicException;
 import com.omri.service.common.model.Patient_Clinic;
@@ -67,5 +68,9 @@ public class Patient_ClinicLocalServiceImpl
 	}
 	public Patient_Clinic getPatientClinicByPatientIdandCreatorUserId(long patiendId, long userId) throws NoSuchPatient_ClinicException{
 		return patient_ClinicPersistence.findByPatientIdAndCreatedUserId(patiendId, userId);
+	}
+	
+	public List<Patient_Clinic> getPatientsOfClinic(long clinicId){
+		return patient_ClinicPersistence.findByClinicId(clinicId);
 	}
 }
