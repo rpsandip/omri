@@ -79,3 +79,52 @@
 .portlet-title-text{
 	display:none !important;
 }
+
+.default .navbar.navbar2 #main_nav .nav li a
+{
+	color:#fff;
+	font-weight:700;
+}
+.default .navbar.navbar2
+{
+	background: #0186d5;
+	 box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+	
+}
+.link-3 {
+  transition: 0.4s;
+  color: #ffffff;
+  font-size: 10px;
+  text-decoration: none;
+  padding: 0 20px;
+  margin: 0px;
+  margin-left:-4px;
+}
+.link-3:hover {
+  background-color: #ffffff !important;
+  color: #0186d5;
+  padding: 24px 20px;
+}
+
+.link-3.active
+{
+   background-color: #ffffff !important;
+  color: #0186d5;
+  padding: 24px 20px;
+}
+.icon-asterisk.text-warning
+{
+	    color: red !important;
+    font-size: 8px;
+    position: absolute;
+    margin-left: 2px;
+}
+.contactForm .contact_form label
+{
+	color:#000 !important;
+}
+.contactForm .contact_form .form-control
+{
+	color: #000 !important;
+	background : #084ff5 !important;
+}

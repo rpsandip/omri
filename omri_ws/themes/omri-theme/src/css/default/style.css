@@ -126,13 +126,13 @@ button:hover {
   margin: 0;
 }
 .default .navbar #main_nav .nav li a {
-  color: #ccd5e7;
+  color: #fff;
   text-shadow: none;
   text-transform: uppercase;
   line-height: 48px;
   padding: 0 16px;
   font-family: 'Karla', sans-serif;
-  font-weight: 300;
+  font-weight: 700;
 }
 .default .navbar #main_nav .nav li a:hover,
 .default .navbar #main_nav .nav li a:focus {
@@ -225,7 +225,7 @@ button:hover {
 }
 .default .navbar.navbar2 #main_nav .nav li a {
   line-height: 88px;
-  color: #8595b1;
+  color: #fff;
 }
 .default .navbar.navbar2 #main_nav .nav li a:hover {
   color: #404d5f;

@@ -29,10 +29,11 @@
     <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
 
     <!--Mechanic Styles-->
-    <link rel="stylesheet" href="${css_folder}/default/style.css">
+   
     <link rel="stylesheet" href="${css_folder}/responsive/responsive.css">
     <link rel="stylesheet" href="${css_folder}/checkbox.css">
     <link rel="stylesheet" href="${css_folder}/Multiselect/bootstrap-multiselect.css">
+	<link rel="stylesheet" href="${css_folder}/default/style.css">
     <link rel="stylesheet" href="${css_folder}/custom.css">
     <!--[if lt IE 9]>
     <script>
@@ -60,13 +61,12 @@
 		<br/>
 		<br/>
 		<br/>
-		<br/>
 	</#if>
 		
 		<#if has_navigation && is_setup_complete>
 			<#include "${full_templates_path}/navigation.ftl" />
 		</#if>
-		<section id="content" class="row contact_form_row">
+		<section id="content" class="row">
 			<#if selectable>
 				<@liferay_util["include"] page=content_include />
 			<#else>
