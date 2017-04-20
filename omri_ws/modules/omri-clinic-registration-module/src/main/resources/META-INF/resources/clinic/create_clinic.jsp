@@ -94,7 +94,7 @@
 							                  			 <aui:option value="${resource.resourceId }">${resource.resourceName }</aui:option>
 							               			 </c:forEach>
 							             		</aui:select>
-							             		<aui:select name="specification0" id="specification0" label="Specification" cssClass="form-control specificationItem"></aui:select>
+							             		<aui:select name="specification0" id="specification0" label="Specification" cssClass="form-control specificationItem patient_select"></aui:select>
 								                <aui:input fieldParam='operationTime0' id='operationTime0' name="operationTime0" cssClass="form-control" label="Operation Time" placeholder="mins"/>
 								                <aui:input name="resourceCount" type="hidden"  />
 						                	</div>

@@ -83,7 +83,7 @@
 					<div class="row m0">
 						<div class="col-sm-12">
 	                         <div class="input-group">
-	                         	<aui:select name="entity">
+	                         	<aui:select name="entity" cssClass="patient_select">
 									<aui:option value="">Select Entity</aui:option>
 								    <c:if test="${hasClinicRole or isAdmin}">
 								  	  <aui:option value="clinic">Clinic</aui:option>
@@ -106,12 +106,12 @@
 	                    </div>     
 						<div class="col-sm-12">
 	                         <div class="input-group">
-	                         	<aui:select name="role" multiple="true" ></aui:select>
+	                         	<aui:select name="role" multiple="true" cssClass="patient_select"></aui:select>
 	                         </div>
 	                    </div> 
 	                    <div class="col-sm-12">
 	                         <div class="input-group">
-	                         	<aui:select name="respectiveParentUserId" label="Respective Admin"></aui:select>
+	                         	<aui:select name="respectiveParentUserId" label="Respective Admin" cssClass="patient_select"></aui:select>
 	                         </div>
 	                    </div> 
 					</div>

@@ -47,8 +47,8 @@ public class PatientLocalServiceImpl extends PatientLocalServiceBaseImpl {
 	 * Never reference this class directly. Always use {@link com.omri.service.common.service.PatientLocalServiceUtil} to access the patient local service.
 	 */
 	
-	public Patient createPatient(String firstName,String lastName,Date dob, String phoneNo,String addressLine1, String addressLine2,
-			String city, String state, String country, String zip, long createdBy, long modifiedBy){
+	public Patient createPatient(String firstName,String lastName, String cptCode,Date dob, String phoneNo,String addressLine1, String addressLine2,
+			String city, String state, String country, String zip, String lopNotes, String orderNotes, String invoiceNotes,String otherNotes,long createdBy, long modifiedBy){
 		Patient patient = PatientLocalServiceUtil.createPatient(CounterLocalServiceUtil.increment());
 		patient.setFirstName(firstName);
 		patient.setLastName(lastName);
@@ -60,6 +60,9 @@ public class PatientLocalServiceImpl extends PatientLocalServiceBaseImpl {
 		patient.setState(state);
 		patient.setCountry(country);
 		patient.setZip(zip);
+		patient.setCptCode(cptCode);
+		patient.setLopNotes(lopNotes);
+		patient.setOtherNotes(otherNotes);
 		patient.setCreatedBy(createdBy);
 		patient.setModifiedBy(modifiedBy);
 		patient.setCreateDate(new Date());

@@ -24,6 +24,7 @@
 		<column name="state" type="String" />
 		<column name="zipcode" type="String" />
 		<column name="phone" type="String" />
+		<column name="fax" type="String" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 		<column name="createdBy" type="long" />
@@ -104,10 +105,17 @@
 		<column name="addressLine1" type="String" />
 		<column name="addressLine2" type="String" />
 		<column name="phoneNo" type="String" />
+		<column name="cptCode" type="String" />
 		<column name="city" type="String" />
 		<column name="state" type="String" />
 		<column name="country" type="String" />
 		<column name="zip" type="String" />
+		<column name="lopNotes" type="String" />
+		<column name="orderNotes" type="String" />
+		<column name="invoiceNotes" type="String" />
+		<column name="otherNotes" type="String" />
+		<column name="reportToDoctor" type="boolean" />
+		<column name="reportToLawyer" type="boolean" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 		<column name="createdBy" type="long" />

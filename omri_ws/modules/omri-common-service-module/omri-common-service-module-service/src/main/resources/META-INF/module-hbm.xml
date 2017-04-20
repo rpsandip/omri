@@ -54,6 +54,7 @@
 		<property column="state_" name="state" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="zipcode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="phone" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="fax" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="createdBy" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -69,10 +70,17 @@
 		<property name="addressLine1" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="addressLine2" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="phoneNo" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="cptCode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="city" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property column="state_" name="state" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="country" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="zip" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="lopNotes" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="orderNotes" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="invoiceNotes" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="otherNotes" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="reportToDoctor" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="reportToLawyer" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="createdBy" type="com.liferay.portal.dao.orm.hibernate.LongType" />

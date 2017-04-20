@@ -1,5 +1,7 @@
 package com.omri.patient.portlet.actioncommand;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;
@@ -93,9 +95,14 @@ public class CreatePatientActionCommand extends BaseMVCActionCommand{
 		String state = ParamUtil.getString(actionRequest, "state");
 		String country = ParamUtil.getString(actionRequest, "country");
 		String zip = ParamUtil.getString(actionRequest, "zip");
+		String cptCode = ParamUtil.getString(actionRequest, "cptCode");
+		String lopNotes = ParamUtil.getString(actionRequest, "lopNotes");
+		String orderNotes = ParamUtil.getString(actionRequest, "orderNotes");
+		String invoiceNotes = ParamUtil.getString(actionRequest, "invoiceNotes");
+		String otherNotes = ParamUtil.getString(actionRequest, "otherNotes");
 		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 		Date dob = dateFormat.parse(patientDOB);
-		Patient patient = PatientLocalServiceUtil.createPatient(firstName, lastName, dob, phoneNo,address1, address2, city, state, country, zip, themeDisplay.getUserId(), themeDisplay.getUserId());
+		Patient patient = PatientLocalServiceUtil.createPatient(firstName, lastName, cptCode,dob, phoneNo,address1, address2, city, state, country, zip, lopNotes, orderNotes,invoiceNotes,otherNotes,themeDisplay.getUserId(), themeDisplay.getUserId());
 		return patient;
 	}
 
@@ -136,87 +143,95 @@ public class CreatePatientActionCommand extends BaseMVCActionCommand{
 	
 	private void addPatientDocuments(ActionRequest actionRequest,Patient patient){
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
-		boolean isFolderCreated = createFolder(actionRequest, patient);
-		if(isFolderCreated){
-			fileUpload(themeDisplay, actionRequest, patient);
+		Folder patientFolder = getFolder(actionRequest, patient, PARENT_FOLDER_ID,String.valueOf(patient.getPatientId()));
+		if(Validator.isNotNull(patientFolder)){
+			fileUpload(actionRequest, patient, patientFolder,"lop");
+			fileUpload(actionRequest, patient, patientFolder,"order");
+			fileUpload(actionRequest, patient, patientFolder,"invoice");
+			fileUpload(actionRequest, patient, patientFolder,"other");
 		}
 	}
 	
-	private boolean createFolder(ActionRequest actionRequest,Patient patient) { 
+	private Folder getFolder(ActionRequest actionRequest,Patient patient, long parentFolderId,String folderName) { 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
-		boolean defaultFolderExist = isFolderExist(themeDisplay,String.valueOf(patient.getPatientId())); 
-		boolean isFolderCreated=false;
+		boolean defaultFolderExist = isFolderExist(themeDisplay,parentFolderId,String.valueOf(patient.getPatientId())); 
+		Folder patientFolder=null;
 		if (!defaultFolderExist) {
 			long repositoryId = themeDisplay.getCompanyGroupId();
 			try {
 				ServiceContext serviceContext = ServiceContextFactory.getInstance(DLFolder.class.getName(), actionRequest); 
-				DLAppServiceUtil.addFolder(repositoryId,PARENT_FOLDER_ID, String.valueOf(patient.getPatientId()),"", serviceContext);
-				isFolderCreated=true;
+				patientFolder = DLAppServiceUtil.addFolder(repositoryId,parentFolderId, folderName,"", serviceContext);
 			} catch (PortalException e1) { 
 				LOG.error(e1.getMessage(), e1);
 			} catch (SystemException e1) {
 				LOG.error(e1.getMessage(), e1);
 			}	
-		}else{
-			isFolderCreated = true;
 		}
-		return isFolderCreated;
+		return patientFolder;
 	}
 	
-	private void fileUpload(ThemeDisplay themeDisplay,ActionRequest actionRequest, Patient patient){ 
+	private void fileUpload(ActionRequest actionRequest, Patient patient, Folder parentFolder ,String fileType){ 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		UploadPortletRequest uploadPortletRequest = PortalUtil.getUploadPortletRequest(actionRequest);
-		Map<String, FileItem[]> files= uploadPortletRequest.getMultipartParameterMap(); 
-		Folder uploadFolder = getFolder(themeDisplay,String.valueOf(patient.getPatientId()));
-		InputStream is;
-		String title, description,mimeType,extension; 
-		long repositoryId=0l; 
-		for (Entry<String, FileItem[]> file2 : files.entrySet()) {
-			FileItem item[] =file2.getValue(); 
-			try { 
-				for (FileItem fileItem : item) {
-					title = fileItem.getFileName(); 
-					description = title;
-					repositoryId = themeDisplay.getCompanyGroupId();
-					mimeType = fileItem.getContentType();
-					extension = fileItem.getFileNameExtension();
-					is =fileItem.getInputStream();
-					try { 
-						ServiceContext serviceContext = ServiceContextFactory.getInstance(DLFileEntry.class.getName(), actionRequest);
-						FileEntry fileEntry = null;
-						try{
-							fileEntry = DLAppServiceUtil.addFileEntry(repositoryId, uploadFolder.getFolderId(), title, mimeType, title, description, "", is, fileItem.getSize(), serviceContext);
-						}catch(DuplicateFileException | DuplicateFileEntryException dfe){
-							title = title+ StringPool.UNDERLINE +new Date().getTime();
-							fileEntry = DLAppServiceUtil.addFileEntry(repositoryId, uploadFolder.getFolderId(), title, mimeType, title, description, "", is, fileItem.getSize(), serviceContext);
-						}
-					} catch (PortalException e) { 
-						LOG.error(e.getMessage(), e);
-					} catch (SystemException e) {
-						LOG.error(e.getMessage(), e);
-					}
-				}
-			} catch (IOException e) {
-				LOG.error(e.getMessage(), e);
-			}	
-		}
+		String fileName="";
+		File file = null; 
+		String mimeType = "";
+		String title = "";
+		String description = ""; 
+		long repositoryId = themeDisplay.getCompanyGroupId();
+		Folder folder = null;
+		try { 
+			if(fileType.equals("lop")){
+				fileName=uploadPortletRequest.getFileName("lopDocument");
+				file = uploadPortletRequest.getFile("lopDocument"); 
+				mimeType = uploadPortletRequest.getContentType("lopDocument");
+				title = fileName;
+				description = "Patient LOP Document";
+				folder = getFolder(actionRequest,patient, parentFolder.getFolderId(),"LOP Documents"); 
+			}
+			if(fileType.equals("order")){
+				fileName=uploadPortletRequest.getFileName("orderDocument");
+				file = uploadPortletRequest.getFile("orderDocument"); 
+				mimeType = uploadPortletRequest.getContentType("orderDocument");
+				title = fileName;
+				description = "Patient Order Document";
+				folder = getFolder(actionRequest,patient, parentFolder.getFolderId(),"Order Documents"); 
+			}
+			if(fileType.equals("invoice")){
+				fileName=uploadPortletRequest.getFileName("invoiceDocument");
+				file = uploadPortletRequest.getFile("invoiceDocument"); 
+				mimeType = uploadPortletRequest.getContentType("invoiceDocument");
+				title = fileName;
+				description = "Patient Invoice Document";
+				folder = getFolder(actionRequest,patient, parentFolder.getFolderId(),"Invoice Documents"); 
+			}
+			if(fileType.equals("other")){
+				fileName=uploadPortletRequest.getFileName("otherDocument");
+				file = uploadPortletRequest.getFile("otherDocument"); 
+				mimeType = uploadPortletRequest.getContentType("otherDocument");
+				title = fileName;
+				description = "Patient Other Document";
+				folder = parentFolder; 
+			}
+			if(Validator.isNotNull(fileName) && Validator.isNotNull(folder)){
+				ServiceContext serviceContext = ServiceContextFactory.getInstance(DLFileEntry.class.getName(), actionRequest); 
+				InputStream is = new FileInputStream( file );
+				DLAppServiceUtil.addFileEntry(repositoryId, folder.getFolderId(), fileName, mimeType, title, description, "", is, file.getTotalSpace(), serviceContext); 
+			}
+			} catch (Exception e) {
+				System.out.println(e.getMessage()); e.printStackTrace();
+			} 
+			
 	  }
 	
-	private boolean isFolderExist(ThemeDisplay themeDisplay,String folderName){
+	
+	private boolean isFolderExist(ThemeDisplay themeDisplay,long parentFolderId,String folderName){
 		boolean folderExist = false;
 		try { 
-			DLAppServiceUtil.getFolder(themeDisplay.getCompanyGroupId(), PARENT_FOLDER_ID, folderName); 
+			DLAppServiceUtil.getFolder(themeDisplay.getCompanyGroupId(), parentFolderId, folderName); 
 			folderExist = true;
 		} catch (Exception e) {	
 			//LOG.error(e.getMessage(), e);
 		} return folderExist; 
-	}
-	
-	private Folder getFolder(ThemeDisplay themeDisplay, String folderName){
-		Folder folder = null; 
-		try { 
-			folder =DLAppServiceUtil.getFolder(themeDisplay.getCompanyGroupId(), PARENT_FOLDER_ID, folderName);
-		} catch (Exception e) {
-			//LOG.error(e.getMessage(), e);
-		} return folder; 
 	}
 }

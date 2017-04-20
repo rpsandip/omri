@@ -78,7 +78,7 @@
 					<div class="row m0">
 						<div class="col-sm-12">
 	                         <div class="input-group">
-	                         	<aui:select name="Clinic" label="Clinic">
+	                         	<aui:select name="Clinic" label="Clinic" cssClass="patient_select">
 									<aui:option value="0">Select Clinic</aui:option>
 								    <aui:option value="1">Clinic1</aui:option>
 								    <aui:option value="2">Clinic2</aui:option>

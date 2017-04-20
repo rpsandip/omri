@@ -27,7 +27,6 @@
                 <th>LastName</th>
                 <th>Phone No</th>
 				<th>Procedure</th>
-				<th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -45,13 +44,6 @@
                 		</li>
                 	</c:forEach>
                 	</ul>
-                </td>
-                <td>
-                   <portlet:renderURL var="patientDocumentURL">
-        					<portlet:param name="mvcRenderCommandName" value="/upload-patient-document" />
-        					<portlet:param name="patientId" value="${patientBean.patientId}" />
-					</portlet:renderURL>
-                   <a href="${patientDocumentURL }">Add Patient Document</a>
                 </td>
             </tr>
            </c:forEach>

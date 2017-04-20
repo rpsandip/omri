@@ -108,6 +108,17 @@ public class OmriDashboardModulemvcportletPortlet extends MVCPortlet {
 				_log.error(e.getMessage(), e);
 			}
 			
+			// For System Admin
+			try {
+				Role systemAdminRole = RoleLocalServiceUtil.getRole(themdeDisplay.getCompanyId(), "System Admin");
+				boolean hasSystemAdminRole = RoleLocalServiceUtil.hasUserRole(themdeDisplay.getUserId(), systemAdminRole.getRoleId());
+				if(hasSystemAdminRole){
+					patientBeanList = getAdminPatientList(renderRequest, renderResponse);
+				}
+			} catch (PortalException e) {
+				_log.error(e.getMessage(), e);
+			}
+			
 			
 			renderRequest.setAttribute("patientBeanList", patientBeanList);
 			include(viewTemplate, renderRequest, renderResponse);

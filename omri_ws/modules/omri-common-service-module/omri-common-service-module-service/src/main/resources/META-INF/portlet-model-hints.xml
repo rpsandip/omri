@@ -38,6 +38,7 @@
 		<field name="state" type="String" />
 		<field name="zipcode" type="String" />
 		<field name="phone" type="String" />
+		<field name="fax" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="createdBy" type="long" />
@@ -51,10 +52,17 @@
 		<field name="addressLine1" type="String" />
 		<field name="addressLine2" type="String" />
 		<field name="phoneNo" type="String" />
+		<field name="cptCode" type="String" />
 		<field name="city" type="String" />
 		<field name="state" type="String" />
 		<field name="country" type="String" />
 		<field name="zip" type="String" />
+		<field name="lopNotes" type="String" />
+		<field name="orderNotes" type="String" />
+		<field name="invoiceNotes" type="String" />
+		<field name="otherNotes" type="String" />
+		<field name="reportToDoctor" type="boolean" />
+		<field name="reportToLawyer" type="boolean" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="createdBy" type="long" />

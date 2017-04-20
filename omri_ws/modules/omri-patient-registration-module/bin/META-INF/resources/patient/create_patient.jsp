@@ -4,31 +4,40 @@
 </portlet:actionURL>
 <portlet:resourceURL id="/getSpecificationList" var="getSpecificationListURL" />
 <portlet:resourceURL id="/getClinicResources" var="getClinicResources" />
+<portlet:resourceURL id="/getDoctorDetail" var="getDoctorDetailURL" />
 
 <div class="container">
 	<div class="row ">
+		<h3 class="contact_section_title"><liferay-ui:message key="add.patient"/></h3>
+	</div>
+</div>		
+ <div class="container">
+	    <div class="row form-group">
+            <div class="col-xs-12">
+                <ul class="nav nav-pills nav-justified thumbnail setup-panel">
+                    <li class="link active"><a id="step-1-link">
+                        <h4 class="list-group-item-heading">Patient Information</h4>
+                    </a></li>
+                    <li class="link"><a id="step-2-link">
+                        <h4 class="list-group-item-heading">Doctor</h4>
+                    </a></li>
+                    <li class="link"><a id="step-3-link">
+                        <h4 class="list-group-item-heading">Clinic And Procedure</h4>
+                    </a></li>
+                    <li class="link"><a id="step-4-link">
+                        <h4 class="list-group-item-heading">Documents</h4>
+                    </a></li>    
+                </ul>
+            </div>
+	    </div>
+  </div>
+<div class="container">
+	<div class="row ">
 		 <div class="col-sm-8 contact_form_area">
-		 	<h3 class="contact_section_title"><liferay-ui:message key="add.patient"/></h3>
+		 	
 		 	<div class="contactForm row m0">
 				<aui:form name="createPatientForm" action="${createPatientActionURL}" cssClass="row contact_form" method="post" enctype="multipart/form-data">
-					<div class="row m0">
-						<aui:select name="patient_status" label="Patient Status">
-							<aui:option value="0">Referral Received</aui:option>
-							<aui:option value="1">Lop Received</aui:option>
-							<aui:option value="2">Patient contacted</aui:option>
-							<aui:option value="3">Patient Scheduled</aui:option>
-							<aui:option value="4">Patient Checked In</aui:option>
-							<aui:option value="5">Patient Canceled</aui:option>
-							<aui:option value="6">Patient Rescheduled</aui:option>
-							<aui:option value="7">Patient No-showed</aui:option>
-							<aui:option value="8">Study Complete</aui:option>
-							<aui:option value="9">Report Received</aui:option>
-							<aui:option value="10">Invoice/Report Sent</aui:option>
-							<aui:option value="11">Payment Received</aui:option>
-							
-						</aui:select>
-					</div>
-					<div class="row m0">
+					<div class="row m0 setup-content" id="step-1">
 						 <div class="col-sm-6">
                          	<div class="input-group">
                             	<aui:input name="firstName" label="patient.firstName" cssClass="form-control">
@@ -40,6 +49,12 @@
                                 <div class="input-group">
                                     <aui:input name="lastName" label="patient.lastName" cssClass="form-control">
 										<aui:validator name="required" />
+									</aui:input>
+                                </div>
+                           </div>
+                           <div class="col-sm-6">
+                                <div class="input-group">
+                                    <aui:input name="cptCode" label="patient.cptCode" cssClass="form-control">
 									</aui:input>
                                 </div>
                            </div>
@@ -90,15 +105,32 @@
 									</aui:input>
                                 </div>
                             </div>
-                          </div>
-							<hr/>
-							<div class="row m0">
+	                         <br/>
+	                         <div class="col-sm-12">
+								<aui:select name="patient_status" label="Patient Status" cssClass="patient_select">
+									<aui:option value="0">Referral Received</aui:option>
+									<aui:option value="1">Lop Received</aui:option>
+									<aui:option value="2">Patient contacted</aui:option>
+									<aui:option value="3">Patient Scheduled</aui:option>
+									<aui:option value="4">Patient Checked In</aui:option>
+									<aui:option value="5">Patient Canceled</aui:option>
+									<aui:option value="6">Patient Rescheduled</aui:option>
+									<aui:option value="7">Patient No-showed</aui:option>
+									<aui:option value="8">Study Complete</aui:option>
+									<aui:option value="9">Report Received</aui:option>
+									<aui:option value="10">Invoice/Report Sent</aui:option>
+									<aui:option value="11">Payment Received</aui:option>
+								</aui:select>
+							 </div>
+						 </div> 
+						 <div class="row m0 setup-content" id="step-2">
 								<div>
 									<h5><liferay-ui:message key="doctor"></liferay-ui:message></h5>
 								</div>
 								<div class="col-sm-6">
 	                                <div class="input-group">
 	                                    <aui:select name="doctor" label="" cssClass="form-control patient_select">
+												<aui:option value="0"> Select Doctor</aui:option>
 											<c:forEach items="${doctorAdminList }" var="doctor"> 
 												<aui:option value="${doctor.userId }">  ${doctor.firstName } ${doctor.lastName }</aui:option>
 											</c:forEach>
@@ -110,9 +142,13 @@
 	                                    <aui:input name="doctorPhone" label="doctor.phone" cssClass="form-control"></aui:input>
 	                                </div>
 	                            </div>
+	                            <div class="col-sm-6">
+	                                <div class="input-group">
+	                                    <aui:input name="doctorFax" label="doctor.fax" cssClass="form-control"></aui:input>
+	                                </div>
+	                            </div>
                             </div>
-							<hr/>
-							<div class="row m0">
+							<div class="row m0 setup-content" id="step-3">
 									<div>
 										<h5><liferay-ui:message key="clinic"></liferay-ui:message></h5>
 									</div>
@@ -181,17 +217,48 @@
 								</div>	
 							</div>	
 					 		<aui:input name="resourceCount" type="hidden"/>	
-					 		<div class="row m0">	
-					 			<input type="file" name="uploadedFile" multiple="multiple"  id="uploadedFile">
+					 		<div class="row m0 setup-content" id="step-4">	
+					 			<div class="row m0">
+                            		<div class="col-sm-12">
+					 					LOP : <input type="file" name="lopDocument" id="uploadedFile">
+					 				</div>
+					 				<div class="col-sm-12">
+                                		<aui:input type="textarea" name="lopNotes" label="lop.notes" max="500" cssClass=""/>
+                            		</div>
+					 			</div>	
+					 			<div class="row m0">
+                            		<div class="col-sm-12">
+					 					Order : <input type="file" name="orderDocument" id="uploadedFile">
+					 				</div>
+					 				<div class="col-sm-12">
+                                		<aui:input type="textarea" name="orderNotes" label="order.notes" max="500" cssClass=""/>
+                            		</div>
+					 			</div>	
+					 			<div class="row m0">
+                            		<div class="col-sm-12">
+					 					Invoice : <input type="file" name="invoiceDocument" id="uploadedFile">
+					 				</div>
+					 				<div class="col-sm-12">
+                                		<aui:input type="textarea" name="invoiceNotes" label="invoice.notes" max="500" cssClass=""/>
+                            		</div>
+					 			</div>
+					 			<div class="row m0">
+                            		
+                     			</div> 
+                     			<div class="row m0">
+                            		<div class="col-sm-12">
+                                		<aui:input type="textarea" name="otherNotes" label="other.notes" max="500" cssClass=""/>
+                            		</div>
+                     			</div>	
+					 			<br/>
+					 			<br/>
+								<div class="row m0">
+                            		<div class="col-sm-12">
+                                		<aui:button type="button" value="Add Patient"  cssClass="addPatientBtn"/>
+                            		</div>
+                     			</div> 
 					 		</div>
-					 		<br/>
-					 		<br/>
-							<div class="row m0">
-                            	<div class="col-sm-12">
-                                	<aui:button type="button" value="Add Patient"  cssClass="addPatientBtn"/>
-                            	</div>
-                     		</div> 
-				</aui:form>
+				     </aui:form>
 				</div>
 			</div>	
 		 </div>
@@ -211,6 +278,28 @@ AUI().use('aui-io-request', 'aui-autocomplete' ,'aui-base','aui-form-validator',
 		}
 	});
 	
+	var doctorSelect= A.one("#"+patientRegistrationMouleNS+"doctor");
+	doctorSelect.on('change', function(e) {
+		var currentNode = this;
+		var doctorId= this.val();
+		console.log("doctorID ->" + doctorId);
+		if(doctorId>0){
+		A.io.request('${getDoctorDetailURL}', {
+            method: 'post',
+            data: {
+         	   '<portlet:namespace/>userId': doctorId
+            },
+            on: {
+                success: function(data) {
+                    var docotrDetail = JSON.parse(this.get('responseData'));
+                    console.log("docotrDetail ->" +docotrDetail.phone);
+                    A.one("#"+patientRegistrationMouleNS+"doctorPhone").val(docotrDetail.phone);
+                    A.one("#"+patientRegistrationMouleNS+"doctorFax").val(docotrDetail.fax);
+                }
+             }
+		 });
+	   }
+	});
 	var clinicSelect= A.one("#"+patientRegistrationMouleNS+"clinic");
 	A.one("#"+patientRegistrationMouleNS+"resourceCount").val(resourceCount);
 	clinicSelect.on('change', function(e) {
@@ -256,5 +345,65 @@ AUI().use('aui-io-request', 'aui-autocomplete' ,'aui-base','aui-form-validator',
             }
      });
 	});
+	
+	var allContent = A.all(".setup-content");
+	allContent.hide();
+	var step1Link = A.one("#step-1-link");
+	var step2Link = A.one("#step-2-link");
+	var step3Link = A.one("#step-3-link");
+	var step4Link = A.one("#step-4-link");
+
+	var step1Content = A.one("#step-1");
+	var step2Content = A.one("#step-2");
+	var step3Content = A.one("#step-3");
+	var step4Content = A.one("#step-4");
+
+	step1Content.show();
+
+	step1Link.on('click', function(e) {
+		console.log("step1");
+		step1Content.show();
+		step2Content.hide();
+		step3Content.hide();
+		step4Content.hide();
+		removeAllActiveClass();
+		this.ancestor('li').addClass("active");
+	});
+	step2Link.on('click', function(e) {
+		console.log("step2");
+		step1Content.hide();
+		step2Content.show();
+		step3Content.hide();
+		step4Content.hide();
+		removeAllActiveClass();
+		this.ancestor('li').addClass("active");
+	});
+	step3Link.on('click', function(e) {
+		console.log("step3");
+		step1Content.hide();
+		step2Content.hide();
+		step3Content.show();
+		step4Content.hide();
+		removeAllActiveClass();
+		this.ancestor('li').addClass("active");
+	});
+	step4Link.on('click', function(e) {
+		console.log("step4");
+		step1Content.hide();
+		step2Content.hide();
+		step3Content.hide();
+		step4Content.show();
+		removeAllActiveClass();
+		this.ancestor('li').addClass("active");
+	});
+
+	var removeAllActiveClass = function(){
+		A.all('.link').each(
+				  function (node) {
+				    node.removeClass("active");
+				  }
+	    );
+	}
+
 });
 </aui:script>
