@@ -24,7 +24,6 @@ public class PatientBean{
 	private long createdBy;
 	private long modifiedBy;
 	private Patient_Clinic patientClinic;
-	
 	private List<PatientResourceBean> resourceBeanList;
 	
 	public PatientBean(){

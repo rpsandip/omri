@@ -1,3 +1,19 @@
+create table OMRI_Appointment (
+	appointmentId LONG not null primary key,
+	patientId LONG,
+	clinicId LONG,
+	doctorId LONG,
+	resourceId LONG,
+	specificationId LONG,
+	noOfOccurance INTEGER,
+	appointmetDate DATE null,
+	appointmetProcessTime INTEGER,
+	createDate DATE null,
+	modifiedDate DATE null,
+	createdBy LONG,
+	modifiedBy LONG
+);
+
 create table OMRI_Clinic (
 	clinicId LONG not null primary key,
 	clinicorganizationId LONG,

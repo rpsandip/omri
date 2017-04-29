@@ -2,6 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping auto-import="false" default-lazy="false">
+	<import class="com.omri.service.common.model.Appointment" />
 	<import class="com.omri.service.common.model.Clinic" />
 	<import class="com.omri.service.common.model.Clinic_Resource" />
 	<import class="com.omri.service.common.model.CustomUser" />
@@ -11,6 +12,23 @@
 	<import class="com.omri.service.common.model.Resource" />
 	<import class="com.omri.service.common.model.Resource_Specification" />
 	<import class="com.omri.service.common.model.Specification" />
+	<class name="com.omri.service.common.model.impl.AppointmentImpl" table="OMRI_Appointment">
+		<id name="appointmentId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="patientId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="clinicId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="doctorId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="resourceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="specificationId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="noOfOccurance" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="appointmetDate" type="org.hibernate.type.TimestampType" />
+		<property name="appointmetProcessTime" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="createdBy" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="modifiedBy" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
 	<class name="com.omri.service.common.model.impl.ClinicImpl" table="OMRI_Clinic">
 		<id name="clinicId" type="long">
 			<generator class="assigned" />

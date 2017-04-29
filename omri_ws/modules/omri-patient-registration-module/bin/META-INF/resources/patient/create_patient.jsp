@@ -184,10 +184,13 @@
 												                 	//resourceItemElement.all('option').remove();
 												                 	resourceItemElement.on('change', function(e) {
 													    				var resourceId = resourceItemElement.val();
+													    				var clinicId = A.one("#"+patientRegistrationMouleNS+"clinic").val();
+													    				console.log("clinicId -?" + clinicId);
 													    				A.io.request('${getSpecificationListURL}', {
 																               method: 'post',
 																               data: {
-																            	   '<portlet:namespace/>resourceId': resourceId
+																            	   '<portlet:namespace/>resourceId': resourceId,
+																            	   '<portlet:namespace/>clinicId': clinicId
 																               },
 																               on: {
 																                    success: function(data) {
@@ -325,7 +328,8 @@ AUI().use('aui-io-request', 'aui-autocomplete' ,'aui-base','aui-form-validator',
 			    				A.io.request('${getSpecificationListURL}', {
 						               method: 'post',
 						               data: {
-						            	   '<portlet:namespace/>resourceId': resourceId
+						            	   '<portlet:namespace/>resourceId': resourceId,
+						            	   '<portlet:namespace/>clinicId': clinicId
 						               },
 						               on: {
 						                    success: function(data) {

@@ -43,6 +43,7 @@
 	
     <script src="${javascript_folder}/html5shiv.min.js"></script>
     <script src="${javascript_folder}/respond.min.js"></script>
+    <script src="${javascript_folder}/bootstrap-datepicker.js"></script>
     <![endif]-->
     
     <script>

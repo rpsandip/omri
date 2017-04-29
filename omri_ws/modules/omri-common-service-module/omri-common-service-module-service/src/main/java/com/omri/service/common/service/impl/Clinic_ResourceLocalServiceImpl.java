@@ -64,4 +64,10 @@ public class Clinic_ResourceLocalServiceImpl
 		clinicResources = clinic_ResourcePersistence.findByClinicId(clinicId);
 		return clinicResources;
 	}
+	
+	public List<Clinic_Resource> getClinicResources(long clinicId, long resourceId){
+		List<Clinic_Resource> clinicResources = new ArrayList<Clinic_Resource>();
+		clinicResources = clinic_ResourcePersistence.findByClinicIdAndResourceId(clinicId, resourceId);
+		return clinicResources;
+	}
 }

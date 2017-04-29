@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean class="com.omri.service.common.service.impl.AppointmentLocalServiceImpl" id="com.omri.service.common.service.AppointmentLocalService" />
+	<bean class="com.omri.service.common.service.persistence.impl.AppointmentPersistenceImpl" id="com.omri.service.common.service.persistence.AppointmentPersistence" parent="basePersistence" />
 	<bean class="com.omri.service.common.service.impl.ClinicLocalServiceImpl" id="com.omri.service.common.service.ClinicLocalService" />
 	<bean class="com.omri.service.common.service.persistence.impl.ClinicPersistenceImpl" id="com.omri.service.common.service.persistence.ClinicPersistence" parent="basePersistence" />
 	<bean class="com.omri.service.common.service.impl.Clinic_ResourceLocalServiceImpl" id="com.omri.service.common.service.Clinic_ResourceLocalService" />

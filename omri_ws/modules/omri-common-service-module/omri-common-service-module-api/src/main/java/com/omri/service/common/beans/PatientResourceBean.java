@@ -15,6 +15,7 @@ public class PatientResourceBean{
 	private String specificationName;
 	private long specificationId;
 	private int occurnace;
+	private int remainingOccurance;
 	
 	public PatientResourceBean(Patient patient, Clinic clinic,Resource resource, Specification specification, Patient_Clinic_Resource patientClinicResource){
 		this.patientId = patient.getPatientId();
@@ -24,6 +25,7 @@ public class PatientResourceBean{
 		this.specificationId = specification.getSpecificationId();
 		this.specificationName = specification.getSpecificationName();
 		this.occurnace = patientClinicResource.getNoOfOccurance();
+		this.remainingOccurance = patientClinicResource.getNoOfOccurance();
 	}
 	
 	public String getClinicName() {
@@ -77,5 +79,12 @@ public class PatientResourceBean{
 	}
 	public void setSpecificationId(long specificationId) {
 		this.specificationId = specificationId;
+	}
+	public int getRemainingOccurance() {
+		return remainingOccurance;
+	}
+
+	public void setRemainingOccurance(int remainingOccurance) {
+		this.remainingOccurance = remainingOccurance;
 	}
 }

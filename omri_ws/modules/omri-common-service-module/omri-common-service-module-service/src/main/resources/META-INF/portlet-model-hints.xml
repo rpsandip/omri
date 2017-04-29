@@ -1,6 +1,21 @@
 <?xml version="1.0"?>
 
 <model-hints>
+	<model name="com.omri.service.common.model.Appointment">
+		<field name="appointmentId" type="long" />
+		<field name="patientId" type="long" />
+		<field name="clinicId" type="long" />
+		<field name="doctorId" type="long" />
+		<field name="resourceId" type="long" />
+		<field name="specificationId" type="long" />
+		<field name="noOfOccurance" type="int" />
+		<field name="appointmetDate" type="Date" />
+		<field name="appointmetProcessTime" type="int" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="createdBy" type="long" />
+		<field name="modifiedBy" type="long" />
+	</model>
 	<model name="com.omri.service.common.model.Clinic">
 		<field name="clinicId" type="long" />
 		<field name="clinicorganizationId" type="long" />

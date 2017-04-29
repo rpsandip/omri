@@ -1,5 +1,7 @@
 <%@page import="com.liferay.portal.kernel.util.Validator"%>
 <%@page import="com.omri.service.common.util.PatientStatus"%>
+<%@page import="javax.portlet.WindowState"%>
+
 <%@ include file="/init.jsp" %>
 <script>
     define._amd = define.amd;
@@ -27,6 +29,7 @@
                 <th>Phone No</th>
 				<th>Procedure</th>
 				<th>Status</th>
+				<th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -54,6 +57,14 @@
                     }
                 	 %>
                 	 <%=patientStatus %>
+                </td>
+                <td>
+                	<portlet:renderURL var="shcedulePatientURL" windowState="<%=WindowState.MAXIMIZED.toString() %>">
+       					 <portlet:param name="mvcRenderCommandName" value="/schedule_patient" />
+       					 <portlet:param name="patientId" value="${patientBean.patientId }" />
+       					 <portlet:param name="clinicId" value="${patientBean.patientClinic.clinicId }" />
+					</portlet:renderURL>
+					<a href="${shcedulePatientURL }">Shedule Patient</a>
                 </td>
             </tr>
            </c:forEach>

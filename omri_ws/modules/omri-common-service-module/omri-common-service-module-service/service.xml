@@ -95,6 +95,10 @@
 		<finder return-type="Collection" name="ClinicId">
 			<finder-column name="clinicId"></finder-column>
 		</finder>
+		<finder return-type="Collection" name="ClinicIdAndResourceId">
+			<finder-column name="clinicId"></finder-column>
+			<finder-column name="resourceId"></finder-column>
+		</finder>
 	</entity>
 	
 	<entity name="Patient" local-service="true"  remote-service="false">
@@ -174,8 +178,47 @@
 			<finder-column name="patientId"></finder-column>
 			<finder-column name="clinicId"></finder-column>
 		</finder>
-		
-
 	</entity>
+	
+	<entity name="Appointment" local-service="true"  remote-service="false">
+		<column name="appointmentId" primary="true" type="long" />
+		<column name="patientId" type="long" />
+		<column name="clinicId" type="long" />
+		<column name="doctorId" type="long" />
+		<column name="resourceId" type="long" />
+		<column name="specificationId" type="long" />
+		<column name="noOfOccurance" type="int" />
+		<column name="appointmetDate" type="Date" />
+		<column name="appointmetProcessTime" type="int" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+		<column name="createdBy" type="long" />
+		<column name="modifiedBy" type="long" />
+		
+		<finder return-type="Collection" name="PatientIdAndClinicId">
+			<finder-column name="patientId"></finder-column>
+			<finder-column name="clinicId"></finder-column>
+		</finder>
+		
+		<finder return-type="Collection" name="ClinicId">
+			<finder-column name="clinicId"></finder-column>
+		</finder>
+		
+		<finder return-type="Collection" name="ResourceId">
+			<finder-column name="resourceId"></finder-column>
+		</finder>
+		
+		<finder return-type="Collection" name="appointmentDate">
+			<finder-column name="appointmetDate"></finder-column>
+		</finder>
+		
+		<finder return-type="Collection" name="PatientIdClinicIdResourceIdSpecificationId">
+			<finder-column name="patientId"></finder-column>
+			<finder-column name="clinicId"></finder-column>
+			<finder-column name="resourceId"></finder-column>
+			<finder-column name="specificationId"></finder-column>
+		</finder>
+		
+	</entity>	
 	
 </service-builder>
