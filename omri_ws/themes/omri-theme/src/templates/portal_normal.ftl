@@ -19,11 +19,10 @@
     <link rel="stylesheet" href="${css_folder}/bootstrap.min.css">
     <link rel="stylesheet" href="${css_folder}/bootstrap-theme.min.css">
     <link rel="stylesheet" href="${css_folder}/font-awesome.min.css">
-    <link rel="stylesheet" href="${css_folder}/vendors/owl.carousel/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="${css_folder}/vendors/owl.carousel/css/owl.theme.default.min.css">
-    <link rel="stylesheet" type="text/css" href="${css_folder}/vendors/flexslider/flexslider.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="${css_folder}/vendors/bootstrap-datepicker/css/datepicker3.css" media="screen">
-
+    <link rel="stylesheet" href="${css_folder}/fullcalendar.min.css">
+    <link rel="stylesheet" href="${css_folder}/bootstrap-datepicker3.css">
+    <link rel="stylesheet" href="${css_folder}/bootstrap-timepicker.css">
+    
     <!--Fonts-->
     <link href='http://fonts.googleapis.com/css?family=Karla:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
@@ -35,16 +34,21 @@
     <link rel="stylesheet" href="${css_folder}/Multiselect/bootstrap-multiselect.css">
 	<link rel="stylesheet" href="${css_folder}/default/style.css">
     <link rel="stylesheet" href="${css_folder}/custom.css">
-    <!--[if lt IE 9]>
     <script>
 	    define._amd = define.amd;
 	    define.amd = false;
 	</script>
-	
+
+	<script src="${javascript_folder}/jquery-2.1.3.min.js"></script>
+	<script src="${javascript_folder}/bootstrap.min.js"></script>
     <script src="${javascript_folder}/html5shiv.min.js"></script>
     <script src="${javascript_folder}/respond.min.js"></script>
+    <script src="${javascript_folder}/moment.min.js"></script>
     <script src="${javascript_folder}/bootstrap-datepicker.js"></script>
-    <![endif]-->
+    <script src="${javascript_folder}/bootstrap-timepicker.min.js"></script>
+    <script src="${javascript_folder}/fullcalendar.min.js"></script>
+    
+    
     
     <script>
 	    define.amd = define._amd;
