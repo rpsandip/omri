@@ -52,10 +52,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.display-name=omri-dashboard-module Portlet",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
-		"com.liferay.portlet.footer-portlet-javascript=/js/moment.min.js",
-		"com.liferay.portlet.footer-portlet-javascript=/js/fullcalendar.min.js",
-		"com.liferay.portlet.footer-portlet-javascript=/js/jquery.js",
-		"com.liferay.portlet.footer-portlet-css=/css/fullcalendar.min.css",
+		"com.liferay.portlet.action-url-redirect=true",
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user"
 	},

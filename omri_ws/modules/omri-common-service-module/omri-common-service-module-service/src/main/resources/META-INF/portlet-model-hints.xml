@@ -11,6 +11,8 @@
 		<field name="noOfOccurance" type="int" />
 		<field name="appointmetDate" type="Date" />
 		<field name="appointmetProcessTime" type="int" />
+		<field name="status" type="int" />
+		<field name="technologistComment" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="createdBy" type="long" />
@@ -40,6 +42,7 @@
 		<field name="specificationId" type="long" />
 		<field name="resourceId" type="long" />
 		<field name="operationTime" type="int" />
+		<field name="price" type="int" />
 	</model>
 	<model name="com.omri.service.common.model.CustomUser">
 		<field name="customUserId" type="long" />
@@ -64,6 +67,7 @@
 		<field name="firstName" type="String" />
 		<field name="lastName" type="String" />
 		<field name="dob" type="Date" />
+		<field name="gender" type="String" />
 		<field name="addressLine1" type="String" />
 		<field name="addressLine2" type="String" />
 		<field name="phoneNo" type="String" />
@@ -105,6 +109,35 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="createdBy" type="long" />
 		<field name="modifiedBy" type="long" />
+	</model>
+	<model name="com.omri.service.common.model.PatientDetail">
+		<field name="patientId" type="long" />
+		<field name="MRIBefore" type="boolean" />
+		<field name="Claustrophobic" type="boolean" />
+		<field name="under300lbs" type="boolean" />
+		<field name="pacemaker" type="boolean" />
+		<field name="PreviousPatient" type="boolean" />
+		<field name="MetalInBody" type="boolean" />
+		<field name="priorSurgery" type="boolean" />
+		<field name="chanceOfPregnent" type="boolean" />
+		<field name="overAge60" type="boolean" />
+		<field name="labsDone" type="boolean" />
+		<field name="allergic" type="boolean" />
+		<field name="diabetic" type="boolean" />
+		<field name="kidneyProblem" type="boolean" />
+		<field name="hyperTension" type="boolean" />
+		<field name="cancer" type="boolean" />
+		<field name="bloodthinners" type="boolean" />
+		<field name="allergicToIdodine" type="boolean" />
+		<field name="claustrophobicDetail" type="String" />
+		<field name="pacemakerDetail" type="String" />
+		<field name="metalInBodyDetail" type="String" />
+		<field name="priorSurgeryDetail" type="String" />
+		<field name="alergicDetail" type="String" />
+		<field name="diabeticDetail" type="String" />
+		<field name="allergicToIdodineDetail" type="String" />
+		<field name="bloodthinnersDetail" type="String" />
+		<field name="detailWithTimeStamp" type="String" />
 	</model>
 	<model name="com.omri.service.common.model.Resource">
 		<field name="resourceId" type="long" />

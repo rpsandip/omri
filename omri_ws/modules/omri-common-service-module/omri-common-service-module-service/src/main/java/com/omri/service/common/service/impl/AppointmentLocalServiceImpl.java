@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.omri.service.common.model.Appointment;
 import com.omri.service.common.service.AppointmentLocalServiceUtil;
 import com.omri.service.common.service.base.AppointmentLocalServiceBaseImpl;
+import com.omri.service.common.util.AppointmentStatus;
 
 /**
  * The implementation of the appointment local service.
@@ -63,6 +64,7 @@ public class AppointmentLocalServiceImpl extends AppointmentLocalServiceBaseImpl
 		appointment.setCreatedBy(createdBy);
 		appointment.setNoOfOccurance(noOfOccurance);
 		appointment.setModifiedBy(modifiedBy);
+		appointment.setStatus(AppointmentStatus.CREATED.getValue());
 		appointment.setCreateDate(createdDate);
 		appointment.setModifiedDate(modifiedDate);
 		appointment = AppointmentLocalServiceUtil.addAppointment(appointment);
@@ -87,6 +89,12 @@ public class AppointmentLocalServiceImpl extends AppointmentLocalServiceBaseImpl
 		return patientAppointmentList;
 	}
 	
+	public List<Appointment> getPatientAppointmentsByPatientId(long patientId){
+		List<Appointment> patientAppointmentList = new ArrayList<Appointment>();
+		patientAppointmentList = appointmentPersistence.findByPatientId(patientId);
+		return patientAppointmentList;
+	}
+	
 	public List<Appointment> getPatientAppointmentsByAppintmentDate(Date date){
 		List<Appointment> patientAppointmentList = new ArrayList<Appointment>();
 		patientAppointmentList = appointmentPersistence.findByappointmentDate(date);
@@ -97,6 +105,12 @@ public class AppointmentLocalServiceImpl extends AppointmentLocalServiceBaseImpl
 			long specificationId){
 		List<Appointment> patientAppointmentList = new ArrayList<Appointment>();
 		patientAppointmentList = appointmentPersistence.findByPatientIdClinicIdResourceIdSpecificationId(patientId, clinicId, resourceId, specificationId);
+		return patientAppointmentList;
+	}
+	
+	public List<Appointment> getAppointmentByPatientIdResourceIdSpecificationId(long patientId, long resourceId, long specificationId){
+		List<Appointment> patientAppointmentList = new ArrayList<Appointment>();
+		patientAppointmentList = appointmentPersistence.findByPatientIdResourceIdSpecificationId(patientId, resourceId, specificationId);
 		return patientAppointmentList;
 	}
 	
@@ -126,6 +140,12 @@ public class AppointmentLocalServiceImpl extends AppointmentLocalServiceBaseImpl
 		}
 		patientAppointmentList = AppointmentLocalServiceUtil.dynamicQuery(dynamicQuery);
 		return patientAppointmentList;
+	}
+	
+	public List<Appointment> getClinicAppointmentListBystatus(long clinicId, int status){
+		List<Appointment> appointmentList = new ArrayList<Appointment>();
+		appointmentList = appointmentPersistence.findByStatusAndClinicId(clinicId, status);
+		return appointmentList;
 	}
 	
 }

@@ -9,6 +9,7 @@
 	<import class="com.omri.service.common.model.Patient" />
 	<import class="com.omri.service.common.model.Patient_Clinic" />
 	<import class="com.omri.service.common.model.Patient_Clinic_Resource" />
+	<import class="com.omri.service.common.model.PatientDetail" />
 	<import class="com.omri.service.common.model.Resource" />
 	<import class="com.omri.service.common.model.Resource_Specification" />
 	<import class="com.omri.service.common.model.Specification" />
@@ -24,6 +25,8 @@
 		<property name="noOfOccurance" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="appointmetDate" type="org.hibernate.type.TimestampType" />
 		<property name="appointmetProcessTime" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="technologistComment" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="createdBy" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -57,6 +60,7 @@
 			<key-property name="resourceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		</composite-id>
 		<property name="operationTime" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="price" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 	<class name="com.omri.service.common.model.impl.CustomUserImpl" table="OMRI_CustomUser">
 		<id name="customUserId" type="long">
@@ -85,6 +89,7 @@
 		<property name="firstName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="lastName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="dob" type="org.hibernate.type.TimestampType" />
+		<property name="gender" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="addressLine1" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="addressLine2" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="phoneNo" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -130,6 +135,37 @@
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="createdBy" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="modifiedBy" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+	<class name="com.omri.service.common.model.impl.PatientDetailImpl" table="OMRI_PatientDetail">
+		<id name="patientId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="MRIBefore" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="Claustrophobic" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="under300lbs" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="pacemaker" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="PreviousPatient" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="MetalInBody" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="priorSurgery" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="chanceOfPregnent" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="overAge60" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="labsDone" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="allergic" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="diabetic" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="kidneyProblem" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="hyperTension" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="cancer" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="bloodthinners" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="allergicToIdodine" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="claustrophobicDetail" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="pacemakerDetail" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="metalInBodyDetail" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="priorSurgeryDetail" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="alergicDetail" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="diabeticDetail" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="allergicToIdodineDetail" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="bloodthinnersDetail" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="detailWithTimeStamp" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.omri.service.common.model.impl.ResourceImpl" table="OMRI_Resource">
 		<id name="resourceId" type="long">

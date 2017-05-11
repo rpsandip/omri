@@ -96,6 +96,7 @@
 							             		</aui:select>
 							             		<aui:select name="specification0" id="specification0" label="Specification" cssClass="form-control specificationItem patient_select"></aui:select>
 								                <aui:input fieldParam='operationTime0' id='operationTime0' name="operationTime0" cssClass="form-control" label="Operation Time" placeholder="mins"/>
+								                <aui:input fieldParam='price0' id='price0' name="price0" cssClass="form-control" label="Price" placeholder="Price"/>
 								                <aui:input name="resourceCount" type="hidden"  />
 						                	</div>
 						               </div> 

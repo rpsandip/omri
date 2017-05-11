@@ -8,6 +8,8 @@ create table OMRI_Appointment (
 	noOfOccurance INTEGER,
 	appointmetDate DATE null,
 	appointmetProcessTime INTEGER,
+	status INTEGER,
+	technologistComment VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
 	createdBy LONG,
@@ -39,6 +41,7 @@ create table OMRI_Clinic_Resource (
 	specificationId LONG not null,
 	resourceId LONG not null,
 	operationTime INTEGER,
+	price INTEGER,
 	primary key (clinicId, specificationId, resourceId)
 );
 
@@ -66,6 +69,7 @@ create table OMRI_Patient (
 	firstName VARCHAR(75) null,
 	lastName VARCHAR(75) null,
 	dob DATE null,
+	gender VARCHAR(75) null,
 	addressLine1 VARCHAR(75) null,
 	addressLine2 VARCHAR(75) null,
 	phoneNo VARCHAR(75) null,
@@ -84,6 +88,36 @@ create table OMRI_Patient (
 	modifiedDate DATE null,
 	createdBy LONG,
 	modifiedBy LONG
+);
+
+create table OMRI_PatientDetail (
+	patientId LONG not null primary key,
+	MRIBefore BOOLEAN,
+	Claustrophobic BOOLEAN,
+	under300lbs BOOLEAN,
+	pacemaker BOOLEAN,
+	PreviousPatient BOOLEAN,
+	MetalInBody BOOLEAN,
+	priorSurgery BOOLEAN,
+	chanceOfPregnent BOOLEAN,
+	overAge60 BOOLEAN,
+	labsDone BOOLEAN,
+	allergic BOOLEAN,
+	diabetic BOOLEAN,
+	kidneyProblem BOOLEAN,
+	hyperTension BOOLEAN,
+	cancer BOOLEAN,
+	bloodthinners BOOLEAN,
+	allergicToIdodine BOOLEAN,
+	claustrophobicDetail VARCHAR(75) null,
+	pacemakerDetail VARCHAR(75) null,
+	metalInBodyDetail VARCHAR(75) null,
+	priorSurgeryDetail VARCHAR(75) null,
+	alergicDetail VARCHAR(75) null,
+	diabeticDetail VARCHAR(75) null,
+	allergicToIdodineDetail VARCHAR(75) null,
+	bloodthinnersDetail VARCHAR(75) null,
+	detailWithTimeStamp VARCHAR(75) null
 );
 
 create table OMRI_Patient_Clinic (

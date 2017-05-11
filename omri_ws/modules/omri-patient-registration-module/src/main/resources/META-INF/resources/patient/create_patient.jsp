@@ -223,7 +223,7 @@
 					 		<div class="row m0 setup-content" id="step-4">	
 					 			<div class="row m0">
                             		<div class="col-sm-12">
-					 					LOP : <input type="file" name="lopDocument" id="uploadedFile">
+					 					LOP : <input type="file" name="lopDocument" id="uploadedFile"/>
 					 				</div>
 					 				<div class="col-sm-12">
                                 		<aui:input type="textarea" name="lopNotes" label="lop.notes" max="500" cssClass=""/>
@@ -231,7 +231,7 @@
 					 			</div>	
 					 			<div class="row m0">
                             		<div class="col-sm-12">
-					 					Order : <input type="file" name="orderDocument" id="uploadedFile">
+					 					Order : <input type="file" name="orderDocument" id="uploadedFile"/>
 					 				</div>
 					 				<div class="col-sm-12">
                                 		<aui:input type="textarea" name="orderNotes" label="order.notes" max="500" cssClass=""/>
@@ -239,7 +239,7 @@
 					 			</div>	
 					 			<div class="row m0">
                             		<div class="col-sm-12">
-					 					Invoice : <input type="file" name="invoiceDocument" id="uploadedFile">
+					 					Invoice : <input type="file" name="invoiceDocument" id="uploadedFile"/>
 					 				</div>
 					 				<div class="col-sm-12">
                                 		<aui:input type="textarea" name="invoiceNotes" label="invoice.notes" max="500" cssClass=""/>

@@ -91,6 +91,7 @@
 		<column name="specificationId" primary="true" type="long" />
 		<column name="resourceId" primary="true" type="long" />
 		<column name="operationTime" type="int" />
+		<column name="price" type="int" />
 		
 		<finder return-type="Collection" name="ClinicId">
 			<finder-column name="clinicId"></finder-column>
@@ -106,6 +107,7 @@
 		<column name="firstName" type="String" />
 		<column name="lastName" type="String" />
 		<column name="dob" type="Date" />
+		<column name="gender" type="String" />
 		<column name="addressLine1" type="String" />
 		<column name="addressLine2" type="String" />
 		<column name="phoneNo" type="String" />
@@ -120,6 +122,7 @@
 		<column name="otherNotes" type="String" />
 		<column name="reportToDoctor" type="boolean" />
 		<column name="reportToLawyer" type="boolean" />
+		
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 		<column name="createdBy" type="long" />
@@ -129,6 +132,41 @@
 			<finder-column name="createdBy"></finder-column>
 		</finder>
 	</entity>
+	
+	<entity name="PatientDetail" local-service="true"  remote-service="false">
+		<column name="patientId" primary="true" type="long" />
+		<!-- Other patient detail -->
+		<column name="MRIBefore" type="boolean" />
+		<column name="Claustrophobic" type="boolean" />
+		<column name="under300lbs" type="boolean" />
+		<column name="pacemaker" type="boolean" />
+		<column name="PreviousPatient" type="boolean" />
+		<column name="MetalInBody" type="boolean" />
+		<column name="priorSurgery" type="boolean" />
+		<column name="chanceOfPregnent" type="boolean" />
+		<column name="overAge60" type="boolean" />
+		<column name="labsDone" type="boolean" />
+		<column name="allergic" type="boolean" />
+		<column name="diabetic" type="boolean" />
+		<column name="kidneyProblem" type="boolean" />
+		<column name="hyperTension" type="boolean" />
+		<column name="cancer" type="boolean" />
+		<column name="bloodthinners" type="boolean" />
+		<column name="allergicToIdodine" type="boolean" />
+		
+		<column name="claustrophobicDetail" type="String" />
+		<column name="pacemakerDetail" type="String" />
+		<column name="metalInBodyDetail" type="String" />
+		<column name="priorSurgeryDetail" type="String" />
+		<column name="alergicDetail" type="String" />
+		<column name="diabeticDetail" type="String" />
+		<column name="allergicToIdodineDetail" type="String" />
+		<column name="bloodthinnersDetail" type="String" />
+		
+		
+		<column name="detailWithTimeStamp" type="String" />
+		
+	</entity>	
 	
 	<entity name="Patient_Clinic" local-service="true"  remote-service="false">
 		<column name="clinicId" primary="true" type="long" />
@@ -190,6 +228,8 @@
 		<column name="noOfOccurance" type="int" />
 		<column name="appointmetDate" type="Date" />
 		<column name="appointmetProcessTime" type="int" />
+		<column name="status" type="int" />
+		<column name="technologistComment" type="String" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 		<column name="createdBy" type="long" />
@@ -202,6 +242,10 @@
 		
 		<finder return-type="Collection" name="ClinicId">
 			<finder-column name="clinicId"></finder-column>
+		</finder>
+		
+		<finder return-type="Collection" name="PatientId">
+			<finder-column name="patientId"></finder-column>
 		</finder>
 		
 		<finder return-type="Collection" name="ResourceId">
@@ -217,6 +261,17 @@
 			<finder-column name="clinicId"></finder-column>
 			<finder-column name="resourceId"></finder-column>
 			<finder-column name="specificationId"></finder-column>
+		</finder>
+		
+		<finder return-type="Collection" name="PatientIdResourceIdSpecificationId">
+			<finder-column name="patientId"></finder-column>
+			<finder-column name="resourceId"></finder-column>
+			<finder-column name="specificationId"></finder-column>
+		</finder>
+		
+		<finder return-type="Collection" name="StatusAndClinicId">
+			<finder-column name="clinicId"></finder-column>
+			<finder-column name="status"></finder-column>
 		</finder>
 		
 	</entity>	

@@ -2,6 +2,7 @@ package com.example.portlet.resourcecommand;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.portlet.PortletException;
@@ -53,7 +54,7 @@ public class GetAppointmentListResourceCommand  implements MVCResourceCommand{
 			Resource resource = com.omri.service.common.service.ResourceLocalServiceUtil.getResource(appointment.getResourceId());
 			appointmentJsonObj.put("title", patient.getFirstName()+StringPool.SPACE+patient.getLastName()+ StringPool.DASH+ resource.getResourceName());
 			appointmentJsonObj.put("start",appointment.getAppointmetDate());
-			appointmentJsonObj.put("end",appointment.getAppointmetDate().getTime()+ 1 * (3600*1000));
+			appointmentJsonObj.put("end",new Date(appointment.getAppointmetDate().getTime()+ (appointment.getAppointmetProcessTime() * (60*1000))));
 			appointmentJsonObj.put("allDay", false);
 			appointmentJsonArray.put(appointmentJsonObj);
 			}catch(PortalException e){

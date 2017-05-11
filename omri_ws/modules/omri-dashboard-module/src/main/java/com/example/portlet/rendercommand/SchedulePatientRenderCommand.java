@@ -51,7 +51,7 @@ public class SchedulePatientRenderCommand implements MVCRenderCommand{
 		try {
 			Patient patient = PatientLocalServiceUtil.getPatient(patientId);
 			Clinic clinic = ClinicLocalServiceUtil.getClinic(clinicId);
-			List<AppointmentBean> patientAppointmentList = getPatientAppointments(patient, clinic);
+			List<AppointmentBean> patientAppointmentList = getPatientAppointments(patient);
 			Patient_ClinicPK patientClinicPK = new Patient_ClinicPK(clinicId, patientId);
 			Patient_Clinic patientClinc = Patient_ClinicLocalServiceUtil.getPatient_Clinic(patientClinicPK);
 			List<PatientResourceBean> patientResourceBeanList = new ArrayList<PatientResourceBean>();
@@ -63,7 +63,11 @@ public class SchedulePatientRenderCommand implements MVCRenderCommand{
 						Specification specification = SpecificationLocalServiceUtil.getSpecification(patientClinicResource.getSpecificationId());
 						PatientResourceBean patientResourceBean = new PatientResourceBean(patient, clinic, resource, specification,patientClinicResource);
 						int appointmentCreated = checkAppointmentExist(patientResourceBean);
-						patientResourceBean.setRemainingOccurance(patientResourceBean.getRemainingOccurance()-appointmentCreated);
+						int remainingAppointment = patientResourceBean.getRemainingOccurance()-appointmentCreated;
+						if(remainingAppointment<0){
+							remainingAppointment=0;
+						}
+						patientResourceBean.setRemainingOccurance(remainingAppointment);
 						patientResourceBeanList.add(patientResourceBean);
 					} catch (PortalException e) {
 						_log.error(e.getMessage(), e);
@@ -72,7 +76,7 @@ public class SchedulePatientRenderCommand implements MVCRenderCommand{
 			}
 			PatientBean patientBean= new PatientBean(patient, patientClinc,patientResourceBeanList);
 			renderRequest.setAttribute("patientBean", patientBean);
-			renderRequest.setAttribute("patientAppointmentList", getPatientAppointments(patient, clinic));
+			renderRequest.setAttribute("patientAppointmentList", patientAppointmentList);
 			
 			// Get clinic list
 			List<Clinic> clinicList = ClinicLocalServiceUtil.getClinics(-1,-1);
@@ -90,19 +94,20 @@ public class SchedulePatientRenderCommand implements MVCRenderCommand{
 	}
 	
     private int checkAppointmentExist(PatientResourceBean patientResourceBean){
-    	List<Appointment> appointmentExistList = AppointmentLocalServiceUtil.getAppointmentByPatientIdClinicIdResourceIdSpecificationId
-    			(patientResourceBean.getPatientId(), patientResourceBean.getClinicId(), patientResourceBean.getResourceId(), patientResourceBean.getSpecificationId());
+    	List<Appointment> appointmentExistList = AppointmentLocalServiceUtil.getAppointmentByPatientIdResourceIdSpecificationId
+    			(patientResourceBean.getPatientId(), patientResourceBean.getResourceId(), patientResourceBean.getSpecificationId());
     	return appointmentExistList.size();
     }
 	
-	private List<AppointmentBean> getPatientAppointments(Patient patient, Clinic clinic){
+	private List<AppointmentBean> getPatientAppointments(Patient patient){
 		List<Appointment> patientAppointmentList= new ArrayList<Appointment>();
 		List<AppointmentBean> patientAppointmentBeanList= new ArrayList<AppointmentBean>();
-		patientAppointmentList = AppointmentLocalServiceUtil.getPatientAppointments(patient.getPatientId(), clinic.getClinicId());
+		patientAppointmentList = AppointmentLocalServiceUtil.getPatientAppointmentsByPatientId(patient.getPatientId());  //getPatientAppointments(patient.getPatientId(), clinic.getClinicId());
 		for(Appointment appointment : patientAppointmentList){
 			try {
 				Resource resource = ResourceLocalServiceUtil.getResource(appointment.getResourceId());
 				Specification specification = SpecificationLocalServiceUtil.getSpecification(appointment.getSpecificationId());
+				Clinic clinic = ClinicLocalServiceUtil.getClinic(appointment.getClinicId());
 				AppointmentBean appointmentBean = new AppointmentBean(appointment, patient, clinic, resource, specification);
 				patientAppointmentBeanList.add(appointmentBean);
 			} catch (PortalException e) {

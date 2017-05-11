@@ -1,6 +1,7 @@
 create index IX_F0340058 on OMRI_Appointment (appointmetDate);
-create index IX_4B2E4DF2 on OMRI_Appointment (clinicId);
+create index IX_83807AD8 on OMRI_Appointment (clinicId, status);
 create index IX_DF6303C5 on OMRI_Appointment (patientId, clinicId, resourceId, specificationId);
+create index IX_73A06C7C on OMRI_Appointment (patientId, resourceId, specificationId);
 create index IX_DDA416D8 on OMRI_Appointment (resourceId);
 
 create index IX_1C3D2C42 on OMRI_Clinic (clinicorganizationId);

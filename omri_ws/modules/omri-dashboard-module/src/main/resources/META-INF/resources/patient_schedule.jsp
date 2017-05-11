@@ -1,9 +1,11 @@
 <%@ include file="/init.jsp" %>
 <liferay-ui:success key="appointment-created-successfully" message="appointment-created-successfully"/>
-<liferay-ui:success key="error-create-appointment" message="error-create-appointment"/>
+<liferay-ui:error key="error-create-appointment" message="error-create-appointment"/>
+<liferay-ui:error key="clinic-resource-error" message="clinic-resource-error"/>
 <portlet:actionURL var="addAppointmentURL" name="/patient/add_appointment">
 </portlet:actionURL>
 <portlet:resourceURL id="/getAppointmentList" var="getAppointmentListURL" />
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <style>
 
 	body {
@@ -45,15 +47,26 @@
                </div>
                <hr/> 
                <div class="row m0">
-               		<h3>Appointment Created</h3>
+               		<h5>Appointment Created</h5>
                		<c:forEach items="${patientAppointmentList }" var="patientAppointmentBean">
 						<div>
+							
 						    <span>Clinic: ${patientAppointmentBean.clinicName }<span><br/>
-						    <span>Date : ${patientAppointmentBean.appointmentDate}</span><br/>
+						    <span>Date : <fmt:formatDate pattern="MM/dd/yyyy hh:mm a" value="${patientAppointmentBean.appointmentDate}" />
+						        </span><br/>
 						    <span>Resource : ${patientAppointmentBean.resourceName }(${patientAppointmentBean.specificationName })</span>
 						</div>	
 						<hr/>	 
 					</c:forEach>
+               </div>
+               <hr/>
+               <div class="row m0">
+                    
+					<aui:select name="appointmentClinic" label="Clinic">
+						<c:forEach items="${clinicList }" var="clinicMaster">
+							<option value="${clinicMaster.clinicId }"   <c:if test='${ clinicMaster.clinicId eq patientBean.patientClinic.clinicId }'>selected</c:if>>${clinicMaster.clinicName }</option>
+						</c:forEach>	
+					</aui:select>
                </div>
                <div class="row m0">
 					<aui:select name="resource" label="Resource">
@@ -108,7 +121,7 @@
 						<option value="${resourceMaster.resourceId }">${resourceMaster.resourceName }</option>
 					</c:forEach>	
 				</select>
-		       &nbsp;<button name="Search" id="filterSearch" type="button" >Search</button>		
+		       &nbsp;	<button name="Search" id="filterSearch" type="button" >Search</button>		
 	</div>
 	<br/>
 	<div id='calendar'></div>
@@ -128,15 +141,28 @@ AUI().use('aui-io-request', 'aui-autocomplete' ,'aui-base','aui-form-validator',
 	});
 });	
 </aui:script>
+<script>
+var dd ="";
+</script>
 
 <script>
 			$(document).ready(function() {
+				var appountmentDate=$('#<portlet:namespace/>appointmentDate');
+				var filterDate=$('#filterDate');
 				
+				var date_input=$('#<portlet:namespace/>appointmentDate');
+				dd = date_input;
 				var options={
 				        format: 'mm/dd/yyyy',
 				        todayHighlight: true,
 				        autoclose: true,
 				      };
+				appountmentDate.datepicker(options);
+				filterDate.datepicker(options);
+				
+				$('#'+'<portlet:namespace/>'+'appointmentTime').timepicker({
+					showInputs: false
+				});
 				
 				var patientId= '${ patientBean.patientId}';
 				var clinicId= '${ patientBean.patientClinic.clinicId}';
@@ -179,6 +205,9 @@ AUI().use('aui-io-request', 'aui-autocomplete' ,'aui-base','aui-form-validator',
 						      //$('#calendar').fullCalendar( 'refetchEvents' );
 							  $('#calendar').fullCalendar('addEventSource', jsonArray);         
 				              $('#calendar').fullCalendar('rerenderEvents' );
+				              if($("#filterDate").val().length>0){
+				              	$('#calendar').fullCalendar( 'gotoDate', $("#filterDate").val());
+				              }
 						   }
 						});
 				});

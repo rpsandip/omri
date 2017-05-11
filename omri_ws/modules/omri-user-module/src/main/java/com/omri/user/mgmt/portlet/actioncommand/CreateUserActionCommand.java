@@ -203,6 +203,7 @@ public class CreateUserActionCommand extends BaseMVCActionCommand{
 		boolean isLawyerAdmin = ParamUtil.getBoolean(actionRequest, "isLawyerAdmin");
 		boolean isDoctorAdmin = ParamUtil.getBoolean(actionRequest, "isDoctorAdmin");
 		boolean isAdmin = ParamUtil.getBoolean(actionRequest, "isAdmin");
+		boolean isClinicAdmin = ParamUtil.getBoolean(actionRequest, "isClinicAdmin");
 		String entity = ParamUtil.getString(actionRequest, "entity");
 		if(isLawyerAdmin || (isAdmin && entity.equals("lawyer"))){
 			try {
@@ -224,12 +225,10 @@ public class CreateUserActionCommand extends BaseMVCActionCommand{
 			}
 			
 		}
-		if(isAdmin){
-			if(entity.equals("clinic")){
+		if(isClinicAdmin || (isAdmin && entity.equals("clinic"))){
 				long clinicId = ParamUtil.getLong(actionRequest, "clinic");
 				Clinic clinic = ClinicLocalServiceUtil.getClinic(clinicId);
 				return clinic.getClinicorganizationId();
-			}
 		}
 		return organizationId;
 	}
@@ -239,9 +238,10 @@ public class CreateUserActionCommand extends BaseMVCActionCommand{
 		ThemeDisplay themeDisplay = (ThemeDisplay) actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		boolean isLawyerAdmin = ParamUtil.getBoolean(actionRequest, "isLawyerAdmin");
 		boolean isDoctorAdmin = ParamUtil.getBoolean(actionRequest, "isDoctorAdmin");
+		boolean isClinicAdmin = ParamUtil.getBoolean(actionRequest, "isClinicAdmin");
 		boolean isAdmin = ParamUtil.getBoolean(actionRequest, "isAdmin");
 		
-		if(isLawyerAdmin || isDoctorAdmin){
+		if(isLawyerAdmin || isDoctorAdmin || isClinicAdmin){
 			return themeDisplay.getUserId();
 		}
 		if(isAdmin){

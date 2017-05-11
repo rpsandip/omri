@@ -8,6 +8,7 @@ import com.omri.service.common.model.Clinic;
 import com.omri.service.common.model.Patient;
 import com.omri.service.common.model.Resource;
 import com.omri.service.common.model.Specification;
+import com.omri.service.common.util.AppointmentStatus;
 
 public class AppointmentBean {
 		private long appointmentId;
@@ -60,7 +61,7 @@ public class AppointmentBean {
 				this.createdDate = appointment.getCreateDate();
 				this.modifiedBy = appointment.getModifiedBy();
 				this.modifiedDate = appointment.getModifiedDate();
-				this.appointmentStatus = 
+				this.appointmentStatus = AppointmentStatus.findByValue(appointment.getStatus()).getLabel();
 			}
 		}
 		

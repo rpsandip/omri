@@ -100,8 +100,9 @@ public class AddClinicActionCommand extends BaseMVCActionCommand{
 			long resourceId = ParamUtil.getLong(actionRequest, "resource" + i);
 			long specificationId = ParamUtil.getLong(actionRequest, "specification" + i);
 			int operationTime = ParamUtil.getInteger(actionRequest, "operationTime"+i);
+			int price = ParamUtil.getInteger(actionRequest, "price"+i);
 			if(resourceId!=0 && specificationId!=0 && operationTime!=0){
-				Clinic_ResourceLocalServiceUtil.addClinic_Resource(clinic.getClinicId(), resourceId, specificationId, operationTime);
+				Clinic_ResourceLocalServiceUtil.addClinic_Resource(clinic.getClinicId(), resourceId, specificationId, operationTime, price);
 			}
 		}
 	}

@@ -121,6 +121,7 @@
 					<aui:input name="isAdmin" type="hidden" value="${isAdmin }"/>
 					<aui:input name="isLawyerAdmin" type="hidden" value="${isLawyerAdmin }"/>
 					<aui:input name="isDoctorAdmin" type="hidden" value="${isDoctorAdmin }"/>
+					<aui:input name="isClinicAdmin" type="hidden" value="${isClinicAdmin }"/>
 				</aui:form>
             </div>
         </div>
