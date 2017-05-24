@@ -51,13 +51,15 @@ import com.omri.service.common.util.AppointmentStatus;
 @ProviderType
 public class AppointmentLocalServiceImpl extends AppointmentLocalServiceBaseImpl {
 	private static Log _log = LogFactoryUtil.getLog(AppointmentLocalServiceImpl.class);
-	public Appointment createAppointment(long patientId, long clinicId, long resourceId, long specificationId, long doctorId,Date appointmentDate,int appointmentProcessTime,int noOfOccurance,
+	public Appointment createAppointment(long patientId, long clinicId, long resourceId, long specificationId, long procedureId,double price,long doctorId,Date appointmentDate,int appointmentProcessTime,int noOfOccurance,
 			long createdBy, long modifiedBy, Date createdDate, Date modifiedDate){
 		Appointment appointment = AppointmentLocalServiceUtil.createAppointment(CounterLocalServiceUtil.increment());
 		appointment.setPatientId(patientId);
 		appointment.setClinicId(clinicId);
 		appointment.setResourceId(resourceId);
 		appointment.setSpecificationId(specificationId);
+		appointment.setProcedureId(procedureId);
+		appointment.setPrice(price);
 		appointment.setDoctorId(doctorId);
 		appointment.setAppointmetDate(appointmentDate);
 		appointment.setAppointmetProcessTime(appointmentProcessTime);
@@ -140,6 +142,12 @@ public class AppointmentLocalServiceImpl extends AppointmentLocalServiceBaseImpl
 		}
 		patientAppointmentList = AppointmentLocalServiceUtil.dynamicQuery(dynamicQuery);
 		return patientAppointmentList;
+	}
+	
+	public List<Appointment> getAppointmentByProcedureId(long procedureId){
+		List<Appointment> appointmentList = new ArrayList<Appointment>();
+		appointmentList = appointmentPersistence.findByProcedureId(procedureId);
+		return appointmentList;
 	}
 	
 	public List<Appointment> getClinicAppointmentListBystatus(long clinicId, int status){

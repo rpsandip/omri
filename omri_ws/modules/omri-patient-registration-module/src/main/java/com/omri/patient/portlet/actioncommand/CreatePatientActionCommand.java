@@ -48,10 +48,12 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.omri.patient.portlet.resourcecommand.GetClinicResourcesResourceCommand;
 import com.omri.service.common.model.Patient;
 import com.omri.service.common.model.Patient_Clinic;
+import com.omri.service.common.model.Procedure;
 import com.omri.service.common.service.Clinic_ResourceLocalServiceUtil;
 import com.omri.service.common.service.PatientLocalServiceUtil;
 import com.omri.service.common.service.Patient_ClinicLocalServiceUtil;
 import com.omri.service.common.service.Patient_Clinic_ResourceLocalServiceUtil;
+import com.omri.service.common.service.ProcedureLocalServiceUtil;
 import com.omri.service.common.util.PatientStatus;
 
 @Component(
@@ -71,8 +73,9 @@ public class CreatePatientActionCommand extends BaseMVCActionCommand{
 			Patient patient = addPatient(actionRequest);
 			if(Validator.isNotNull(patient)){
 				Patient_Clinic patientClinic = addPatientClinic(actionRequest, patient);
+				Procedure procedure = addPatientProcedure(patientClinic);
 				if(Validator.isNotNull(patientClinic)){
-					addPatientClinicResource(actionRequest, patientClinic);
+					addPatientClinicResource(actionRequest, patientClinic, procedure.getProcedureId());
 				}
 			    addPatientDocuments(actionRequest,patient);
 				SessionMessages.add(actionRequest, "patient.added.successfully");
@@ -123,7 +126,10 @@ public class CreatePatientActionCommand extends BaseMVCActionCommand{
 		return patientClinic;
 	}
 	
-	private void addPatientClinicResource(ActionRequest actionRequest,Patient_Clinic patientClinic){
+	private Procedure addPatientProcedure(Patient_Clinic patientClinic){
+		return ProcedureLocalServiceUtil.addPatientProcedure(patientClinic.getPatientId(), patientClinic.getClinicId());
+	}
+	private void addPatientClinicResource(ActionRequest actionRequest,Patient_Clinic patientClinic, long procedureId){
 		ThemeDisplay themeDisplay = (ThemeDisplay) actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		int resourcesCounts =  ParamUtil.getInteger(actionRequest, "resourceCount");
 		resourcesCounts++;
@@ -133,7 +139,7 @@ public class CreatePatientActionCommand extends BaseMVCActionCommand{
 			int occurance = ParamUtil.getInteger(actionRequest, "occurance"+i);
 			if(resourceId!=0 && specificationId!=0){
 				try{
-				Patient_Clinic_ResourceLocalServiceUtil.addPatientClinicResource(patientClinic.getPatientId(), resourceId, patientClinic.getClinicId(), specificationId, occurance, themeDisplay.getUserId(), themeDisplay.getUserId() );
+				Patient_Clinic_ResourceLocalServiceUtil.addPatientClinicResource(patientClinic.getPatientId(), resourceId, patientClinic.getClinicId(), specificationId, procedureId,occurance, themeDisplay.getUserId(), themeDisplay.getUserId() );
 				}catch(Exception e){
 					LOG.error(e.getMessage(), e);
 				}

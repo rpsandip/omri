@@ -135,6 +135,12 @@ public class SubmitAppointmentReportActionCommand extends BaseMVCActionCommand{
 			} catch (SystemException e1) {
 				_log.error(e1.getMessage(), e1);
 			}	
+		}else{
+			try {
+				patientFolder =	DLAppServiceUtil.getFolder(themeDisplay.getCompanyGroupId(), parentFolderId, folderName);
+			} catch (PortalException e1) {
+				_log.error(e1.getMessage(), e1);
+			}
 		}
 		return patientFolder;
 	}

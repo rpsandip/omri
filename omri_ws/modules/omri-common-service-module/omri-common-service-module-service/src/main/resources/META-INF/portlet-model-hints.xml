@@ -12,6 +12,8 @@
 		<field name="appointmetDate" type="Date" />
 		<field name="appointmetProcessTime" type="int" />
 		<field name="status" type="int" />
+		<field name="price" type="double" />
+		<field name="procedureId" type="long" />
 		<field name="technologistComment" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
@@ -105,6 +107,7 @@
 		<field name="resourceId" type="long" />
 		<field name="specificationId" type="long" />
 		<field name="noOfOccurance" type="int" />
+		<field name="procedureId" type="long" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="createdBy" type="long" />
@@ -138,6 +141,12 @@
 		<field name="allergicToIdodineDetail" type="String" />
 		<field name="bloodthinnersDetail" type="String" />
 		<field name="detailWithTimeStamp" type="String" />
+	</model>
+	<model name="com.omri.service.common.model.Procedure">
+		<field name="procedureId" type="long" />
+		<field name="clinicId" type="long" />
+		<field name="patientId" type="long" />
+		<field name="isComplete" type="boolean" />
 	</model>
 	<model name="com.omri.service.common.model.Resource">
 		<field name="resourceId" type="long" />

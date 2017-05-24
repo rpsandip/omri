@@ -9,6 +9,8 @@ create table OMRI_Appointment (
 	appointmetDate DATE null,
 	appointmetProcessTime INTEGER,
 	status INTEGER,
+	price DOUBLE,
+	procedureId LONG,
 	technologistComment VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
@@ -140,11 +142,19 @@ create table OMRI_Patient_Clinic_Resource (
 	resourceId LONG not null,
 	specificationId LONG not null,
 	noOfOccurance INTEGER,
+	procedureId LONG,
 	createDate DATE null,
 	modifiedDate DATE null,
 	createdBy LONG,
 	modifiedBy LONG,
 	primary key (clinicId, patientId, resourceId, specificationId)
+);
+
+create table OMRI_Procedure (
+	procedureId LONG not null primary key,
+	clinicId LONG,
+	patientId LONG,
+	isComplete BOOLEAN
 );
 
 create table OMRI_Resource (

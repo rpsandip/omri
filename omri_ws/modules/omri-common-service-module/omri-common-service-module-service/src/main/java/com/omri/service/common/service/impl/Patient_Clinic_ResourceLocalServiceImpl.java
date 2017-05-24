@@ -50,13 +50,14 @@ public class Patient_Clinic_ResourceLocalServiceImpl
 	 * Never reference this class directly. Always use {@link com.omri.service.common.service.Patient_Clinic_ResourceLocalServiceUtil} to access the patient_ clinic_ resource local service.
 	 */
 	
-	public Patient_Clinic_Resource addPatientClinicResource(long patientId, long resourceId, long clinicId, long specificationId,int noOfOccurnace, long createdBy, long modifiedBy){
+	public Patient_Clinic_Resource addPatientClinicResource(long patientId, long resourceId, long clinicId, long specificationId, long procedureId,int noOfOccurnace, long createdBy, long modifiedBy){
 		Patient_Clinic_ResourcePK patientClinicResourcePK = new Patient_Clinic_ResourcePK();
 		patientClinicResourcePK.setClinicId(clinicId);
 		patientClinicResourcePK.setPatientId(patientId);
 		patientClinicResourcePK.setResourceId(resourceId);
 		patientClinicResourcePK.setSpecificationId(specificationId);
 		Patient_Clinic_Resource patientClinicResource = Patient_Clinic_ResourceLocalServiceUtil.createPatient_Clinic_Resource(patientClinicResourcePK);
+		patientClinicResource.setProcedureId(procedureId);
 		patientClinicResource.setNoOfOccurance(noOfOccurnace);
 		patientClinicResource.setCreatedBy(createdBy);
 		patientClinicResource.setModifiedBy(modifiedBy);

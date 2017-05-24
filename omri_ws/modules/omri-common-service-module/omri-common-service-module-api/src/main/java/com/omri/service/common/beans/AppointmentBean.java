@@ -2,6 +2,12 @@ package com.omri.service.common.beans;
 
 import java.util.Date;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.omri.service.common.model.Appointment;
 import com.omri.service.common.model.Clinic;
@@ -11,6 +17,9 @@ import com.omri.service.common.model.Specification;
 import com.omri.service.common.util.AppointmentStatus;
 
 public class AppointmentBean {
+	
+		Log _log = LogFactoryUtil.getLog(AppointmentBean.class.getName());
+			
 		private long appointmentId;
 		private long patientId;
 		private String patientFirtName;
@@ -21,6 +30,8 @@ public class AppointmentBean {
 		private long doctorId;
 		private String doctorName;
 		private long resourceId;
+		private long procedureId;
+		private double price;
 		private String appointmentStatus;
 		private String resourceName;
 		private long specificationId;
@@ -44,6 +55,15 @@ public class AppointmentBean {
 				this.clinicName = clinic.getClinicName();
 			}
 			this.doctorId = appointment.getDoctorId();
+			try {
+				User doctor = UserLocalServiceUtil.getUser(doctorId);
+				this.doctorName = doctor.getFirstName()+StringPool.SPACE+doctor.getLastName();
+			} catch (PortalException e) {
+				_log.error(e.getMessage(), e);
+			}
+			
+			
+			
 			if(Validator.isNotNull(resource)){
 				this.resourceId = resource.getResourceId();
 				this.resourceName = resource.getResourceName();
@@ -58,6 +78,8 @@ public class AppointmentBean {
 				this.appointmentDate = appointment.getAppointmetDate();
 				this.appointmetProcessTime = appointment.getAppointmetProcessTime();
 				this.createdBy = appointment.getCreatedBy();
+				this.procedureId = appointment.getProcedureId();
+				this.price = appointment.getPrice();
 				this.createdDate = appointment.getCreateDate();
 				this.modifiedBy = appointment.getModifiedBy();
 				this.modifiedDate = appointment.getModifiedDate();
@@ -188,6 +210,19 @@ public class AppointmentBean {
 		public void setAppointmentStatus(String appointmentStatus) {
 			this.appointmentStatus = appointmentStatus;
 		}
+		public long getProcedureId() {
+			return procedureId;
+		}
+		public void setProcedureId(long procedureId) {
+			this.procedureId = procedureId;
+		}
+		public double getPrice() {
+			return price;
+		}
+		public void setPrice(double price) {
+			this.price = price;
+		}
+		
 		
 
  }

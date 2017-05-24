@@ -10,6 +10,7 @@
 	<import class="com.omri.service.common.model.Patient_Clinic" />
 	<import class="com.omri.service.common.model.Patient_Clinic_Resource" />
 	<import class="com.omri.service.common.model.PatientDetail" />
+	<import class="com.omri.service.common.model.Procedure" />
 	<import class="com.omri.service.common.model.Resource" />
 	<import class="com.omri.service.common.model.Resource_Specification" />
 	<import class="com.omri.service.common.model.Specification" />
@@ -26,6 +27,8 @@
 		<property name="appointmetDate" type="org.hibernate.type.TimestampType" />
 		<property name="appointmetProcessTime" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="price" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="procedureId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="technologistComment" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
@@ -131,6 +134,7 @@
 			<key-property name="specificationId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		</composite-id>
 		<property name="noOfOccurance" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="procedureId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="createdBy" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -166,6 +170,14 @@
 		<property name="allergicToIdodineDetail" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="bloodthinnersDetail" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="detailWithTimeStamp" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="com.omri.service.common.model.impl.ProcedureImpl" table="OMRI_Procedure">
+		<id name="procedureId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="clinicId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="patientId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="isComplete" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class name="com.omri.service.common.model.impl.ResourceImpl" table="OMRI_Resource">
 		<id name="resourceId" type="long">

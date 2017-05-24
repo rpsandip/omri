@@ -3,6 +3,7 @@ package com.example.portlet.actioncommand;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.portlet.ActionRequest;
@@ -25,16 +26,19 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.omri.service.common.exception.NoSuchClinic_ResourceException;
+import com.omri.service.common.exception.NoSuchProcedureException;
 import com.omri.service.common.model.Appointment;
 import com.omri.service.common.model.Clinic_Resource;
 import com.omri.service.common.model.Patient_Clinic;
 import com.omri.service.common.model.Patient_Clinic_Resource;
+import com.omri.service.common.model.Procedure;
 import com.omri.service.common.model.Resource;
 import com.omri.service.common.model.Specification;
 import com.omri.service.common.service.AppointmentLocalServiceUtil;
 import com.omri.service.common.service.Clinic_ResourceLocalServiceUtil;
 import com.omri.service.common.service.Patient_ClinicLocalServiceUtil;
 import com.omri.service.common.service.Patient_Clinic_ResourceLocalServiceUtil;
+import com.omri.service.common.service.ProcedureLocalServiceUtil;
 import com.omri.service.common.service.ResourceLocalServiceUtil;
 import com.omri.service.common.service.SpecificationLocalServiceUtil;
 import com.omri.service.common.service.persistence.Clinic_ResourcePK;
@@ -97,6 +101,7 @@ public class CreateAppointmentActionCommand  extends BaseMVCActionCommand{
 					patientClinic = Patient_ClinicLocalServiceUtil.getPatient_Clinic(patientClinicPK);
 				}
 				
+				Procedure procedure = ProcedureLocalServiceUtil.getProcedureByPatientIdAndClinicId(patientClinic.getPatientId(), patientClinic.getClinicId());
 				//Patient_Clinic_ResourcePK patientClinicResourcePK = new Patient_Clinic_ResourcePK(clinicId, patientId, resource.getResourceId(), specification.getSpecificationId());
 				//Patient_Clinic_Resource patientClinicResource = Patient_Clinic_ResourceLocalServiceUtil.getPatient_Clinic_Resource(patientClinicResourcePK);
 				Clinic_ResourcePK clinicResourcePK = new Clinic_ResourcePK(clinicId, specification.getSpecificationId(), resource.getResourceId());
@@ -104,10 +109,10 @@ public class CreateAppointmentActionCommand  extends BaseMVCActionCommand{
 				//appointmentProcessTime = patientClinicResource.getNoOfOccurance()*clinicResource.getOperationTime();
 				appointmentProcessTime = clinicResource.getOperationTime();
 				Appointment appointment = AppointmentLocalServiceUtil.createAppointment(patientId, clinicId,
-						resource.getResourceId(), specification.getSpecificationId(), patientClinic.getDoctorId(),
+						resource.getResourceId(), specification.getSpecificationId(), procedure.getProcedureId(), clinicResource.getPrice(),patientClinic.getDoctorId(),
 						appointmentDate, appointmentProcessTime, Integer.parseInt(resourceSpeficiationArray[2]), themeDisplay.getUserId(), themeDisplay.getUserId(),
 						new Date(), new Date());
-				
+				checkProcedureComplete(appointment);
 				actionResponse.setRenderParameter("mvcRenderCommandName", "/schedule_patient");
 				actionResponse.setRenderParameter("patientId", String.valueOf(patientClinic.getPatientId()));
 				actionResponse.setRenderParameter("clinicId",  String.valueOf(patientClinic.getClinicId()));
@@ -135,6 +140,27 @@ public class CreateAppointmentActionCommand  extends BaseMVCActionCommand{
 				}
 				_log.error(e.getMessage(), e);
 			}
+	}
+	
+	private boolean checkProcedureComplete(Appointment appointment){
+		boolean isProcedureComplete=false;
+		int totalResourceCount=0;
+		List<Patient_Clinic_Resource> patientClinicResourceList = Patient_Clinic_ResourceLocalServiceUtil.getPatientClinicByPatiendIdAndClinicId(appointment.getPatientId(), appointment.getClinicId());
+		for(Patient_Clinic_Resource patientClinicResource : patientClinicResourceList){
+			totalResourceCount = totalResourceCount + patientClinicResource.getNoOfOccurance();
+		}
+		try {
+			Procedure procedure = ProcedureLocalServiceUtil.getProcedureByPatientIdAndClinicId(appointment.getPatientId(), appointment.getClinicId());
+			List<Appointment> procedureAppointment = AppointmentLocalServiceUtil.getAppointmentByProcedureId(procedure.getProcedureId());
+			int remainingAppointmentToCreate = totalResourceCount=procedureAppointment.size();
+			if(remainingAppointmentToCreate==0){
+				procedure.setIsComplete(true);
+				ProcedureLocalServiceUtil.updateProcedure(procedure);
+			}
+		} catch (NoSuchProcedureException e) {
+			_log.error(e.getMessage(), e);
+		}
+		return isProcedureComplete;
 	}
 
 }
