@@ -74,24 +74,32 @@
                         </div>
 						<div class="col-sm-6">
                          	<div class="input-group">
-                            	<aui:input name="zip" label="user.zip" cssClass="form-control">
+                            	<aui:input name="zipcode" label="user.zip" cssClass="form-control">
 									<aui:validator name="required" />
 								</aui:input>
                             </div>
                         </div>
+                        <div class="col-sm-6">
+                         	<div class="input-group">
+                            	<aui:input name="fax" label="user.fax" cssClass="form-control">
+									<aui:validator name="required" />
+								</aui:input>
+                            </div>
+                        </div>
+                        
 					</div>
 					<div class="row m0">
 						<div class="col-sm-12">
 	                         <div class="input-group">
 	                         	<aui:select name="entity" cssClass="patient_select">
 									<aui:option value="">Select Entity</aui:option>
-								    <c:if test="${hasClinicRole or isAdmin}">
+								    <c:if test="${hasClinicRole or isAdmin or isSystemAdmin}">
 								  	  <aui:option value="clinic">Clinic</aui:option>
 								    </c:if>
-								 	<c:if test="${hasLawyerRole or isAdmin}">
+								 	<c:if test="${hasLawyerRole or isAdmin or isSystemAdmin}">
 								    	<aui:option value="lawyer">Lawyer</aui:option>
 								    </c:if>
-								    <c:if test="${hasDoctorRole or isAdmin}">	
+								    <c:if test="${hasDoctorRole or isAdmin or isSystemAdmin}">	
 								    	<aui:option value="doctor">Doctor</aui:option>
 								    </c:if>
 								</aui:select>

@@ -59,12 +59,14 @@
                 	 <%=patientStatus %>
                 </td>
                 <td>
-                	<portlet:renderURL var="shcedulePatientURL" windowState="<%=WindowState.MAXIMIZED.toString() %>">
-       					 <portlet:param name="mvcRenderCommandName" value="/schedule_patient" />
-       					 <portlet:param name="patientId" value="${patientBean.patientId }" />
-       					 <portlet:param name="clinicId" value="${patientBean.patientClinic.clinicId }" />
-					</portlet:renderURL>
-					<a href="${shcedulePatientURL }">Shedule Patient</a>
+                   <c:if test="${hasSchedulePatientPermission }">
+	                	<portlet:renderURL var="shcedulePatientURL" windowState="<%=WindowState.MAXIMIZED.toString() %>">
+	       					 <portlet:param name="mvcRenderCommandName" value="/schedule_patient" />
+	       					 <portlet:param name="patientId" value="${patientBean.patientId }" />
+	       					 <portlet:param name="clinicId" value="${patientBean.patientClinic.clinicId }" />
+						</portlet:renderURL>
+						<a href="${shcedulePatientURL }">Schedule Patient</a>
+					</c:if>
                 </td>
             </tr>
            </c:forEach>

@@ -15,6 +15,7 @@ import com.omri.service.common.model.Clinic_Resource;
 import com.omri.service.common.model.Resource;
 import com.omri.service.common.service.ClinicLocalServiceUtil;
 import com.omri.service.common.service.Clinic_ResourceLocalServiceUtil;
+import com.omri.service.common.service.OMRICommonLocalServiceUtil;
 import com.omri.service.common.service.ResourceLocalServiceUtil;
 
 import java.io.IOException;
@@ -52,7 +53,7 @@ public class OmriClinicResourceModulemvcportletPortlet extends MVCPortlet {
 				Role clinicRegularRole = RoleLocalServiceUtil.getRole(themdeDisplay.getCompanyId(), "Clinic");
 				boolean hasClinicRole = RoleLocalServiceUtil.hasUserRole(themdeDisplay.getUserId(), clinicRegularRole.getRoleId());
 				if(hasClinicRole){
-					long clinicOrganizationId = getUserAssociatedLawFirmOrgId(themdeDisplay.getUserId()); 
+					long clinicOrganizationId = OMRICommonLocalServiceUtil.getUserAssociatedOrgId(themdeDisplay.getUserId()); 
 					Clinic clinic = ClinicLocalServiceUtil.getClinicByClinicOrganizationId(clinicOrganizationId);
 					List<Clinic_Resource> clinicResourceList= Clinic_ResourceLocalServiceUtil.getClinicResources(clinic.getClinicId());
 					for(Clinic_Resource clinicResource : clinicResourceList){
@@ -70,16 +71,5 @@ public class OmriClinicResourceModulemvcportletPortlet extends MVCPortlet {
 			renderRequest.setAttribute("resourceList", resourceList);
 			include(viewTemplate, renderRequest, renderResponse);
 		}
-		
-		 public long getUserAssociatedLawFirmOrgId(long userId) {
-			    List<Organization> userOrganizationList =
-			        OrganizationLocalServiceUtil.getUserOrganizations(userId);
-			    if (userOrganizationList.size() > 0) {
-			      _log.debug(" UserId ->" + userId + " LawFirmOrgId ->"
-			          + userOrganizationList.get(0).getOrganizationId());
-			      return userOrganizationList.get(0).getOrganizationId();
-			    }
-			    _log.debug(" UserId ->" + userId + " LawFirmOrgId ->" + 0l);
-			    return 0l;
-			  }
+
 }

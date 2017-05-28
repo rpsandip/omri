@@ -6,6 +6,7 @@
 	<import class="com.omri.service.common.model.Clinic" />
 	<import class="com.omri.service.common.model.Clinic_Resource" />
 	<import class="com.omri.service.common.model.CustomUser" />
+	<import class="com.omri.service.common.model.OMRICommon" />
 	<import class="com.omri.service.common.model.Patient" />
 	<import class="com.omri.service.common.model.Patient_Clinic" />
 	<import class="com.omri.service.common.model.Patient_Clinic_Resource" />

@@ -26,8 +26,10 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.omri.patient.portlet.OmriPatientRegistrationModulemvcportletPortlet;
+import com.omri.service.common.exception.NoSuchClinicException;
 import com.omri.service.common.model.Clinic;
 import com.omri.service.common.service.ClinicLocalServiceUtil;
+import com.omri.service.common.service.OMRICommonLocalServiceUtil;
 
 @Component(
 	    property = {
@@ -41,7 +43,28 @@ public class CreatePatientRenderCommand implements MVCRenderCommand{
 	@Override
 	public String render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException {
 	ThemeDisplay themeDisplay = (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
-	List<Clinic> clinicList = ClinicLocalServiceUtil.getClinics(-1,-1);
+	List<Clinic> clinicList = new ArrayList<Clinic>();
+	long organizationId = OMRICommonLocalServiceUtil.getUserAssociatedOrgId(themeDisplay.getUserId());
+	long orgGroupId = OMRICommonLocalServiceUtil.getOrganizationGroupId(organizationId);
+	Role clinicAdminRole;
+	boolean isClinicAdmin = false;
+	try {
+		clinicAdminRole = RoleLocalServiceUtil.getRole(themeDisplay.getCompanyId(), "Clinic Admin");
+		isClinicAdmin = UserGroupRoleLocalServiceUtil.hasUserGroupRole(themeDisplay.getUserId(), orgGroupId, clinicAdminRole.getRoleId());
+	} catch (PortalException e) {
+		_log.error(e.getMessage(), e);
+	}
+	
+	if(isClinicAdmin){
+		try {
+			Clinic clinic = ClinicLocalServiceUtil.getClinicByClinicOrganizationId(organizationId);
+			clinicList.add(clinic);
+		} catch (NoSuchClinicException e) {
+			_log.error(e.getMessage(), e);
+		}
+	}else{
+		clinicList = ClinicLocalServiceUtil.getClinics(-1,-1);
+	}
 	renderRequest.setAttribute("clinicList", clinicList);
 	
 	try{

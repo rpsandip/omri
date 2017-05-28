@@ -22,6 +22,7 @@ import com.omri.service.common.model.Resource;
 import com.omri.service.common.model.Specification;
 import com.omri.service.common.service.AppointmentLocalServiceUtil;
 import com.omri.service.common.service.ClinicLocalServiceUtil;
+import com.omri.service.common.service.OMRICommonLocalServiceUtil;
 import com.omri.service.common.service.PatientDetailLocalServiceUtil;
 import com.omri.service.common.service.PatientLocalServiceUtil;
 import com.omri.service.common.service.ProcedureLocalServiceUtil;
@@ -60,8 +61,8 @@ public class OmriBillingModulemvcportletPortlet extends MVCPortlet {
 	public void doView(RenderRequest renderRequest, RenderResponse renderResponse)
 			throws IOException, PortletException {
 		ThemeDisplay themdeDisplay = (ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
-		long clinicOrganizationId = getUserAssociatedLawFirmOrgId(themdeDisplay.getUserId()); 
-		long clinicOrganizationgroupId = getUserAssociatedLawFirmGroupId(themdeDisplay.getUserId());
+		long clinicOrganizationId = OMRICommonLocalServiceUtil.getUserAssociatedOrgId(themdeDisplay.getUserId()); 
+		long clinicOrganizationgroupId = OMRICommonLocalServiceUtil.getOrganizationGroupId(clinicOrganizationId);
 		List<ProcedureBean> procedureBeanList = new ArrayList<ProcedureBean>();
 		try {
 			Clinic clinic = ClinicLocalServiceUtil.getClinicByClinicOrganizationId(clinicOrganizationId);
@@ -107,28 +108,5 @@ public class OmriBillingModulemvcportletPortlet extends MVCPortlet {
 		}
 		return procedureBeanList;
 	}
-	
-	 public long getUserAssociatedLawFirmOrgId(long userId) {
-		    List<Organization> userOrganizationList =
-		        OrganizationLocalServiceUtil.getUserOrganizations(userId);
-		    if (userOrganizationList.size() > 0) {
-		      _log.debug(" UserId ->" + userId + " LawFirmOrgId ->"
-		          + userOrganizationList.get(0).getOrganizationId());
-		      return userOrganizationList.get(0).getOrganizationId();
-		    }
-		    _log.debug(" UserId ->" + userId + " LawFirmOrgId ->" + 0l);
-		    return 0l;
-	 }
-	 
-	 public long getUserAssociatedLawFirmGroupId(long userId) {
-		    List<Organization> userOrganizationList =
-		        OrganizationLocalServiceUtil.getUserOrganizations(userId);
-		    if (userOrganizationList.size() > 0) {
-		      _log.debug(" UserId ->" + userId + " LawFirmOrgId ->"
-		          + userOrganizationList.get(0).getGroupId());
-		      return userOrganizationList.get(0).getGroupId();
-		    }
-		    _log.debug(" UserId ->" + userId + " LawFirmOrgId ->" + 0l);
-		    return 0l;
-	 }
+
 }

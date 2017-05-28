@@ -1,4 +1,5 @@
 <%@ include file="/init.jsp" %>
+<%@ page import="com.omri.service.common.model.Appointment" %>
 <script>
     define._amd = define.amd;
     define.amd = false;
@@ -41,21 +42,27 @@
                 <td><fmt:formatDate pattern="MM/dd/yyyy hh:mm a" value="${appointmentBean.appointmentDate}" /></td>
                 <td>${appointmentBean.appointmentStatus }</td>
                 <td>
-                	<portlet:renderURL var="addPatientMoreDetailURL">
-       					 <portlet:param name="mvcRenderCommandName" value="/add_patient_more_detail" />
-       					 <portlet:param name="patientId" value="${appointmentBean.patientId }" />
-       					 <portlet:param name="clinicId" value="${appointmentBean.clinicId }" />
-					</portlet:renderURL>
-					<a href="${addPatientMoreDetailURL }">Add Patient More detail</a><br/>
+                    <c:if test="${hasPatientAddMoreDetailPermission }">
+	                	<portlet:renderURL var="addPatientMoreDetailURL">
+	       					 <portlet:param name="mvcRenderCommandName" value="/add_patient_more_detail" />
+	       					 <portlet:param name="patientId" value="${appointmentBean.patientId }" />
+	       					 <portlet:param name="clinicId" value="${appointmentBean.clinicId }" />
+						</portlet:renderURL>
+						<a href="${addPatientMoreDetailURL }">Add Patient More detail</a><br/>
+					</c:if>
+					<c:if test="${hasSheduleForTechnologistPermission }">
 					<portlet:actionURL var="scheduleForTechnologistURL" name="/scheduleForTechnologist">
 						<portlet:param name="appointmentId" value="${appointmentBean.appointmentId }" />
 					</portlet:actionURL>
 					<a href="${scheduleForTechnologistURL }">Schedule For Technologist</a><br/>
+					</c:if>
+					<c:if test="${hasSubmitTechnologistReportPermission }">
 					<portlet:renderURL var="scheduleForTechnologistURL">
 						<portlet:param name="appointmentId" value="${appointmentBean.appointmentId }" />
 						<portlet:param name="mvcRenderCommandName" value="/sublitTechnologistReport" />
 					</portlet:renderURL>
 					<a href="${scheduleForTechnologistURL }">Submit Technologist Report</a>
+					</c:if>
                 </td>
             </tr>
            </c:forEach>

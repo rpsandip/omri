@@ -53,6 +53,10 @@
 		</finder>
 	</entity>
 	
+	
+	<entity name="OMRICommon" local-service="true"  remote-service="false">
+	</entity>
+	
 	<entity name="Clinic" local-service="true"  remote-service="false">
 
 		<!-- PK fields -->

@@ -8,8 +8,10 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
@@ -18,6 +20,7 @@ import com.omri.service.common.beans.PatientBean;
 import com.omri.service.common.beans.PatientResourceBean;
 import com.omri.service.common.exception.NoSuchClinicException;
 import com.omri.service.common.exception.NoSuchPatient_ClinicException;
+import com.omri.service.common.model.Appointment;
 import com.omri.service.common.model.Clinic;
 import com.omri.service.common.model.Patient;
 import com.omri.service.common.model.Patient_Clinic;
@@ -25,6 +28,7 @@ import com.omri.service.common.model.Patient_Clinic_Resource;
 import com.omri.service.common.model.Resource;
 import com.omri.service.common.model.Specification;
 import com.omri.service.common.service.ClinicLocalServiceUtil;
+import com.omri.service.common.service.OMRICommonLocalServiceUtil;
 import com.omri.service.common.service.PatientLocalServiceUtil;
 import com.omri.service.common.service.Patient_ClinicLocalServiceUtil;
 import com.omri.service.common.service.Patient_Clinic_ResourceLocalServiceUtil;
@@ -66,36 +70,34 @@ public class OmriDashboardModulemvcportletPortlet extends MVCPortlet {
 			ThemeDisplay themdeDisplay = (ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 			List<PatientBean> patientBeanList = new ArrayList<PatientBean>();
 			
-			// For Clinic
-			try {
-				Role clinicRegularRole = RoleLocalServiceUtil.getRole(themdeDisplay.getCompanyId(), "Clinic");
-				boolean hasClinicRole = RoleLocalServiceUtil.hasUserRole(themdeDisplay.getUserId(), clinicRegularRole.getRoleId());
-				if(hasClinicRole){
-					patientBeanList = getClinicPatientList(renderRequest, renderResponse);
-				}
-			} catch (PortalException e) {
-				_log.error(e.getMessage(), e);
-			}	
-			// For Lawyer
-			try {
-				Role LawyerRegularRole = RoleLocalServiceUtil.getRole(themdeDisplay.getCompanyId(), "Lawyer");
-				boolean hasLawyerRole = RoleLocalServiceUtil.hasUserRole(themdeDisplay.getUserId(), LawyerRegularRole.getRoleId());
-				if(hasLawyerRole){
-					patientBeanList = getLawyerOrDoctorPatientList(renderRequest, renderResponse);
-				}
-			} catch (PortalException e) {
+			long userAssociatedOrgId = OMRICommonLocalServiceUtil.getUserAssociatedOrgId(themdeDisplay.getUserId());
+			long userAssociatedOrgGroupId = OMRICommonLocalServiceUtil.getOrganizationGroupId(userAssociatedOrgId);
+			
+			boolean isClinicAdmin = false;
+			boolean isDoctorAdmin = false;
+			boolean isLawyerAdmin = false;
+			
+			try{
+			Role clinicAdminRole = RoleLocalServiceUtil.getRole(themdeDisplay.getCompanyId(), "Clinic Admin");
+			Role doctorAdminRole = RoleLocalServiceUtil.getRole(themdeDisplay.getCompanyId(), "Doctor Admin");
+			Role lawyerAdminRole = RoleLocalServiceUtil.getRole(themdeDisplay.getCompanyId(), "Lawyer Admin");
+			
+			isClinicAdmin = UserGroupRoleLocalServiceUtil.hasUserGroupRole(themdeDisplay.getUserId(), userAssociatedOrgGroupId, clinicAdminRole.getRoleId());
+			isDoctorAdmin = UserGroupRoleLocalServiceUtil.hasUserGroupRole(themdeDisplay.getUserId(), userAssociatedOrgGroupId, doctorAdminRole.getRoleId());
+			isLawyerAdmin = UserGroupRoleLocalServiceUtil.hasUserGroupRole(themdeDisplay.getUserId(), userAssociatedOrgGroupId, lawyerAdminRole.getRoleId());
+		
+			}catch(PortalException e){
 				_log.error(e.getMessage(), e);
 			}
 			
-			// For Doctor
-			try {
-				Role doctorRegularRole = RoleLocalServiceUtil.getRole(themdeDisplay.getCompanyId(), "Doctor");
-				boolean hasDoctorRole = RoleLocalServiceUtil.hasUserRole(themdeDisplay.getUserId(), doctorRegularRole.getRoleId());
-				if(hasDoctorRole){
-					patientBeanList = getLawyerOrDoctorPatientList(renderRequest, renderResponse);
-				}
-			} catch (PortalException e) {
-				_log.error(e.getMessage(), e);
+			if(isClinicAdmin){
+				// For Clinic Admin
+				patientBeanList = getClinicAdminPatientList(renderRequest, renderResponse);
+			}
+			
+			// For Lawyer or Doctor admin
+			if(isDoctorAdmin | isLawyerAdmin){
+				patientBeanList = getLawyerOrDoctorPatientList(renderRequest, renderResponse);
 			}
 			
 			// For Admin
@@ -120,15 +122,18 @@ public class OmriDashboardModulemvcportletPortlet extends MVCPortlet {
 				_log.error(e.getMessage(), e);
 			}
 			
+			PermissionChecker permissionChecker = themdeDisplay.getPermissionChecker();
+			boolean hasSchedulePatientPermission =  permissionChecker.hasPermission(userAssociatedOrgGroupId, Patient.class.getName(), Patient.class.getName(), "SCHEDULE_PATIENT");
+			renderRequest.setAttribute("hasSchedulePatientPermission", hasSchedulePatientPermission);
 			
 			renderRequest.setAttribute("patientBeanList", patientBeanList);
 			include(viewTemplate, renderRequest, renderResponse);
 		}
 		
-		private List<PatientBean> getClinicPatientList(RenderRequest renderRequest, RenderResponse renderResponse){
+		private List<PatientBean> getClinicAdminPatientList(RenderRequest renderRequest, RenderResponse renderResponse){
 			ThemeDisplay themdeDisplay = (ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 			List<PatientBean> patientBeanList = new ArrayList<PatientBean>();
-			long clinicOrganizationId = getUserAssociatedLawFirmOrgId(themdeDisplay.getUserId()); 
+			long clinicOrganizationId =  OMRICommonLocalServiceUtil.getUserAssociatedOrgId(themdeDisplay.getUserId()); 
 			if(clinicOrganizationId!=0){
 				try {
 					Clinic clinic = ClinicLocalServiceUtil.getClinicByClinicOrganizationId(clinicOrganizationId);
@@ -197,7 +202,6 @@ public class OmriDashboardModulemvcportletPortlet extends MVCPortlet {
 				}
 				
 			}
-			
 			return patientBeanList;
 		}
 		
@@ -236,16 +240,4 @@ public class OmriDashboardModulemvcportletPortlet extends MVCPortlet {
 			}
 			return patientBeanList;
 		}
-		
-		 public long getUserAssociatedLawFirmOrgId(long userId) {
-		    List<Organization> userOrganizationList =
-		        OrganizationLocalServiceUtil.getUserOrganizations(userId);
-		    if (userOrganizationList.size() > 0) {
-		      _log.debug(" UserId ->" + userId + " LawFirmOrgId ->"
-		          + userOrganizationList.get(0).getOrganizationId());
-		      return userOrganizationList.get(0).getOrganizationId();
-		    }
-		    _log.debug(" UserId ->" + userId + " LawFirmOrgId ->" + 0l);
-		    return 0l;
-		  }
-}
+   }

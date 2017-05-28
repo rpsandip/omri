@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.taglib.util.ParamAncestorTag;
 import com.omri.service.common.model.Clinic;
 import com.omri.service.common.model.CustomUser;
 import com.omri.service.common.service.ClinicLocalServiceUtil;
@@ -73,7 +74,7 @@ public class CreateUserActionCommand extends BaseMVCActionCommand{
 			long organizationGroupId = getOrganizationGroupIdFromOrgId(organizationId);
 			
 			//Associate Liferay default site to user
-			Group omriDefaultSite = GroupLocalServiceUtil.getFriendlyURLGroup(themeDisplay.getCompanyId(),"/guest");
+			Group omriDefaultSite = GroupLocalServiceUtil.getFriendlyURLGroup(themeDisplay.getCompanyId(),"/omri");
 			GroupLocalServiceUtil.addUserGroup(user.getUserId(), omriDefaultSite.getGroupId());
 			
 			
@@ -84,14 +85,13 @@ public class CreateUserActionCommand extends BaseMVCActionCommand{
 			long[] roleIds = ParamUtil.getLongValues(actionRequest, "role");
 			if(organizationIds.length>0){
 				 UserGroupRoleLocalServiceUtil.addUserGroupRoles(user.getUserId(), organizationGroupId, roleIds);
+				 UserGroupRoleLocalServiceUtil.addUserGroupRoles(user.getUserId(), omriDefaultSite.getGroupId(), roleIds);
 			}
 			
 			// Set Clinic admin if selected entity is clinic
 			String entity = ParamUtil.getString(actionRequest, "entity");
 			if(entity.equals("clinic")){
 				Role clinicAdminRole = RoleLocalServiceUtil.getRole(themeDisplay.getCompanyId(), "Clinic Admin");
-				Role clinicRegularRole = RoleLocalServiceUtil.getRole(themeDisplay.getCompanyId(), "Clinic");
-				RoleLocalServiceUtil.addUserRole(user.getUserId(), clinicRegularRole.getRoleId());
 				for(int i=0;i<roleIds.length;i++){
 					if(roleIds[i]==clinicAdminRole.getRoleId()){
 						// creating clinic admin user so check selected clinci has any clinic admin or not. If not then
@@ -108,11 +108,9 @@ public class CreateUserActionCommand extends BaseMVCActionCommand{
 					}
 				}
 			}else if(entity.equals("lawyer")){
-				Role LawyerRegularRole = RoleLocalServiceUtil.getRole(themeDisplay.getCompanyId(), "Lawyer");
-				RoleLocalServiceUtil.addUserRole(user.getUserId(), LawyerRegularRole.getRoleId());
+				
 			}else if(entity.equals("doctor")){
-				Role doctorRegularRole = RoleLocalServiceUtil.getRole(themeDisplay.getCompanyId(), "Doctor");
-				RoleLocalServiceUtil.addUserRole(user.getUserId(), doctorRegularRole.getRoleId());
+				
 			}
 			
 			SessionMessages.add(actionRequest, "user.added.successfully");
@@ -171,12 +169,13 @@ public class CreateUserActionCommand extends BaseMVCActionCommand{
 			long organizationId, long organizationGroupId){
 		
 		ThemeDisplay themeDisplay = (ThemeDisplay) actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
-		String phone = ParamUtil.getString(actionRequest, "phone");
+		String phone = ParamUtil.getString(actionRequest, "phoneNumber");
 		String addressLine1 = ParamUtil.getString(actionRequest, "addressLine1");
 		String addressLine2 = ParamUtil.getString(actionRequest, "addressLine1");
 		String city = ParamUtil.getString(actionRequest, "city");
 		String state = ParamUtil.getString(actionRequest, "state");
 		String zipcode = ParamUtil.getString(actionRequest, "zipcode");
+		String fax = ParamUtil.getString(actionRequest, "fax");
 		
 		CustomUser customUser = CustomUserLocalServiceUtil.createCustomUser(CounterLocalServiceUtil.increment());
 		customUser.setLrUserId(user.getUserId());
@@ -189,6 +188,7 @@ public class CreateUserActionCommand extends BaseMVCActionCommand{
 		customUser.setState(state);
 		customUser.setZipcode(zipcode);
 		customUser.setPhone(phone);
+		customUser.setFax(fax);
 		customUser.setCreateDate(new Date());
 		customUser.setModifiedDate(new Date());
 		customUser.setModifiedBy(themeDisplay.getUserId());

@@ -152,7 +152,7 @@ public class CreateAppointmentActionCommand  extends BaseMVCActionCommand{
 		try {
 			Procedure procedure = ProcedureLocalServiceUtil.getProcedureByPatientIdAndClinicId(appointment.getPatientId(), appointment.getClinicId());
 			List<Appointment> procedureAppointment = AppointmentLocalServiceUtil.getAppointmentByProcedureId(procedure.getProcedureId());
-			int remainingAppointmentToCreate = totalResourceCount=procedureAppointment.size();
+			int remainingAppointmentToCreate = totalResourceCount-procedureAppointment.size();
 			if(remainingAppointmentToCreate==0){
 				procedure.setIsComplete(true);
 				ProcedureLocalServiceUtil.updateProcedure(procedure);

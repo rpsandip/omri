@@ -6,6 +6,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
@@ -20,6 +21,7 @@ import com.omri.service.common.model.Resource;
 import com.omri.service.common.model.Specification;
 import com.omri.service.common.service.AppointmentLocalServiceUtil;
 import com.omri.service.common.service.ClinicLocalServiceUtil;
+import com.omri.service.common.service.OMRICommonLocalServiceUtil;
 import com.omri.service.common.service.PatientLocalServiceUtil;
 import com.omri.service.common.service.ResourceLocalServiceUtil;
 import com.omri.service.common.service.SpecificationLocalServiceUtil;
@@ -42,7 +44,7 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"com.liferay.portlet.display-category=category.sample",
-		"com.liferay.portlet.instanceable=true",
+		"com.liferay.portlet.instanceable=false",
 		"javax.portlet.display-name=omri-appointment-portlet Portlet",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
@@ -58,8 +60,18 @@ public class OmriAppointmentPortletmvcportletPortlet extends MVCPortlet {
 	public void doView(RenderRequest renderRequest, RenderResponse renderResponse)
 			throws IOException, PortletException {
 		ThemeDisplay themdeDisplay = (ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
-		long clinicOrganizationId = getUserAssociatedLawFirmOrgId(themdeDisplay.getUserId()); 
-		long clinicOrganizationgroupId = getUserAssociatedLawFirmGroupId(themdeDisplay.getUserId());
+		long clinicOrganizationId = OMRICommonLocalServiceUtil.getUserAssociatedOrgId(themdeDisplay.getUserId());
+		long clinicOrganizationgroupId =  OMRICommonLocalServiceUtil.getOrganizationGroupId(clinicOrganizationId);
+		PermissionChecker permuissionChecker = themdeDisplay.getPermissionChecker();
+		boolean hasPatientAddMoreDetailPermission =  permuissionChecker.hasPermission(clinicOrganizationgroupId, Appointment.class.getName(), Appointment.class.getName(), "ADD_PATIENT_MORE_DETAIL");
+		boolean hasSheduleForTechnologistPermission =  permuissionChecker.hasPermission(clinicOrganizationgroupId, Appointment.class.getName(), Appointment.class.getName(), "SCHEDULE_FOR_TECHNOLOGIST");
+		boolean hasSubmitTechnologistReportPermission =  permuissionChecker.hasPermission(clinicOrganizationgroupId, Appointment.class.getName(), Appointment.class.getName(), "SUBMIT_TECHNOLOGIST_REPORT");
+		
+		renderRequest.setAttribute("hasPatientAddMoreDetailPermission", hasPatientAddMoreDetailPermission);
+		renderRequest.setAttribute("hasSheduleForTechnologistPermission", hasSheduleForTechnologistPermission);
+		renderRequest.setAttribute("hasSubmitTechnologistReportPermission", hasSubmitTechnologistReportPermission);
+		
+		
 		List<AppointmentBean> appointmentBeanList = new ArrayList<AppointmentBean>();
 		boolean isTechonlogist=false;
 		try {
@@ -124,27 +136,4 @@ public class OmriAppointmentPortletmvcportletPortlet extends MVCPortlet {
 		}
 		return appointmentBeanList;
 	}
-	 public long getUserAssociatedLawFirmOrgId(long userId) {
-		    List<Organization> userOrganizationList =
-		        OrganizationLocalServiceUtil.getUserOrganizations(userId);
-		    if (userOrganizationList.size() > 0) {
-		      _log.debug(" UserId ->" + userId + " LawFirmOrgId ->"
-		          + userOrganizationList.get(0).getOrganizationId());
-		      return userOrganizationList.get(0).getOrganizationId();
-		    }
-		    _log.debug(" UserId ->" + userId + " LawFirmOrgId ->" + 0l);
-		    return 0l;
-	 }
-	 
-	 public long getUserAssociatedLawFirmGroupId(long userId) {
-		    List<Organization> userOrganizationList =
-		        OrganizationLocalServiceUtil.getUserOrganizations(userId);
-		    if (userOrganizationList.size() > 0) {
-		      _log.debug(" UserId ->" + userId + " LawFirmOrgId ->"
-		          + userOrganizationList.get(0).getGroupId());
-		      return userOrganizationList.get(0).getGroupId();
-		    }
-		    _log.debug(" UserId ->" + userId + " LawFirmOrgId ->" + 0l);
-		    return 0l;
-	 }
 }

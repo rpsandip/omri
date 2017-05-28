@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.omri.service.common.service.OMRICommonLocalServiceUtil;
 import com.omri.user.mgmt.portlet.util.UserModuleContstant;
 
 @Component(
@@ -48,46 +49,49 @@ public class CreateUserRenderCommand implements MVCRenderCommand{
 			boolean isDoctorAdmin=false;
 			boolean isLawyerAdmin=false;
 			boolean isClinicAdmin=false;
+			boolean isSystemAdmin=false;
 			
 			boolean hasLawyerRole = false;
 			boolean hasDoctorRole = false;
 			boolean hasClinicRole = false;
 			
-			long clinicGroupId = getUserAssociatedLawFirmGroupId(themeDisplay.getUserId());
+			long userAssociatedOrgId = OMRICommonLocalServiceUtil.getUserAssociatedOrgId(themeDisplay.getUserId());
+			long userAssociatedOrgGroupId = OMRICommonLocalServiceUtil.getOrganizationGroupId(userAssociatedOrgId);
 			
 			Role administratorRole = getRoleWithName(themeDisplay.getCompanyId(), RoleConstants.ADMINISTRATOR);
-			Role lawyerRole = getRoleWithName(themeDisplay.getCompanyId(), "Lawyer");
-			Role doctorRole = getRoleWithName(themeDisplay.getCompanyId(), "Doctor");
-			Role clinicRole = getRoleWithName(themeDisplay.getCompanyId(), "Clinic");
-			
-			
 			try {
 				Role lawyerAdminRole = RoleLocalServiceUtil.getRole(themeDisplay.getCompanyId(), "Lawyer Admin");
 				Role doctorAdminRole = RoleLocalServiceUtil.getRole(themeDisplay.getCompanyId(), "Doctor Admin");
 				Role clinicAdminRole = RoleLocalServiceUtil.getRole(themeDisplay.getCompanyId(), "Clinic Admin");
+				Role systemAdminRole = RoleLocalServiceUtil.getRole(themeDisplay.getCompanyId(), "System Admin");
 				Organization doctorOrg = OrganizationLocalServiceUtil.getOrganization(themeDisplay.getCompanyId(), "Doctor");
 				Organization lawyerOrg = OrganizationLocalServiceUtil.getOrganization(themeDisplay.getCompanyId(), "Lawyer");
 				isLawyerAdmin = UserGroupRoleLocalServiceUtil.hasUserGroupRole(themeDisplay.getUserId(), lawyerOrg.getGroupId(), lawyerAdminRole.getRoleId());
 				isDoctorAdmin =UserGroupRoleLocalServiceUtil.hasUserGroupRole(themeDisplay.getUserId(), doctorOrg.getGroupId(),doctorAdminRole.getRoleId());
-				if(clinicGroupId>0){
-					isClinicAdmin =UserGroupRoleLocalServiceUtil.hasUserGroupRole(themeDisplay.getUserId(), clinicGroupId,clinicAdminRole.getRoleId());
+				if(userAssociatedOrgGroupId>0){
+					isClinicAdmin =UserGroupRoleLocalServiceUtil.hasUserGroupRole(themeDisplay.getUserId(), userAssociatedOrgGroupId,clinicAdminRole.getRoleId());
 				}
-			} catch (PortalException e) {
-				_log.error(e.getMessage(), e);
-			}
 			
 			if(Validator.isNotNull(administratorRole)){
 				isAdmin = RoleLocalServiceUtil.hasUserRole(themeDisplay.getUserId(),administratorRole.getRoleId());
 			}
-			if(Validator.isNotNull(lawyerRole)){
-				hasLawyerRole = RoleLocalServiceUtil.hasUserRole(themeDisplay.getUserId(),lawyerRole.getRoleId());
+			if(Validator.isNotNull(lawyerAdminRole)){
+				hasLawyerRole = UserGroupRoleLocalServiceUtil.hasUserGroupRole(themeDisplay.getUserId(), userAssociatedOrgGroupId, lawyerAdminRole.getRoleId());
 			}
-			if(Validator.isNotNull(doctorRole)){
-				hasDoctorRole = RoleLocalServiceUtil.hasUserRole(themeDisplay.getUserId(),doctorRole.getRoleId());
+			if(Validator.isNotNull(doctorAdminRole)){
+				hasDoctorRole = UserGroupRoleLocalServiceUtil.hasUserGroupRole(themeDisplay.getUserId(), userAssociatedOrgGroupId, doctorAdminRole.getRoleId());
 			}
-			if(Validator.isNotNull(clinicRole)){
-				hasClinicRole = RoleLocalServiceUtil.hasUserRole(themeDisplay.getUserId(),clinicRole.getRoleId());
+			if(Validator.isNotNull(clinicAdminRole)){
+				hasClinicRole = UserGroupRoleLocalServiceUtil.hasUserGroupRole(themeDisplay.getUserId(), userAssociatedOrgGroupId, clinicAdminRole.getRoleId());
 			}
+			if(Validator.isNotNull(systemAdminRole)){
+				isSystemAdmin = RoleLocalServiceUtil.hasUserRole(themeDisplay.getUserId(), systemAdminRole.getRoleId());
+			}
+			
+			} catch (PortalException e) {
+				_log.error(e.getMessage(), e);
+			}
+			
 			renderRequest.setAttribute("isAdmin", isAdmin);
 			renderRequest.setAttribute("hasLawyerRole", hasLawyerRole);
 			renderRequest.setAttribute("hasDoctorRole", hasDoctorRole);
@@ -96,20 +100,9 @@ public class CreateUserRenderCommand implements MVCRenderCommand{
 			renderRequest.setAttribute("isLawyerAdmin", isLawyerAdmin);
 			renderRequest.setAttribute("isDoctorAdmin", isDoctorAdmin);
 			renderRequest.setAttribute("isClinicAdmin", isClinicAdmin);
+			renderRequest.setAttribute("isSystemAdmin", isSystemAdmin);
 		return roles;
 	}
-	
-	 public long getUserAssociatedLawFirmGroupId(long userId) {
-		    List<Organization> userOrganizationList =
-		        OrganizationLocalServiceUtil.getUserOrganizations(userId);
-		    if (userOrganizationList.size() > 0) {
-		      _log.debug(" UserId ->" + userId + " LawFirmOrgId ->"
-		          + userOrganizationList.get(0).getGroupId());
-		      return userOrganizationList.get(0).getGroupId();
-		    }
-		    _log.debug(" UserId ->" + userId + " LawFirmOrgId ->" + 0l);
-		    return 0l;
-	 }
 
 	private Role getRoleWithName(long companyId, String roleName){
 		Role role = null;
