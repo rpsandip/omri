@@ -38,7 +38,9 @@
         jQuery.noConflict();
         (function($) {
             $(function() {  
-            	 $('#resources').DataTable();
+            	 $('#resources').DataTable({
+            		 "order": []
+            	 });
             	//console.log("example->" + $("#example").val());
             });
         })(jQuery);

@@ -102,7 +102,7 @@ public class AppointmentLocalServiceImpl extends AppointmentLocalServiceBaseImpl
 		patientAppointmentList = appointmentPersistence.findByappointmentDate(date);
 		return patientAppointmentList;
 	}
-	
+
 	public List<Appointment> getAppointmentByPatientIdClinicIdResourceIdSpecificationId(long patientId, long clinicId, long resourceId,
 			long specificationId){
 		List<Appointment> patientAppointmentList = new ArrayList<Appointment>();
@@ -153,6 +153,12 @@ public class AppointmentLocalServiceImpl extends AppointmentLocalServiceBaseImpl
 	public List<Appointment> getClinicAppointmentListBystatus(long clinicId, int status){
 		List<Appointment> appointmentList = new ArrayList<Appointment>();
 		appointmentList = appointmentPersistence.findByStatusAndClinicId(clinicId, status);
+		return appointmentList;
+	}
+	
+	public List<Appointment> getAppointmentsByStatusAndPatientId(long patientId, int status){
+		List<Appointment> appointmentList = new ArrayList<Appointment>();
+		appointmentList = appointmentPersistence.findByStatusAndPatientId(patientId, status);
 		return appointmentList;
 	}
 	

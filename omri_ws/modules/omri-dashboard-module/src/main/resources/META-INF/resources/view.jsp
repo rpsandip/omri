@@ -3,18 +3,6 @@
 <%@page import="javax.portlet.WindowState"%>
 
 <%@ include file="/init.jsp" %>
-<script>
-    define._amd = define.amd;
-    define.amd = false;
-</script>
-
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css" type="text/css">
-</link>
-<script>
-    define.amd = define._amd;
-</script>
 <liferay-ui:success key="patient.added.successfully" message="patient.added.successfully"/>
 <br/><br/>
 <div>
@@ -78,7 +66,9 @@
         jQuery.noConflict();
         (function($) {
             $(function() {  
-            	 $('#example').DataTable();
+            	 $('#example').DataTable({
+            		 "order": []
+            	 });
             	//console.log("example->" + $("#example").val());
             });
         })(jQuery);

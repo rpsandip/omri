@@ -21,6 +21,8 @@ import java.util.Date;
 import java.util.List;
 
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.omri.service.common.model.Patient;
 import com.omri.service.common.service.PatientLocalServiceUtil;
 import com.omri.service.common.service.base.PatientLocalServiceBaseImpl;
@@ -77,4 +79,13 @@ public class PatientLocalServiceImpl extends PatientLocalServiceBaseImpl {
 		return patientList;
 	}
 
+	public List<Patient> getCreatedPatientListWithDate(long createdByUserId, Date startDate, Date endDate){
+		List<Patient> patientList = new ArrayList<Patient>();
+		DynamicQuery dynamicQuery = PatientLocalServiceUtil.dynamicQuery();
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("createdBy", createdByUserId));
+		dynamicQuery.add(RestrictionsFactoryUtil.between("createDate",startDate, endDate));
+		patientList = PatientLocalServiceUtil.dynamicQuery(dynamicQuery);
+		return patientList;
+	}
+	
 }

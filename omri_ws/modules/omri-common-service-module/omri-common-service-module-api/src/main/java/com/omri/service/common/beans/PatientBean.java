@@ -25,7 +25,10 @@ public class PatientBean{
 	private long modifiedBy;
 	private Patient_Clinic patientClinic;
 	private List<PatientResourceBean> resourceBeanList;
-	
+	private List<DocumentBean> lopDocuments;
+	private List<DocumentBean> invoiceDocuments;
+	private List<DocumentBean> orderDocuments;
+	private List<DocumentBean> procedureDocumnts;
 	public PatientBean(){
 		
 	}
@@ -152,5 +155,37 @@ public class PatientBean{
 
 	public void setPatientClinic(Patient_Clinic patientClinic) {
 		this.patientClinic = patientClinic;
+	}
+
+	public List<DocumentBean> getLopDocuments() {
+		return lopDocuments;
+	}
+
+	public void setLopDocuments(List<DocumentBean> lopDocuments) {
+		this.lopDocuments = lopDocuments;
+	}
+
+	public List<DocumentBean> getInvoiceDocuments() {
+		return invoiceDocuments;
+	}
+
+	public void setInvoiceDocuments(List<DocumentBean> invoiceDocuments) {
+		this.invoiceDocuments = invoiceDocuments;
+	}
+
+	public List<DocumentBean> getOrderDocuments() {
+		return orderDocuments;
+	}
+
+	public void setOrderDocuments(List<DocumentBean> orderDocuments) {
+		this.orderDocuments = orderDocuments;
+	}
+
+	public List<DocumentBean> getProcedureDocumnts() {
+		return procedureDocumnts;
+	}
+
+	public void setProcedureDocumnts(List<DocumentBean> procedureDocumnts) {
+		this.procedureDocumnts = procedureDocumnts;
 	}
 }

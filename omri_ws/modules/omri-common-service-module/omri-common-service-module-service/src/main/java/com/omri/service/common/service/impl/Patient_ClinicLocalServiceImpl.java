@@ -16,11 +16,15 @@ package com.omri.service.common.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.omri.service.common.exception.NoSuchPatient_ClinicException;
 import com.omri.service.common.model.Patient_Clinic;
+import com.omri.service.common.service.PatientLocalServiceUtil;
 import com.omri.service.common.service.Patient_ClinicLocalServiceUtil;
 import com.omri.service.common.service.base.Patient_ClinicLocalServiceBaseImpl;
 import com.omri.service.common.service.persistence.Patient_ClinicPK;
@@ -76,5 +80,14 @@ public class Patient_ClinicLocalServiceImpl
 	
 	public Patient_Clinic getPatientClinicByPatientId(long patientId) throws NoSuchPatient_ClinicException{
 		return patient_ClinicPersistence.findByPatientId(patientId);
+	}
+	
+	public List<Patient_Clinic> getPatientsOfClinic(long clinicId, Date startDate, Date endDate){
+		List<Patient_Clinic> patientLClinicList = new ArrayList<Patient_Clinic>();
+		DynamicQuery dynamicQuery = Patient_ClinicLocalServiceUtil.dynamicQuery();
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("primaryKey.clinicId", clinicId));
+		dynamicQuery.add(RestrictionsFactoryUtil.between("createDate",startDate, endDate));
+		patientLClinicList = Patient_ClinicLocalServiceUtil.dynamicQuery(dynamicQuery);
+		return patientLClinicList;
 	}
 }

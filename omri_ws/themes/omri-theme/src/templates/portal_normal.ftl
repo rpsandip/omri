@@ -15,13 +15,17 @@
     <meta name="msapplication-TileImage" content="favicon/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
     
-    <!--Bootstrap and Other Vendors-->
+    <!--Bootstrap and Other Vendors--> 
     <link rel="stylesheet" href="${css_folder}/bootstrap.min.css">
     <link rel="stylesheet" href="${css_folder}/bootstrap-theme.min.css">
     <link rel="stylesheet" href="${css_folder}/font-awesome.min.css">
     <link rel="stylesheet" href="${css_folder}/fullcalendar.min.css">
     <link rel="stylesheet" href="${css_folder}/bootstrap-datepicker3.css">
     <link rel="stylesheet" href="${css_folder}/bootstrap-timepicker.css">
+    <link rel="stylesheet" href="${css_folder}/dataTables.bootstrap.min.css">
+    <!--<link rel="stylesheet" href="${css_folder}/autoFill.bootstrap.min.css">-->
+    
+    
     
     <!--Fonts-->
     <link href='http://fonts.googleapis.com/css?family=Karla:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
@@ -33,6 +37,7 @@
     <link rel="stylesheet" href="${css_folder}/checkbox.css">
     <link rel="stylesheet" href="${css_folder}/Multiselect/bootstrap-multiselect.css">
 	<link rel="stylesheet" href="${css_folder}/default/style.css">
+	<link rel="stylesheet" href="${css_folder}/jquery.dataTables.min.css">
     <link rel="stylesheet" href="${css_folder}/custom.css">
     <script>
 	    define._amd = define.amd;
@@ -47,6 +52,9 @@
     <script src="${javascript_folder}/bootstrap-datepicker.js"></script>
     <script src="${javascript_folder}/bootstrap-timepicker.min.js"></script>
     <script src="${javascript_folder}/fullcalendar.min.js"></script>
+	<script src="${javascript_folder}/jquery.dataTables.min.js"></script>
+    <!--<script src="${javascript_folder}/dataTables.autoFill.min.js"></script>-->
+    <!--<script src="${javascript_folder}/autoFill.bootstrap.min.js"></script>-->
     
     
     

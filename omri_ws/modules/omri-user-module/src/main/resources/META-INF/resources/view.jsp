@@ -44,7 +44,9 @@
         jQuery.noConflict();
         (function($) {
             $(function() {  
-            	 $('#users').DataTable();
+            	 $('#users').DataTable({
+            		 "order": []
+            	 });
             	//console.log("example->" + $("#example").val());
             });
         })(jQuery);

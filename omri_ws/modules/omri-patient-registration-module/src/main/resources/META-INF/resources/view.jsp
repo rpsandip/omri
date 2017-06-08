@@ -55,7 +55,9 @@
         jQuery.noConflict();
         (function($) {
             $(function() {  
-            	 $('#example').DataTable();
+            	 $('#example').DataTable({
+            		 "order": []
+            	 });
             	//console.log("example->" + $("#example").val());
             });
         })(jQuery);
