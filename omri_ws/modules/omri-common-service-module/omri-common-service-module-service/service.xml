@@ -190,6 +190,9 @@
 		<column name="doctorId" type="long" />
 		<column name="doctorName" type="String" />
 		<column name="doctorPhoneNo" type="String" />
+		<column name="lawyerId" type="long" />
+		<column name="lawyerName" type="String" />
+		<column name="lawyerPhoneNo" type="String" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 		<column name="createdBy" type="long" />

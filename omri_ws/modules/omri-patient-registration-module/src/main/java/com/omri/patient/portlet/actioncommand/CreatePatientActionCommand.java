@@ -112,13 +112,18 @@ public class CreatePatientActionCommand extends BaseMVCActionCommand{
 	private Patient_Clinic addPatientClinic(ActionRequest actionRequest, Patient patient){
 		ThemeDisplay themeDisplay = (ThemeDisplay) actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		long  doctorId = ParamUtil.getLong(actionRequest, "doctor");
+		long  lawyerId = ParamUtil.getLong(actionRequest, "lawyer");
 		long clinicId = ParamUtil.getLong(actionRequest, "clinic");
 		int status = ParamUtil.getInteger(actionRequest, "patient_status");
 		Patient_Clinic patientClinic = null;
 		try {
-			User user = UserLocalServiceUtil.getUser(doctorId);
+			User doctorUser = UserLocalServiceUtil.getUser(doctorId);
 			String doctorPhonNo = ParamUtil.getString(actionRequest, "doctorPhone");
-			patientClinic = Patient_ClinicLocalServiceUtil.addPatient_Clinic(patient.getPatientId(), clinicId, doctorId, user.getFirstName()+StringPool.BLANK+user.getLastName(), doctorPhonNo, status,themeDisplay.getUserId(), themeDisplay.getUserId());
+			
+			User lawyerUser = UserLocalServiceUtil.getUser(lawyerId);
+			String lawyerPhoneNo = ParamUtil.getString(actionRequest, "lawyerPhone");
+			
+			patientClinic = Patient_ClinicLocalServiceUtil.addPatient_Clinic(patient.getPatientId(), clinicId, doctorId, doctorUser.getFirstName()+StringPool.BLANK+doctorUser.getLastName(), doctorPhonNo, lawyerId, lawyerUser.getFirstName()+StringPool.BLANK+lawyerUser.getLastName(), lawyerPhoneNo,status,themeDisplay.getUserId(), themeDisplay.getUserId());
 			
 		} catch (PortalException e) {
 			LOG.error(e.getMessage(), e);

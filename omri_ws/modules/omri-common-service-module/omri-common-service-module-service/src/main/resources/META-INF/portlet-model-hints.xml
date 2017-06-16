@@ -96,6 +96,9 @@
 		<field name="doctorId" type="long" />
 		<field name="doctorName" type="String" />
 		<field name="doctorPhoneNo" type="String" />
+		<field name="lawyerId" type="long" />
+		<field name="lawyerName" type="String" />
+		<field name="lawyerPhoneNo" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="createdBy" type="long" />

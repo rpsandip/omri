@@ -53,7 +53,7 @@ public class Patient_ClinicLocalServiceImpl
 	 */
 	
 	public Patient_Clinic addPatient_Clinic(long patientId, long clinicId, long doctorId, String doctorName
-			, String doctorPhoneNo, int patientStatus,long createdBy, long modifiedBy){
+			, String doctorPhoneNo,long lawyerId, String lawyerName, String lawyerPhoneNo, int patientStatus,long createdBy, long modifiedBy){
 		Patient_ClinicPK patientClinicPK = new Patient_ClinicPK();
 		patientClinicPK.setClinicId(clinicId);
 		patientClinicPK.setPatientId(patientId);
@@ -62,6 +62,9 @@ public class Patient_ClinicLocalServiceImpl
 		patientClinic.setDoctorId(doctorId);
 		patientClinic.setPatient_status(patientStatus);
 		patientClinic.setDoctorPhoneNo(doctorPhoneNo);
+		patientClinic.setLawyerId(lawyerId);
+		patientClinic.setLawyerName(lawyerName);
+		patientClinic.setLawyerPhoneNo(lawyerPhoneNo);
 		patientClinic.setCreatedBy(createdBy);
 		patientClinic.setModifiedBy(modifiedBy);
 		patientClinic.setCreateDate(new Date());

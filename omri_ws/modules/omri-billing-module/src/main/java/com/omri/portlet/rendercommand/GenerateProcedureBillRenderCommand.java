@@ -68,6 +68,8 @@ public class GenerateProcedureBillRenderCommand implements MVCRenderCommand{
 				AppointmentBean appointmentBean = new AppointmentBean(appointment, patient, clinic, resource, specification);
 				procedureAppointmentBeanList.add(appointmentBean);
 				totalPrice = totalPrice+appointmentBean.getPrice();
+				renderRequest.setAttribute("clinic", clinic);
+				renderRequest.setAttribute("patient", patient);
 				}catch(PortalException e){
 					_log.error(e.getMessage(), e);
 				}

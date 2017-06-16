@@ -1,16 +1,36 @@
-<nav class="navbar navbar-default navbar-static-top navbar2" id="navigation" role="navigation">
+<header class="main-header">
+<nav class="navbar navbar-static-top" id="navigation" role="navigation">
 	<div class="container">
 		 <div class="navbar-header clearfix">
             <a class="navbar-brand" href="${site_default_url}">
-              <img src="${images_folder}/logo/3.png" alt="" class="" style="background:#fff">
+              <b>OMRI</b>
             </a>
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+	            <i class="fa fa-bars"></i>
+	        </button>
         </div>
-		 <div class="collapse navbar-collapse" id="main_nav">
-			<ul aria-label="<@liferay.language key="site-pages"/>" class="nav navbar-nav navbar-right" role="menubar">
+		 <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+			<ul aria-label="<@liferay.language key="site-pages"/>" class="nav navbar-nav" role="menubar">
 				<#list nav_items as nav_item>
-		                <li class="dropdown">
-		                    <a class="link-3" aria-labelledby="layout_${nav_item.getLayoutId()}" href="${nav_item.getURL()}" role="menuitem">
-		                    	<span><@liferay_theme["layout-icon"] layout=nav_item_layout /> ${nav_item.getName()}</span>
+		                <li>
+		                    <a aria-labelledby="layout_${nav_item.getLayoutId()}" href="${nav_item.getURL()}" role="menuitem">
+		                    	<#if nav_item.getLayout().getFriendlyURL()=='/dashboard'>
+		                    		<i class="fa fa-fw fa-home"></i> ${nav_item.getName()}
+		                    	<#elseif nav_item.getLayout().getFriendlyURL()=='/users'>
+		                    		<i class="fa fa-fw fa-user"></i> ${nav_item.getName()}
+		                    	<#elseif nav_item.getLayout().getFriendlyURL()=='/clinic'>
+		                    		<i class="fa fa-fw fa-hospital-o"></i> ${nav_item.getName()}
+		                    	<#elseif nav_item.getLayout().getFriendlyURL()=='/patient'>
+		                    		<i class="fa fa-fw fa-wheelchair"></i> ${nav_item.getName()}
+		                    	<#elseif nav_item.getLayout().getFriendlyURL()=='/patient-list'>
+		                    		<i class="fa fa-fw fa-wheelchair"></i> ${nav_item.getName()}
+			                    <#elseif nav_item.getLayout().getFriendlyURL()=='/appointment'>
+		                    		<i class="fa fa-fw fa-fax"></i> ${nav_item.getName()}
+		                    	<#elseif nav_item.getLayout().getFriendlyURL()=='/billing'>
+		                    		<i class="fa fa-fw fa-file-text"></i> ${nav_item.getName()}			
+		                    	<#else>
+		                    		${nav_item.getName()}	
+		                    	</#if>
 		                    </a>
 		                </li>
 				</#list>
@@ -23,3 +43,4 @@
 	    </div>
 	</div>
 </nav>
+ </header>

@@ -67,19 +67,10 @@ public class CreatePatientRenderCommand implements MVCRenderCommand{
 	}
 	renderRequest.setAttribute("clinicList", clinicList);
 	
-	try{
-	Role doctorAdminRole = getRoleWithName(themeDisplay.getCompanyId(), "Doctor Admin");
-	Organization doctorOrg = OrganizationLocalServiceUtil.getOrganization(themeDisplay.getCompanyId(), "Doctor");
-	List<User>doctorAdminList= new ArrayList<User>();
-	List<UserGroupRole> userGroupRoleList = UserGroupRoleLocalServiceUtil.getUserGroupRolesByGroupAndRole(doctorOrg.getGroupId(), doctorAdminRole.getRoleId());
-	for(UserGroupRole userGroupRole : userGroupRoleList){
-		User user = UserLocalServiceUtil.getUser(userGroupRole.getUserId());
-		doctorAdminList.add(user);
-	}
-	renderRequest.setAttribute("doctorAdminList", doctorAdminList);
-	}catch(PortalException e){
-		_log.error(e.getMessage(), e);
-	}
+	setDoctorList(renderRequest);
+	
+	setLayerList(renderRequest);
+	
 	return "/patient/create_patient.jsp";
 	}
 	
@@ -91,5 +82,39 @@ public class CreatePatientRenderCommand implements MVCRenderCommand{
 			_log.error(e.getMessage(), e);
 		}
 		return role;
+	}
+	
+	private void setLayerList(RenderRequest renderRequest){
+		ThemeDisplay themeDisplay = (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+		try{
+			Role lawyerAdminRole = getRoleWithName(themeDisplay.getCompanyId(), "Lawyer Admin");
+			Organization lawyerOrg = OrganizationLocalServiceUtil.getOrganization(themeDisplay.getCompanyId(), "Lawyer");
+			List<User>lawyeAdminList= new ArrayList<User>();
+			List<UserGroupRole> userGroupRoleList = UserGroupRoleLocalServiceUtil.getUserGroupRolesByGroupAndRole(lawyerOrg.getGroupId(), lawyerAdminRole.getRoleId());
+			for(UserGroupRole userGroupRole : userGroupRoleList){
+				User user = UserLocalServiceUtil.getUser(userGroupRole.getUserId());
+				lawyeAdminList.add(user);
+			}
+			renderRequest.setAttribute("lawyerAdminList", lawyeAdminList);
+			}catch(PortalException e){
+				_log.error(e.getMessage(), e);
+			}
+	}
+	
+	private void setDoctorList(RenderRequest renderRequest){
+		ThemeDisplay themeDisplay = (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+		try{
+			Role doctorAdminRole = getRoleWithName(themeDisplay.getCompanyId(), "Doctor Admin");
+			Organization doctorOrg = OrganizationLocalServiceUtil.getOrganization(themeDisplay.getCompanyId(), "Doctor");
+			List<User>doctorAdminList= new ArrayList<User>();
+			List<UserGroupRole> userGroupRoleList = UserGroupRoleLocalServiceUtil.getUserGroupRolesByGroupAndRole(doctorOrg.getGroupId(), doctorAdminRole.getRoleId());
+			for(UserGroupRole userGroupRole : userGroupRoleList){
+				User user = UserLocalServiceUtil.getUser(userGroupRole.getUserId());
+				doctorAdminList.add(user);
+			}
+			renderRequest.setAttribute("doctorAdminList", doctorAdminList);
+			}catch(PortalException e){
+				_log.error(e.getMessage(), e);
+			}
 	}
 }

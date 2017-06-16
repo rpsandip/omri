@@ -4,24 +4,15 @@
         <portlet:param name="mvcRenderCommandName" value="/create-user" />
 </portlet:renderURL>
 <liferay-ui:success key="user.added.successfully" message="user.added.successfully"/>
-<aui:button name="createUser" value="Create User" href="${createUserURL}"/>
+<aui:button name="createUser" value="Create User" href="${createUserURL}" cssClass="btn btn-primary"/>
 <br/>
 <br/>
-<script>
-    define._amd = define.amd;
-    define.amd = false;
-</script>
-
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css" type="text/css">
-</link>
-<script>
-    define.amd = define._amd;
-</script>
-
-<div>
-	<table id="users" class="display" cellspacing="0" width="100%">
+<section class="content">
+ <div class="row">
+ 	 <div class="col-xs-12">
+     	<div class="box">
+            <div class="box-body">
+	<table id="users" class="display table table-bordered table-hover table-striped" cellspacing="0" width="100%">
 		<thead>
             <tr>
                 <th>First Name</th>
@@ -39,6 +30,10 @@
            </c:forEach>
 	</table>
 </div>
+ </div>
+</div> 	
+</div>
+</section>
 
 <script type="text/javascript">
         jQuery.noConflict();

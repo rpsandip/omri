@@ -87,7 +87,7 @@ public class CreateAppointmentActionCommand  extends BaseMVCActionCommand{
 						Patient_ClinicPK patientClinicPK = new Patient_ClinicPK(clinicId, patientId);
 						Patient_Clinic existingPatientClinic = Patient_ClinicLocalServiceUtil.getPatient_Clinic(patientClinicPK);
 						newClinicPatient = Patient_ClinicLocalServiceUtil.addPatient_Clinic(patientId, appointmentClinicId,
-								existingPatientClinic.getDoctorId(), existingPatientClinic.getDoctorName(), existingPatientClinic.getDoctorPhoneNo(), existingPatientClinic.getPatient_status(), 
+								existingPatientClinic.getDoctorId(), existingPatientClinic.getDoctorName(), existingPatientClinic.getDoctorPhoneNo(), existingPatientClinic.getLawyerId(), existingPatientClinic.getLawyerName(), existingPatientClinic.getLawyerPhoneNo(),existingPatientClinic.getPatient_status(), 
 								themeDisplay.getUserId(), themeDisplay.getUserId());
 					}
 				}

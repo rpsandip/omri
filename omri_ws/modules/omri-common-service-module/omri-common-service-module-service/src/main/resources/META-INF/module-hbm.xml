@@ -122,6 +122,9 @@
 		<property name="doctorId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="doctorName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="doctorPhoneNo" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="lawyerId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="lawyerName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="lawyerPhoneNo" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="createdBy" type="com.liferay.portal.dao.orm.hibernate.LongType" />

@@ -8,89 +8,70 @@
 <portlet:resourceURL id="/getClinicList" var="getClinicListURL"></portlet:resourceURL>
 <portlet:actionURL var="createUserActionURL" name="/user/create_user">
 </portlet:actionURL>
-<div class="container">
-	<div class="row ">
-		 <div class="col-sm-8 contact_form_area">
-		 	<h3 class="contact_section_title"><liferay-ui:message key="add.user"/></h3>
-		 	<div class="contactForm row m0">
+<section class="content-header">
+  <h1>
+    <liferay-ui:message key="add.user"/>
+  </h1>
+</section>
+<br/>
+<div class="row">
+	<div class="col-xs-12">
+    	<div class="box">
+       		<div class="box-body">
 				<aui:form name="createUserForm" action="${createUserActionURL}" cssClass="row contact_form">
-				    <div class="row m0">
-				    	<div class="col-sm-6">
-                         	<div class="input-group">
+				    <div class="box-body">
+				    	<div class="form-group col-md-6">
                             	 <aui:input name="firstName" label="user.firstName" cssClass="form-control">
 									<aui:validator name="required" />
 								</aui:input>
-                            </div>
                           </div>
-                          <div class="col-sm-6">
-                         	<div class="input-group">
+                          <div class="form-group col-md-6">
                             	 <aui:input name="lastName" label="user.lastName" cssClass="form-control">
 									<aui:validator name="required" />
 								 </aui:input>
-                            </div>
                           </div>
-                          <div class="col-sm-6">
-                         	<div class="input-group">
+                          <div class="form-group col-md-6">
                             	 <aui:input name="emailAddress" label="user.emailAdddress" cssClass="form-control">
 									<aui:validator name="required" />
 									<aui:validator name="email" />
 								</aui:input>
-                            </div>
                           </div>
-				   		  <div class="col-sm-6">
-                         	<div class="input-group">
+				   		  <div class="form-group col-md-6">
                             	 <aui:input name="phoneNumber" label="user.phone" cssClass="form-control">
 									<aui:validator name="required" />
 								</aui:input>
-                            </div>
                           </div>
-						  <div class="col-sm-6">
-                         	<div class="input-group">
+						  <div class="form-group col-md-6">
                             	<aui:input name="addressLine1" label="user.address1" cssClass="form-control">
 									<aui:validator name="required" />
 								</aui:input>
-                            </div>
                           </div>	
-						 <div class="col-sm-6">
-                         	<div class="input-group">
+						 <div class="form-group col-md-6">
                             	<aui:input name="addressLine2" label="user.address2" cssClass="form-control">
 									<aui:validator name="required" />
 								</aui:input>
-                            </div>
                           </div>
-						<div class="col-sm-6">
-                         	<div class="input-group">
+						<div class="form-group col-md-6">
                             	<aui:input name="city" label="user.city" cssClass="form-control">
 									<aui:validator name="required" />
 								</aui:input>
-                            </div>
                         </div>
-                        <div class="col-sm-6">
-                         	<div class="input-group">
+                        <div class="form-group col-md-6">
                             	<aui:input name="state" label="user.state" cssClass="form-control">
 									<aui:validator name="required" />
 								</aui:input>
-                            </div>
                         </div>
-						<div class="col-sm-6">
-                         	<div class="input-group">
+						<div class="form-group col-md-6">
                             	<aui:input name="zipcode" label="user.zip" cssClass="form-control">
 									<aui:validator name="required" />
 								</aui:input>
-                            </div>
                         </div>
-                        <div class="col-sm-6">
-                         	<div class="input-group">
+                        <div class="form-group col-md-6">
                             	<aui:input name="fax" label="user.fax" cssClass="form-control">
 									<aui:validator name="required" />
 								</aui:input>
-                            </div>
                         </div>
-                        
-					</div>
-					<div class="row m0">
-						<div class="col-sm-12">
-	                         <div class="input-group">
+						<div class="form-group col-md-12">
 	                         	<aui:select name="entity" cssClass="patient_select">
 									<aui:option value="">Select Entity</aui:option>
 								    <c:if test="${hasClinicRole or isAdmin or isSystemAdmin}">
@@ -103,33 +84,26 @@
 								    	<aui:option value="doctor">Doctor</aui:option>
 								    </c:if>
 								</aui:select>
-	                         </div>
 	                    </div>            
-						<div class="col-sm-12">
-	                         <div class="input-group">
+						<div class="form-group col-md-12">
 	                         	<aui:select name="clinic">
 									<aui:option value="">Select Clinic</aui:option>
 								</aui:select>
-	                         </div>
 	                    </div>     
-						<div class="col-sm-12">
-	                         <div class="input-group">
+						<div class="form-group col-md-12">
 	                         	<aui:select name="role" multiple="true" cssClass="patient_select"></aui:select>
-	                         </div>
 	                    </div> 
-	                    <div class="col-sm-12">
-	                         <div class="input-group">
+	                    <div class="form-group col-md-12">
 	                         	<aui:select name="respectiveParentUserId" label="Respective Admin" cssClass="patient_select"></aui:select>
-	                         </div>
 	                    </div> 
-					</div>
-					<div class="row m0">
-						<aui:button type="button" value="Add User"  cssClass="createUserBtn"/>
+					<div class="form-group col-md-12">
+						<aui:button type="button" value="Add User"  cssClass="createUserBtn btn btn-primary"/>
 					</div>	
 					<aui:input name="isAdmin" type="hidden" value="${isAdmin }"/>
 					<aui:input name="isLawyerAdmin" type="hidden" value="${isLawyerAdmin }"/>
 					<aui:input name="isDoctorAdmin" type="hidden" value="${isDoctorAdmin }"/>
 					<aui:input name="isClinicAdmin" type="hidden" value="${isClinicAdmin }"/>
+				  </div>	
 				</aui:form>
             </div>
         </div>

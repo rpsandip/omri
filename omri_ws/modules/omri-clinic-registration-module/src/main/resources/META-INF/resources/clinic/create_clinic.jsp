@@ -2,93 +2,63 @@
 <portlet:resourceURL id="/getSpecificationList" var="getSpecificationListURL" />
 <portlet:actionURL var="addClinicURL" name="/clinic/add_clinic">
 </portlet:actionURL>
-
-<div class="container">
-	<div class="row ">
-		 <div class="col-sm-8 contact_form_area">
-		 	<h3 class="contact_section_title"><liferay-ui:message key="add.clinic"/></h3>
-		 	<div class="contactForm row m0">
+<section class="content-header">
+  <h1>
+    <liferay-ui:message key="add.clinic"/>
+  </h1>
+</section>
+<div class="row">
+	<div class="col-xs-12">
+    	<div class="box">
+       		<div class="box-body">
 				<aui:form name="addClinicForm" action="${addClinicURL}" cssClass="row contact_form">
-					<div class="row m0">
-						<div class="col-sm-6">
-                         	<div class="input-group">
+					 <div class="box-body">
+						<div class="form-group col-md-6">
                             	<aui:input name="clinicName" label="clinic.name" cssClass="form-control">
 									<aui:validator name="required" />
 								</aui:input>
-                            </div>
                           </div>
-                          <div class="col-sm-6">
-                         	<div class="input-group">
+                          <div class="form-group col-md-6">
                             	<aui:input name="addressLine1" label="clinic.addressline1" cssClass="form-control">
 									<aui:validator name="required" />
 								</aui:input>
-                            </div>
                           </div>
-                          <div class="col-sm-6">
-                         	<div class="input-group">
+                          <div class="form-group col-md-6">
                             	<aui:input name="addressLine2" label="clinic.addressline2" cssClass="form-control">
 									<aui:validator name="required" />
 								</aui:input>
-                            </div>
                           </div>
-                          <div class="col-sm-6">
-                         	<div class="input-group">
+                          <div class="form-group col-md-6">
                             	<aui:input name="city" label="clinic.city" cssClass="form-control">
 									<aui:validator name="required" />
 								</aui:input>
-                            </div>
                           </div>
-                          <div class="col-sm-6">
-                         	<div class="input-group">
+                          <div class="form-group col-md-6">
                             	<aui:input name="state" label="clinic.state" cssClass="form-control">
 									<aui:validator name="required" />
 								</aui:input>
-                            </div>
                           </div>
-						  <div class="col-sm-6">
-                         	<div class="input-group">
+						  <div class="form-group col-md-6">
                             	<aui:input name="zip" label="clinic.zip" cssClass="form-control">
 									<aui:validator name="required" />
 								</aui:input>
-                            </div>
                           </div>
-                          <div class="col-sm-6">
-                         	<div class="input-group">
+                          <div class="form-group col-md-6">
                             	<aui:input name="phone" label="clinic.phone" cssClass="form-control">
 									<aui:validator name="required" />
 								</aui:input>
-                            </div>
                           </div>
-                          <div class="col-sm-6">
-                         	<div class="input-group">
+                          <div class="form-group col-md-6">
                             	<aui:input name="fax" label="clinic.fax" cssClass="form-control">
                             		<aui:validator name="required" />
                             	</aui:input>	
-                            </div>
                           </div>
-					</div>
-					<hr/>
-					<!--  
-					<h3><liferay-ui:message key="clinic.admin"></liferay-ui:message></h3>
-					
-					<aui:input name="firstName" label="clinic.admin.firstName">
-					</aui:input>
-					<aui:input name="lastName" label="clinic.admin.lastName">
-					</aui:input>
-					<aui:input name="email" label="clinic.admin.emailaddress">
-					</aui:input>
-					<aui:input name="phone" label="clinic.admin.phone">
-					</aui:input>
-					<hr/>
-					 -->
-					
-					<div class="row m0">
-						<h3><liferay-ui:message key="resources"></liferay-ui:message></h3>
+					<div class="col-md-12 divider-line"><hr></div>
+					<h3><liferay-ui:message key="resources"></liferay-ui:message></h3>
 						<div id="resources">
 							<div class="lfr-form-row lfr-form-row-inline">
 								<div class="row-fields">
-										<div class="col-sm-12">
-	                                		<div class="input-group">
+										<div class="form-group col-md-12">
 								                <aui:select name="resource0" id="resource0" label="Resource" cssClass="resourceItem form-control patient_select">
 							               			 <c:forEach items="${resourceList }" var="resource">
 							                  			 <aui:option value="${resource.resourceId }">${resource.resourceName }</aui:option>
@@ -98,7 +68,6 @@
 								                <aui:input fieldParam='operationTime0' id='operationTime0' name="operationTime0" cssClass="form-control" label="Operation Time" placeholder="mins"/>
 								                <aui:input fieldParam='price0' id='price0' name="price0" cssClass="form-control" label="Price" placeholder="Price"/>
 								                <aui:input name="resourceCount" type="hidden"  />
-						                	</div>
 						               </div> 
 						                <aui:script use="liferay-auto-fields">
 					   					 new Liferay.AutoFields({
@@ -147,12 +116,10 @@
 						        </div>
 						    </div>
 					   </div> 
-					</div>
-					<div class="row m0">
-                            <div class="col-sm-12">
-                                	<aui:button type="button" value="Add Clinic"  cssClass="createClinicBtn"/>
+                            <div class="form-group col-md-12">
+                                	<aui:button type="button" value="Add Clinic"  cssClass="createClinicBtn btn btn-primary"/>
                            </div>
-                     </div> 
+                   </div>  
 				</aui:form>
 			</div>
 		</div>

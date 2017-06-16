@@ -4,8 +4,8 @@
         <portlet:param name="mvcRenderCommandName" value="/create-patient" />
 </portlet:renderURL>
 <liferay-ui:success key="patient.added.successfully" message="patient.added.successfully"></liferay-ui:success>
-<aui:button name="createPatient" value="Create Patient" href="${createPatientURL}"/>
-
+<aui:button name="createPatient" value="Create Patient" href="${createPatientURL}" cssClass="btn btn-primary"/>
+<br/>
 <script>
     define._amd = define.amd;
     define.amd = false;
@@ -18,7 +18,7 @@
 <script>
     define.amd = define._amd;
 </script>
-
+<br/>
 <div>
 	<table id="example" class="display" cellspacing="0" width="100%">
 		<thead>

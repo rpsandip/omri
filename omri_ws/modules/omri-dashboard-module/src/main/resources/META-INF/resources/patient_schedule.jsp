@@ -21,114 +21,122 @@
 	}
 
 </style>
-<div class="container">
-	<div style="width: 30%;float: left;">
-	<div class="row ">
-		 <div class="col-sm-8 contact_form_area">
-		 	<h3 class="contact_section_title">Appointment</h3>
-		 	<aui:form name="crateAppointmentFrm" action="${addAppointmentURL}" cssClass="row contact_form">
-		 	<div class="contactForm row m0">
-				<div class="row m0">
-					<div class="col-sm-12">
-                         <div class="input-group">
-                         	<span style="float: left;"><strong>First Name : </strong><span style="padding-left: 10px;">${patientBean.firstName }</span></span>
-                         </div>
-                    </div>
-                    <div class="col-sm-12">
-                         <div class="input-group">
-                         	<span style="float: left;"><strong>Last Name : </strong><span style="padding-left: 10px;">${patientBean.lastName } </span></span>
-                         </div>
-                    </div>
-                    <div class="col-sm-12">
-                         <div class="input-group">
-                         	<span style="float: left;"><strong> Phone No : </strong><span style="padding-left: 10px;"> ${patientBean.phoneNo } </span></span>
-                         </div>
-                    </div>
-               </div>
-               <hr/> 
-               <div class="row m0">
-               		<h5>Appointment Created</h5>
-               		<c:forEach items="${patientAppointmentList }" var="patientAppointmentBean">
-						<div>
-							
-						    <span>Clinic: ${patientAppointmentBean.clinicName }<span><br/>
-						    <span>Date : <fmt:formatDate pattern="MM/dd/yyyy hh:mm a" value="${patientAppointmentBean.appointmentDate}" />
-						        </span><br/>
-						    <span>Resource : ${patientAppointmentBean.resourceName }(${patientAppointmentBean.specificationName })</span>
-						</div>	
-						<hr/>	 
-					</c:forEach>
-               </div>
-               <hr/>
-               <div class="row m0">
-                    
-					<aui:select name="appointmentClinic" label="Clinic">
-						<c:forEach items="${clinicList }" var="clinicMaster">
-							<option value="${clinicMaster.clinicId }"   <c:if test='${ clinicMaster.clinicId eq patientBean.patientClinic.clinicId }'>selected</c:if>>${clinicMaster.clinicName }</option>
-						</c:forEach>	
-					</aui:select>
-               </div>
-               <div class="row m0">
-					<aui:select name="resource" label="Resource">
-						<c:forEach items="${patientBean.resourceBeanList }" var="resource">
-							 <aui:option value="${resource.resourceId },${resource.specificationId },${ resource.occurnace}">${resource.resourceName }(${resource.specificationName }) : ${ resource.remainingOccurance}</aui:option>
-						</c:forEach>
-					</aui:select>
-               </div>
-               <h4>Appointment Time</h4>
-               <div class="row m0">
-               		<div class="col-sm-6">
-                        <div class="input-group">
-                        	<aui:input name="appointmentDate" label="Appointment Date" cssClass="form-control">
+ <div class="content-wrapper">
+<section class="content-header calender-page-view">
+   <h1>
+     Appointment
+   </h1>
+ </section>
+ <section class="content calender-page-view">
+ 	 <div class="row">
+	        <div class="col-md-3">
+	          <div class="box box-body box-solid">
+	          	<div>
+	          		First Name : </strong><span style="padding-left: 10px;">${patientBean.firstName }
+	          	</div>
+	          	<div>
+	          		Last Name : </strong><span style="padding-left: 10px;">${patientBean.lastName }
+	          	</div>
+	          	<div>
+	          		Phone No : </strong><span style="padding-left: 10px;"> ${patientBean.phoneNo }
+	          	</div>
+	          </div>
+	          <div class="box box-solid">
+	            <div class="box-header with-border">
+	              <h4 class="box-title">Appointment List</h4>
+	            </div>
+	            <div class="box-body appointment-list">
+	             <c:forEach items="${patientAppointmentList }" var="patientAppointmentBean">
+						<div class="col-md-12">
+	              			<p><b>Clinic : </b> ${patientAppointmentBean.clinicName }</p>
+	              			<p><b>Date : </b> <fmt:formatDate pattern="MM/dd/yyyy hh:mm a" value="${patientAppointmentBean.appointmentDate}" /></p>
+	              			<p><b>Resources : </b> ${patientAppointmentBean.resourceName }(${patientAppointmentBean.specificationName })</p>
+	              			<hr />
+	              		</div>	 
+				  </c:forEach>
+	            </div>
+	            <!-- /.box-body -->
+	          </div>
+	          <div class="box box-solid">
+	          	<div class="box-header with-border">
+	              <h4 class="box-title">Create Appointment</h4>
+	            </div>
+	            <div class="box-body create-appointemetn">
+	              <aui:form name="crateAppointmentFrm" action="${addAppointmentURL}" cssClass="row contact_form">
+	                <div class="form-group col-md-12">
+	                 	<aui:select name="appointmentClinic" label="Clinic">
+							<c:forEach items="${clinicList }" var="clinicMaster">
+								<option value="${clinicMaster.clinicId }"   <c:if test='${ clinicMaster.clinicId eq patientBean.patientClinic.clinicId }'>selected</c:if>>${clinicMaster.clinicName }</option>
+							</c:forEach>	
+						</aui:select>
+	                </div>
+	                <div class="form-group col-md-12">
+	                	<aui:select name="resource" label="Resource">
+							<c:forEach items="${patientBean.resourceBeanList }" var="resource">
+								 <aui:option value="${resource.resourceId },${resource.specificationId },${ resource.occurnace}">${resource.resourceName }(${resource.specificationName }) : ${ resource.remainingOccurance}</aui:option>
+							</c:forEach>
+						</aui:select>
+	                </div>
+	                <div class="form-group col-md-6">
+	                  <aui:input name="appointmentDate" label="Appointment Date" cssClass="form-control">
 								<aui:validator name="required" />
-							</aui:input>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="input-group">
-                        	<aui:input name="appointmentTime" label="Appointment Time" cssClass="form-control">
+					  </aui:input>
+	                </div>
+	                <div class="col-md-6  app-time">
+	                <div class="bootstrap-timepicker">
+		                <div class="form-group">
+		                 <aui:input name="appointmentTime" label="Appointment Time" cssClass="form-control">
 								<aui:validator name="required" />
-							</aui:input>
-                        </div>
-                    </div>
-               </div>  
-               <aui:input  type="hidden" name="patientId"  value="${ patientBean.patientId}"/>
-               <aui:input  type="hidden" name="clinicId" value="${ patientBean.patientClinic.clinicId}"/>
-               <br/>
-               <div class="row m0">
-                   <div class="col-sm-12">
-                       	<aui:button type="button" value="Create Appointment"  cssClass="createAppointmentBtn"/>
-                  </div>
-               </div>    
-		 </div>
-		 </aui:form>
-		</div>
-	</div>
-	</div>
-	<div style="width: 70%; float: left;">
-	<div>
-		Date : <input type="text" name="filterDate" id="filterDate"/>
-		Clinic : <select name="clinic" id="filterClinic">
-					<option value="0">Select Clinic</option>
-						<c:forEach items="${clinicList }" var="clinicMaster">
-						<option value="${clinicMaster.clinicId }">${clinicMaster.clinicName }</option>
+						 </aui:input>
+		                </div>
+	                </div>
+	                 <aui:input  type="hidden" name="patientId"  value="${ patientBean.patientId}"/>
+          		     <aui:input  type="hidden" name="clinicId" value="${ patientBean.patientClinic.clinicId}"/>
+	                </div>
+	               	<div class="col-sm-12">
+                       	<aui:button type="button" value="Create Appointment"  cssClass="createAppointmentBtn btn btn-primary"/>
+                  	</div>
+	              </aui:form>
+	            </div>
+	          </div>
+	         </div>
+	         
+	         <div class="col-md-9">
+	          <div class="box box-primary">
+	            <div class="box-body no-padding">
+	              <form id="searchcal">
+	              	<div class="form-group col-md-3">
+	                  <input type="text" name="filterDate" id="filterDate" class="form-control"/>
+	                </div>
+	              	<div class="form-group col-md-3">
+	                  <select name="clinic" id="filterClinic">
+						<option value="0">Select Clinic</option>
+							<c:forEach items="${clinicList }" var="clinicMaster">
+								<option value="${clinicMaster.clinicId }">${clinicMaster.clinicName }</option>
+							</c:forEach>	
+						</select>
+	                </div>
+	                <div class="form-group col-md-3">
+	                  <select name="resource" id="filterResource">
+						<option value="0">Select Resource</option>
+						<c:forEach items="${resourceList }" var="resourceMaster">
+							<option value="${resourceMaster.resourceId }">${resourceMaster.resourceName }</option>
 						</c:forEach>	
-					</select>
-		Resource : 
-				 <select name="resource" id="filterResource">
-					<option value="0">Select Resource</option>
-					<c:forEach items="${resourceList }" var="resourceMaster">
-						<option value="${resourceMaster.resourceId }">${resourceMaster.resourceName }</option>
-					</c:forEach>	
-				</select>
-		       &nbsp;	<button name="Search" id="filterSearch" type="button" >Search</button>		
-	</div>
-	<br/>
-	<div id='calendar'></div>
-
-	</div>
-</div>		 
-
+					  </select>
+	                </div>
+	                <div class="form-group col-md-3">
+	                  <input type=button class="btn btn-primary"  value="Search" id="filterSearch">
+	                </div>
+	              </form>
+	              <!-- THE CALENDAR -->
+	              <div id='calendar'></div>
+	            </div>
+	            <!-- /.box-body -->
+	          </div>
+	        </div> 
+	     </div>    
+ </section>
+</div> 
 <aui:script>
 AUI().use('aui-io-request', 'aui-autocomplete' ,'aui-base','aui-form-validator','autocomplete-list','autocomplete-filters','autocomplete-highlighters', function(A) {
 	var createAppointmentBtn= A.one(".createAppointmentBtn");
@@ -142,11 +150,9 @@ AUI().use('aui-io-request', 'aui-autocomplete' ,'aui-base','aui-form-validator',
 });	
 </aui:script>
 <script>
-var dd ="";
-</script>
-
-<script>
-			$(document).ready(function() {
+jQuery.noConflict();
+(function($) {
+    $(function() {
 				var appountmentDate=$('#<portlet:namespace/>appointmentDate');
 				var filterDate=$('#filterDate');
 				
@@ -211,5 +217,6 @@ var dd ="";
 						   }
 						});
 				});
-			});
+    });
+})(jQuery);
 </script>
