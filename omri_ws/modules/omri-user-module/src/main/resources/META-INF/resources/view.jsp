@@ -18,6 +18,8 @@
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Email Address</th>
+                <th>Role</th>
+                <th>Entity</th>
             </tr>
         </thead>
         <tbody>
@@ -26,6 +28,8 @@
                 <td>${userBean.user.firstName }</td>
                 <td>${userBean.user.lastName }</td>
                 <td>${userBean.user.emailAddress }</td>
+                <td>${userBean.roleName }</td>
+                <td>${userBean.entity }</td> 
             </tr>
            </c:forEach>
 	</table>
@@ -42,7 +46,6 @@
             	 $('#users').DataTable({
             		 "order": []
             	 });
-            	//console.log("example->" + $("#example").val());
             });
         })(jQuery);
     </script>

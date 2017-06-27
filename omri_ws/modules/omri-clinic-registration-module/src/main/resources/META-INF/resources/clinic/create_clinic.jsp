@@ -58,7 +58,7 @@
 						<div id="resources">
 							<div class="lfr-form-row lfr-form-row-inline">
 								<div class="row-fields">
-										<div class="form-group col-md-12">
+										<div class="form-group col-md-6">
 								                <aui:select name="resource0" id="resource0" label="Resource" cssClass="resourceItem form-control patient_select">
 							               			 <c:forEach items="${resourceList }" var="resource">
 							                  			 <aui:option value="${resource.resourceId }">${resource.resourceName }</aui:option>

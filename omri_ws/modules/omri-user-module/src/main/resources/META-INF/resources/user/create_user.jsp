@@ -71,7 +71,7 @@
 									<aui:validator name="required" />
 								</aui:input>
                         </div>
-						<div class="form-group col-md-12">
+						<div class="form-group col-md-6">
 	                         	<aui:select name="entity" cssClass="patient_select">
 									<aui:option value="">Select Entity</aui:option>
 								    <c:if test="${hasClinicRole or isAdmin or isSystemAdmin}">
@@ -85,15 +85,15 @@
 								    </c:if>
 								</aui:select>
 	                    </div>            
-						<div class="form-group col-md-12">
+						<div class="form-group col-md-6">
 	                         	<aui:select name="clinic">
 									<aui:option value="">Select Clinic</aui:option>
 								</aui:select>
 	                    </div>     
-						<div class="form-group col-md-12">
+						<div class="form-group col-md-6">
 	                         	<aui:select name="role" multiple="true" cssClass="patient_select"></aui:select>
 	                    </div> 
-	                    <div class="form-group col-md-12">
+	                    <div class="form-group col-md-6">
 	                         	<aui:select name="respectiveParentUserId" label="Respective Admin" cssClass="patient_select"></aui:select>
 	                    </div> 
 					<div class="form-group col-md-12">
@@ -103,6 +103,7 @@
 					<aui:input name="isLawyerAdmin" type="hidden" value="${isLawyerAdmin }"/>
 					<aui:input name="isDoctorAdmin" type="hidden" value="${isDoctorAdmin }"/>
 					<aui:input name="isClinicAdmin" type="hidden" value="${isClinicAdmin }"/>
+					<aui:input name="isSystemAdmin" type="hidden" value="${isSystemAdmin }"/>
 				  </div>	
 				</aui:form>
             </div>

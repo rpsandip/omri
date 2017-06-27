@@ -68,15 +68,32 @@ public class MonthWisePatientListRenderCommand implements MVCRenderCommand{
 		ThemeDisplay themdeDisplay = (ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		int month = ParamUtil.getInteger(renderRequest, "month");
 		int year = ParamUtil.getInteger(renderRequest, "year");
+		Date startDate=null;
+		Date endDate=null;
+		
 		Calendar c = Calendar.getInstance();
-	    int day = 1;
+	    if(month!=-1){
+		int day = 1;
 	    c.set(year, month, day,0,0,0);
 	    int numOfDaysInMonth = c.getActualMaximum(Calendar.DAY_OF_MONTH);
-	    Date startDate = c.getTime();
+	    startDate = c.getTime();
 	    c.set(year, month, numOfDaysInMonth, 23, 59,59);
-	    Date endDate = c.getTime();
-		List<PatientBean> patientBeanList = new ArrayList<PatientBean>();
-		
+	    endDate = c.getTime();
+	    }else{
+	    	c.set(Calendar.YEAR, year);
+	    	c.set(Calendar.DAY_OF_YEAR, 1);    
+	    	startDate = c.getTime();
+	    	
+	    	c.set(Calendar.YEAR, year);
+	    	c.set(Calendar.MONTH, 11); 
+	    	c.set(Calendar.DAY_OF_MONTH, 31);
+	    	c.set(Calendar.HOUR, 23);
+	    	c.set(Calendar.MINUTE,59);
+	    	c.set(Calendar.SECOND,59);
+	    	endDate = c.getTime();
+	    }
+	    
+	    List<PatientBean> patientBeanList = new ArrayList<PatientBean>();
 		renderRequest.setAttribute("year", year);
 		renderRequest.setAttribute("month", getMonthName(month));
 		
@@ -265,10 +282,21 @@ public class MonthWisePatientListRenderCommand implements MVCRenderCommand{
 		if(Validator.isNotNull(patientFolder)){
 		try {
 			
+			// Set LOP Requests
+			Folder lopRequestFolder = DLAppLocalServiceUtil.getFolder(companyGroupId, patientFolder.getFolderId(), "LOP Requests");
+			List<DLFileEntry> lopRequestDocuments = DLFileEntryLocalServiceUtil.getFileEntries(companyGroupId, lopRequestFolder.getFolderId());
+			for(DLFileEntry fileEntry : lopRequestDocuments){
+				DocumentBean documentBean = new DocumentBean();
+				documentBean.setTitle(fileEntry.getFileName());
+				documentBean.setDownLoadURL(getDLFileURL(fileEntry));
+				documentBeanList.add(documentBean);
+			}
+			patientBean.setLopRequestDocuments(documentBeanList);
 			
 			// Set LOP Documents
-			Folder LOPFolder = DLAppLocalServiceUtil.getFolder(companyGroupId, patientFolder.getFolderId(), "LOP Documents");
+			Folder LOPFolder = DLAppLocalServiceUtil.getFolder(companyGroupId, patientFolder.getFolderId(), "LOP");
 			List<DLFileEntry> lopDocuments = DLFileEntryLocalServiceUtil.getFileEntries(companyGroupId, LOPFolder.getFolderId());
+			documentBeanList = new ArrayList<DocumentBean>();
 			for(DLFileEntry fileEntry : lopDocuments){
 				DocumentBean documentBean = new DocumentBean();
 				documentBean.setTitle(fileEntry.getFileName());
@@ -283,7 +311,7 @@ public class MonthWisePatientListRenderCommand implements MVCRenderCommand{
 		
 		try{
 			// Set Invoice documents
-			Folder invoiceFolder = DLAppLocalServiceUtil.getFolder(companyGroupId, patientFolder.getFolderId(), "Invoice Documents");
+			Folder invoiceFolder = DLAppLocalServiceUtil.getFolder(companyGroupId, patientFolder.getFolderId(), "Invoice");
 			List<DLFileEntry> invoiceDocuments = DLFileEntryLocalServiceUtil.getFileEntries(companyGroupId, invoiceFolder.getFolderId());
 			documentBeanList = new ArrayList<DocumentBean>();
 			for(DLFileEntry fileEntry : invoiceDocuments){
@@ -301,7 +329,7 @@ public class MonthWisePatientListRenderCommand implements MVCRenderCommand{
 		try{
 			
 			// Set Order documents
-			Folder orderFolder = DLAppLocalServiceUtil.getFolder(companyGroupId, patientFolder.getFolderId(), "Order Documents");
+			Folder orderFolder = DLAppLocalServiceUtil.getFolder(companyGroupId, patientFolder.getFolderId(), "Order");
 			List<DLFileEntry> orderDocuments = DLFileEntryLocalServiceUtil.getFileEntries(companyGroupId, orderFolder.getFolderId());
 			documentBeanList = new ArrayList<DocumentBean>();
 			for(DLFileEntry fileEntry : orderDocuments){

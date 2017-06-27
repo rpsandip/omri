@@ -60,6 +60,14 @@
                 		</c:forEach>
                 	</div>	
                 	<div>
+                	LOP Request: 
+                	 <c:forEach items="${patientBean.lopRequestDocuments }" var="lopReqDocument">
+                			<a href="${lopReqDocument.downLoadURL }">
+                				<img src="<%=themeDisplay.getPathThemeImages()+"/document.png"%>">
+                			</a>	
+                		</c:forEach>
+                	</div>	
+                	<div>
                 		Invoice : 
                 		<c:forEach items="${patientBean.invoiceDocuments }" var="invoiceDocument">
                 			<a href="${invoiceDocument.downLoadURL }">

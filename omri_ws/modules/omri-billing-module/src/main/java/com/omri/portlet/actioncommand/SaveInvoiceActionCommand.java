@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.FileItem;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -106,14 +107,13 @@ public class SaveInvoiceActionCommand extends BaseMVCActionCommand {
 			}
 			String fileName = patient.getFirstName()+StringPool.UNDERLINE+patient.getLastName() + StringPool.UNDERLINE + patient.getPatientId() +".pdf";
 			fileName = fileName.replace(StringPool.SPACE, StringPool.UNDERLINE);
-			File file =  File.createTempFile(fileName, ".pdf"); 
-					//File.createTempFile(fileName, ".pdf");
+			File file = new File(System.getProperty("catalina.home")+"/temp/"+fileName);
 			
 			if(Validator.isNotNull(clinic) && Validator.isNotNull(patient) && Validator.isNotNull(appointmentBean)){
 				Document document = new Document();
 				 try {
 					    PdfWriter pdfWriter = PdfWriter.getInstance(document, new FileOutputStream(file));
-		
+					   
 			            //open
 			            document.open();
 			            
@@ -229,13 +229,11 @@ public class SaveInvoiceActionCommand extends BaseMVCActionCommand {
 				 
 				 // Save file to patient folder
 				 Folder patientFolder = getFolder(actionRequest, PARENT_FOLDER_ID,String.valueOf(patient.getPatientId()));
-				 Folder folder = getFolder(actionRequest, patientFolder.getFolderId(),"Invoices"); 
+				 Folder folder = getFolder(actionRequest, patientFolder.getFolderId(),"Invoice Documents"); 
 				 
 				 ServiceContext serviceContext = ServiceContextFactory.getInstance(DLFileEntry.class.getName(), actionRequest); 
 				 InputStream dlFileIs = new FileInputStream(file);
-				 System.out.println(file.length());
 				 try{
-					 //DLAppServiceUtil.addFileEntry(repositoryId, folder.getFolderId(),  file.getName(), MimeTypesUtil.getContentType(file), file.getName(), "Patient Invoice", "", dlFileIs, file.getTotalSpace(), serviceContext);
 					 DLAppServiceUtil.addFileEntry(repositoryId, folder.getFolderId(),  file.getName(), MimeTypesUtil.getContentType(file),  file.getName(), "Patient Invoice" , "", file, serviceContext);
 				 }catch(DuplicateFileEntryException e){
 					 DLAppServiceUtil.addFileEntry(repositoryId, folder.getFolderId(), fileName+ StringPool.UNDERLINE + new Date().getTime(), MimeTypesUtil.getContentType(file), fileName+ StringPool.UNDERLINE + new Date().getTime(), "Patient Invoice", "", dlFileIs, file.getTotalSpace(), serviceContext);

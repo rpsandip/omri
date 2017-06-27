@@ -158,6 +158,7 @@
 	<model name="com.omri.service.common.model.Resource_Specification">
 		<field name="resourceId" type="long" />
 		<field name="specificationId" type="long" />
+		<field name="cptCode" type="String" />
 	</model>
 	<model name="com.omri.service.common.model.Specification">
 		<field name="specificationId" type="long" />

@@ -22,4 +22,4 @@ create index IX_BBF5CFEF on OMRI_Patient_Clinic_Resource (patientId, clinicId, c
 create index IX_17C009DD on OMRI_Procedure (clinicId, isComplete);
 create index IX_B9D88E4A on OMRI_Procedure (clinicId, patientId);
 
-create index IX_6D39D3F on OMRI_Resource_Specification (resourceId);
+create index IX_7BEBA7CF on OMRI_Resource_Specification (resourceId, specificationId);

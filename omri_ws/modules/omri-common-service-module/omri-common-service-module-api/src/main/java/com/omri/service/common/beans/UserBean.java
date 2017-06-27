@@ -6,7 +6,26 @@ import com.omri.service.common.model.CustomUser;
 public class UserBean {
 	private User user;
 	private CustomUser customUser;
+	private String roleName;
+	private String entity;
 	
+	
+	public String getRoleName() {
+		return roleName;
+	}
+
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
+	}
+
+	public String getEntity() {
+		return entity;
+	}
+
+	public void setEntity(String entity) {
+		this.entity = entity;
+	}
+
 	public UserBean(User user,CustomUser customUser){
 		this.user = user;
 		this.customUser = customUser;

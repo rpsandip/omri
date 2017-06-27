@@ -21,8 +21,13 @@ import java.util.List;
 
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.RoleConstants;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.omri.service.common.exception.NoSuchCustomUserException;
 import com.omri.service.common.model.CustomUser;
 import com.omri.service.common.service.CustomUserLocalServiceUtil;
@@ -50,7 +55,9 @@ public class CustomUserLocalServiceImpl extends CustomUserLocalServiceBaseImpl {
 	 * Never reference this class directly. Always use {@link com.omri.service.common.service.CustomUserLocalServiceUtil} to access the custom user local service.
 	 */
 	private static Log LOG = LogFactoryUtil.getLog(CustomUserLocalServiceImpl.class);
+	
 	public List<CustomUser> getChildUsers(long parentUserId){
+		
 		List<CustomUser> customUserList = new ArrayList<CustomUser>();
 		DynamicQuery dynamicQuery = CustomUserLocalServiceUtil.dynamicQuery();
 		dynamicQuery.add(PropertyFactoryUtil.forName("parentUserId").eq(parentUserId));

@@ -101,6 +101,10 @@ public class CreateUserActionCommand extends BaseMVCActionCommand{
 						if(clinic.getClinicAdminId()==0){
 							clinic.setClinicAdminId(user.getUserId());
 							ClinicLocalServiceUtil.updateClinic(clinic);
+							
+							// Give Document uploader role to clinic admin
+							Role documentUploaderRole = RoleLocalServiceUtil.getRole(themeDisplay.getCompanyId(), "Document Uploader");
+							RoleLocalServiceUtil.addUserRole(user.getUserId(), documentUploaderRole.getRoleId());
 						}else{
 							throw new PortalException("Clinic has already clinic admin.");
 						}
@@ -108,9 +112,13 @@ public class CreateUserActionCommand extends BaseMVCActionCommand{
 					}
 				}
 			}else if(entity.equals("lawyer")){
-				
+				// Give Document uploader role  lawyer entity
+				Role documentUploaderRole = RoleLocalServiceUtil.getRole(themeDisplay.getCompanyId(), "Document Uploader");
+				RoleLocalServiceUtil.addUserRole(user.getUserId(), documentUploaderRole.getRoleId());
 			}else if(entity.equals("doctor")){
-				
+				// Give Document uploader role to doctor entity
+				Role documentUploaderRole = RoleLocalServiceUtil.getRole(themeDisplay.getCompanyId(), "Document Uploader");
+				RoleLocalServiceUtil.addUserRole(user.getUserId(), documentUploaderRole.getRoleId());
 			}
 			
 			SessionMessages.add(actionRequest, "user.added.successfully");
@@ -204,8 +212,10 @@ public class CreateUserActionCommand extends BaseMVCActionCommand{
 		boolean isDoctorAdmin = ParamUtil.getBoolean(actionRequest, "isDoctorAdmin");
 		boolean isAdmin = ParamUtil.getBoolean(actionRequest, "isAdmin");
 		boolean isClinicAdmin = ParamUtil.getBoolean(actionRequest, "isClinicAdmin");
+		boolean isSystemAdmin = ParamUtil.getBoolean(actionRequest, "isSystemAdmin");
 		String entity = ParamUtil.getString(actionRequest, "entity");
-		if(isLawyerAdmin || (isAdmin && entity.equals("lawyer"))){
+		//if(isLawyerAdmin || (isAdmin && entity.equals("lawyer"))){
+		  if(entity.equals("lawyer")){
 			try {
 				Organization lawyerOrg = OrganizationLocalServiceUtil.getOrganization(themeDisplay.getCompanyId(), "Lawyer");
 				organizationId = lawyerOrg.getOrganizationId();
@@ -215,7 +225,8 @@ public class CreateUserActionCommand extends BaseMVCActionCommand{
 			}
 			
 		}
-		if(isDoctorAdmin || (isAdmin && entity.equals("doctor"))){
+		//if(isDoctorAdmin || (isAdmin && entity.equals("doctor"))){
+		  if(entity.equals("doctor")){
 			try {
 				Organization doctorOrg = OrganizationLocalServiceUtil.getOrganization(themeDisplay.getCompanyId(), "Doctor");
 				organizationId = doctorOrg.getOrganizationId();
@@ -225,7 +236,8 @@ public class CreateUserActionCommand extends BaseMVCActionCommand{
 			}
 			
 		}
-		if(isClinicAdmin || (isAdmin && entity.equals("clinic"))){
+		//if(isClinicAdmin || (isAdmin && entity.equals("clinic"))){
+		  if(entity.equals("clinic")){
 				long clinicId = ParamUtil.getLong(actionRequest, "clinic");
 				Clinic clinic = ClinicLocalServiceUtil.getClinic(clinicId);
 				return clinic.getClinicorganizationId();

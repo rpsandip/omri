@@ -21,6 +21,8 @@ import java.util.Date;
 import java.util.List;
 
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Order;
+import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.omri.service.common.exception.NoSuchPatient_ClinicException;
 import com.omri.service.common.model.Patient_Clinic;
@@ -90,6 +92,10 @@ public class Patient_ClinicLocalServiceImpl
 		DynamicQuery dynamicQuery = Patient_ClinicLocalServiceUtil.dynamicQuery();
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("primaryKey.clinicId", clinicId));
 		dynamicQuery.add(RestrictionsFactoryUtil.between("createDate",startDate, endDate));
+		
+		Order dateOrder = OrderFactoryUtil.desc("createDate");
+		dynamicQuery.addOrder(dateOrder);
+		
 		patientLClinicList = Patient_ClinicLocalServiceUtil.dynamicQuery(dynamicQuery);
 		return patientLClinicList;
 	}

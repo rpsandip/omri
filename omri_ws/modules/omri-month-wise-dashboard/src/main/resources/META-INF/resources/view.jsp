@@ -20,6 +20,7 @@
 				</div>
 				<div class="form-group col-md-6">
 				<aui:select name="month" label="Select Month">
+					<aui:option value="-1">Select All</aui:option>
 					<aui:option value="0">January</aui:option>	
 					<aui:option value="1">February</aui:option>	
 					<aui:option value="2">March</aui:option>	
@@ -35,7 +36,7 @@
 				</aui:select>
 				</div>
 				<br/>
-				<a href="${shcedulePatientURL }" class="btn btn-primary search-patient">Schedule</a>
+				<a href="${shcedulePatientURL }" class="btn btn-primary search-patient">Submit</a>
 			</div>
 		</div>
 	</div>

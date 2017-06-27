@@ -36,41 +36,41 @@
 								<div class="box-body">
 										<div class="row m0 setup-content" id="step-1">
 										    <div class="form-group col-md-6">
-				                            	<aui:input name="firstName" label="patient.firstName" cssClass="form-control">
+				                            	<aui:input name="firstName" label="patient.firstName" cssClass="form-control" placeholder="First Name">
 													<aui:validator name="required" />
 												</aui:input>
 				                          	</div>
 				                          	<div class="form-group col-md-6">
-				                            	<aui:input name="lastName" label="patient.lastName" cssClass="form-control">
+				                            	<aui:input name="lastName" label="patient.lastName" cssClass="form-control" placeholder="Last Name">
 														<aui:validator name="required" />
 												</aui:input>
 				                           </div>
 				                           <div class="form-group col-md-4">
-				                                <aui:input name="cptCode" label="patient.cptCode" cssClass="form-control"></aui:input>
+				                                <aui:input name="cptCode" label="patient.cptCode" cssClass="form-control" placeholder="CPT Code"></aui:input>
 				                           </div>
 				                           <div class="form-group col-md-4">
 				                                <aui:input type="text"  cssClass="form-control" label="patient.dob"  name="patientDOB" size="30" placeholder="MM/DD/YYYY"/>
 				                            </div>
 				                            <div class="form-group col-md-4">
-				                                <aui:input name="phoneNo" label="patient.phone" cssClass="form-control"></aui:input>
+				                                <aui:input name="phoneNo" label="patient.phone" cssClass="form-control" placeholder="Phone"></aui:input>
 				                            </div>
 				                            <div class="form-group col-md-4">
-				                                <aui:input name="address1" label="patient.address1" cssClass="form-control"></aui:input>
+				                                <aui:input name="address1" label="patient.address1" cssClass="form-control" placeholder="Address1"></aui:input>
 				                            </div>
 											<div class="form-group col-md-4">
-				                                <aui:input name="address2" label="patient.address2" cssClass="form-control"></aui:input>
+				                                <aui:input name="address2" label="patient.address2" cssClass="form-control" placeholder="Address2"></aui:input>
 				                            </div>
 				                            <div class="form-group col-md-4">
-				                               <aui:input name="city" label="patient.city" cssClass="form-control"></aui:input>
+				                               <aui:input name="city" label="patient.city" cssClass="form-control" placeholder="City"></aui:input>
 				                            </div>
 				                            <div class="form-group col-md-4">
-				                                <aui:input name="state" label="patient.state" cssClass="form-control"></aui:input>
+				                                <aui:input name="state" label="patient.state" cssClass="form-control" placeholder="State"></aui:input>
 				                            </div>
 											<div class="form-group col-md-4">
-				                                <aui:input name="country" label="patient.country" cssClass="form-control"></aui:input>
+				                                <aui:input name="country" label="patient.country" cssClass="form-control" placeholder="Country"></aui:input>
 				                            </div>
 				                            <div class="form-group col-md-4">
-				                               <aui:input name="zip" label="patient.zip" cssClass="form-control"></aui:input>
+				                               <aui:input name="zip" label="patient.zip" cssClass="form-control" placeholder="Zip"></aui:input>
 				                            </div>
 					                         <br/>
 					                         <div class="form-group col-md-12">
@@ -103,10 +103,10 @@
 														</aui:select>
 					                            </div>
 					                            <div class="form-group col-md-6">
-					                                    <aui:input name="doctorPhone" label="doctor.phone" cssClass="form-control"></aui:input>
+					                                    <aui:input name="doctorPhone" label="doctor.phone" cssClass="form-control" placeholder="Doctor Phone"></aui:input>
 					                            </div>
 					                            <div class="form-group col-md-6">
-					                                    <aui:input name="doctorFax" label="doctor.fax" cssClass="form-control"></aui:input>
+					                                    <aui:input name="doctorFax" label="doctor.fax" cssClass="form-control" placeholder="Doctor Fax"></aui:input>
 					                            </div>
 					                            <br/><br/>
 					                            
@@ -119,16 +119,16 @@
 														</aui:select>
 					                            </div>
 					                            <div class="form-group col-md-6">
-					                                    <aui:input name="lawyerPhone" label="lawyer.phone" cssClass="form-control"></aui:input>
+					                                    <aui:input name="lawyerPhone" label="lawyer.phone" cssClass="form-control" placeholder="Lawyer Phone"></aui:input>
 					                            </div>
 					                            <div class="form-group col-md-6">
-					                                    <aui:input name="lawyerFax" label="lawyer.fax" cssClass="form-control"></aui:input>
+					                                    <aui:input name="lawyerFax" label="lawyer.fax" cssClass="form-control" placeholder="Lawyer Fax"></aui:input>
 					                            </div>
 					                            
 					                            
 					                            <div class="box-footer">
-					                				<button class="btn btn-primary"  onclick='patientFn.setPrev("dl")'>Previous</button>
-					                				<button class="btn btn-primary pull-right" onclick='patientFn.setNext("dl")'>Next</button>
+					                				<a class="btn btn-primary"  onclick='patientFn.setPrev("dl")' >Previous</a>
+					                				<a class="btn btn-primary pull-right"  onclick='patientFn.setNext("dl")' >Next</a>
 					              				</div>
 				                            </div>
 											<div class="row m0 setup-content" id="step-3">
@@ -140,6 +140,7 @@
 																</c:forEach>
 														</aui:select>
 						                            </div>
+						                            <br/><br/><br/><br/>
 													<div id="resources">
 														<aui:input name="resourceCount" type="hidden"  />
 														<div class="lfr-form-row lfr-form-row-inline">
@@ -197,8 +198,8 @@
 													</div>
 												</div>	
 												<div class="box-footer">
-					                				<button class="btn btn-primary"  onclick='patientFn.setPrev("proc")'>Previous</button>
-					                				<button class="btn btn-primary pull-right" onclick='patientFn.setNext("proc")'>Next</button>
+					                				<a class="btn btn-primary"  onclick='patientFn.setPrev("proc")' >Previous</a>
+					                				<a class="btn btn-primary pull-right"  onclick='patientFn.setNext("proc")' >Next</a>
 					              				</div>
 											</div>	
 									 		<aui:input name="resourceCount" type="hidden"/>	
@@ -226,7 +227,7 @@
 				                            		</div>
 									 			<br/>
 				                            	<div class="box-footer">
-					                				<button class="btn btn-primary"  onclick='patientFn.setPrev("doc")'>Previous</button>
+					                				<a class="btn btn-primary"  onclick='patientFn.setPrev("doc")' >Previous</a>
 					              				</div>
 				                            	<div class="form-group col-md-12">
 				                                	<aui:button type="button" value="Submit"  cssClass="addPatientBtn btn btn-primary"/>
@@ -259,7 +260,6 @@ AUI().use('aui-io-request', 'aui-autocomplete' ,'aui-base','aui-form-validator',
 	doctorSelect.on('change', function(e) {
 		var currentNode = this;
 		var doctorId= this.val();
-		console.log("doctorID ->" + doctorId);
 		if(doctorId>0){
 		A.io.request('${getDoctorDetailURL}', {
             method: 'post',

@@ -168,6 +168,7 @@ create table OMRI_Resource (
 create table OMRI_Resource_Specification (
 	resourceId LONG not null,
 	specificationId LONG not null,
+	cptCode VARCHAR(75) null,
 	primary key (resourceId, specificationId)
 );
 

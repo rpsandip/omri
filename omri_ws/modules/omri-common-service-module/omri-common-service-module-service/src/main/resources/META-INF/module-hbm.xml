@@ -194,6 +194,7 @@
 			<key-property name="resourceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 			<key-property name="specificationId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		</composite-id>
+		<property name="cptCode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.omri.service.common.model.impl.SpecificationImpl" table="OMRI_Specification">
 		<id name="specificationId" type="long">

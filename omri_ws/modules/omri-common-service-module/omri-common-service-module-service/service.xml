@@ -47,9 +47,14 @@
 	<entity name="Resource_Specification" local-service="true"  remote-service="false">
 		<column name="resourceId" primary="true" type="long" />
 		<column name="specificationId" primary="true" type="long" />
+		<column name="cptCode" type="String" />
 		
 		<finder name="resourceId" return-type="Collection">
 			<finder-column name="resourceId" />
+		</finder>
+		<finder name="resourceIdAndSpecificationId" return-type="Resource_Specification">
+			<finder-column name="resourceId" />
+			<finder-column name="specificationId" />
 		</finder>
 	</entity>
 	

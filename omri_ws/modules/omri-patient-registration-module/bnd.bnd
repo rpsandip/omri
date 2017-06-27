@@ -1,2 +1,11 @@
 Bundle-SymbolicName: omri.patient.registration.module
 Bundle-Version: 1.0.0
+Include-Resource:@itextpdf-5.0.6.jar, @bcmail-jdk15-1.46.jar, @bcprov-jdk15-1.46.jar, @bctsp-jdk15-1.46.jar,@junit-4.4.jar
+Private-Package:\
+    com.liferay.util.mail.*,\
+    
+
+Import-Package:\
+    !com.liferay.util.mail.*,\
+    \
+    *

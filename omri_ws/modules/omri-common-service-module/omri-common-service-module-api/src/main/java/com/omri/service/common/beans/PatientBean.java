@@ -23,13 +23,15 @@ public class PatientBean{
 	private Date modifiedDate;
 	private long createdBy;
 	private long modifiedBy;
+
 	private Patient_Clinic patientClinic;
 	private List<PatientResourceBean> resourceBeanList;
 	private List<DocumentBean> lopDocuments;
 	private List<DocumentBean> invoiceDocuments;
 	private List<DocumentBean> orderDocuments;
 	private List<DocumentBean> procedureDocumnts;
-	public PatientBean(){
+	private List<DocumentBean> lopRequestDocuments;
+ 	public PatientBean(){
 		
 	}
 	
@@ -187,5 +189,12 @@ public class PatientBean{
 
 	public void setProcedureDocumnts(List<DocumentBean> procedureDocumnts) {
 		this.procedureDocumnts = procedureDocumnts;
+	}
+	public List<DocumentBean> getLopRequestDocuments() {
+		return lopRequestDocuments;
+	}
+
+	public void setLopRequestDocuments(List<DocumentBean> lopRequestDocuments) {
+		this.lopRequestDocuments = lopRequestDocuments;
 	}
 }
