@@ -45,18 +45,21 @@
 														<aui:validator name="required" />
 												</aui:input>
 				                           </div>
+				                           <br/>
 				                           <div class="form-group col-md-4">
-				                                <aui:input name="cptCode" label="patient.cptCode" cssClass="form-control" placeholder="CPT Code"></aui:input>
-				                           </div>
-				                           <div class="form-group col-md-4">
-				                                <aui:input type="text"  cssClass="form-control" label="patient.dob"  name="patientDOB" size="30" placeholder="MM/DD/YYYY"/>
+				                                <aui:input type="text"  cssClass="form-control" label="patient.dob"  name="patientDOB" placeholder="MM/DD/YYYY">
+				                                	<aui:validator name="required" />
+				                                </aui:input>
 				                            </div>
 				                            <div class="form-group col-md-4">
-				                                <aui:input name="phoneNo" label="patient.phone" cssClass="form-control" placeholder="Phone"></aui:input>
+				                                <aui:input name="phoneNo" label="patient.phone" cssClass="form-control" placeholder="Phone">
+				                                	<aui:validator name="required" />
+				                                </aui:input>
 				                            </div>
 				                            <div class="form-group col-md-4">
 				                                <aui:input name="address1" label="patient.address1" cssClass="form-control" placeholder="Address1"></aui:input>
 				                            </div>
+				                            <br/>
 											<div class="form-group col-md-4">
 				                                <aui:input name="address2" label="patient.address2" cssClass="form-control" placeholder="Address2"></aui:input>
 				                            </div>
@@ -66,6 +69,7 @@
 				                            <div class="form-group col-md-4">
 				                                <aui:input name="state" label="patient.state" cssClass="form-control" placeholder="State"></aui:input>
 				                            </div>
+				                            <br/>
 											<div class="form-group col-md-4">
 				                                <aui:input name="country" label="patient.country" cssClass="form-control" placeholder="Country"></aui:input>
 				                            </div>
@@ -89,14 +93,14 @@
 													<aui:option value="11">Payment Received</aui:option>
 												</aui:select>
 											 </div>
-											 <div class="box-footer">
-					                			<a class="btn btn-primary pull-right" data-section="pi"  onclick='patientFn.setNext("pi")' >Next</a>
+											 <div class="">
+					                			<a class="btn btn-primary pull-right" style="margin-right: 21px;"  data-section="pi"  onclick='patientFn.setNext("pi")' >Next</a>
 					              			 </div>
 										 </div> 
 										 <div class="row m0 setup-content" id="step-2">
 												<div class="form-group col-md-12">
 					                                    <aui:select name="doctor" label="doctor" cssClass="form-control patient_select">
-																<aui:option value="0"> Select Doctor</aui:option>
+																<aui:option value=""> Select Doctor</aui:option>
 															<c:forEach items="${doctorAdminList }" var="doctor"> 
 																<aui:option value="${doctor.userId }">  ${doctor.firstName } ${doctor.lastName }</aui:option>
 															</c:forEach>
@@ -112,7 +116,7 @@
 					                            
 					                            <div class="form-group col-md-12">
 					                                    <aui:select name="lawyer" label="lawyer" cssClass="form-control patient_select">
-																<aui:option value="0"> Select Lawyer</aui:option>
+																<aui:option value=""> Select Lawyer</aui:option>
 															<c:forEach items="${lawyerAdminList }" var="lawyer"> 
 																<aui:option value="${lawyer.userId }">  ${lawyer.firstName } ${lawyer.lastName }</aui:option>
 															</c:forEach>
@@ -126,15 +130,15 @@
 					                            </div>
 					                            
 					                            
-					                            <div class="box-footer">
-					                				<a class="btn btn-primary"  onclick='patientFn.setPrev("dl")' >Previous</a>
-					                				<a class="btn btn-primary pull-right"  onclick='patientFn.setNext("dl")' >Next</a>
+					                            <div class="">
+					                				<a class="btn btn-primary" style="margin-left: 21px;" onclick='patientFn.setPrev("dl")' >Previous</a>
+					                				<a class="btn btn-primary pull-right" style="margin-right: 21px;"  onclick='patientFn.setNext("dl")' >Next</a>
 					              				</div>
 				                            </div>
 											<div class="row m0 setup-content" id="step-3">
 													<div class="form-group col-md-12">
 						                                <aui:select name="clinic" label="clinic">
-																<aui:option value="0">Select Clinic</aui:option>
+																<aui:option value="">Select Clinic</aui:option>
 																<c:forEach items="${clinicList }" var="clinicMaster">
 													 				<aui:option value="${clinicMaster.clinicId }"> ${clinicMaster.clinicName }</aui:option>
 																</c:forEach>
@@ -197,9 +201,9 @@
 														</div>
 													</div>
 												</div>	
-												<div class="box-footer">
-					                				<a class="btn btn-primary"  onclick='patientFn.setPrev("proc")' >Previous</a>
-					                				<a class="btn btn-primary pull-right"  onclick='patientFn.setNext("proc")' >Next</a>
+												<div class="">
+					                				<a class="btn btn-primary" style="margin-left: 21px;" onclick='patientFn.setPrev("proc")' >Previous</a>
+					                				<a class="btn btn-primary pull-right"  style="margin-right: 21px;" onclick='patientFn.setNext("proc")' >Next</a>
 					              				</div>
 											</div>	
 									 		<aui:input name="resourceCount" type="hidden"/>	
@@ -226,8 +230,8 @@
 				                                		<aui:input type="textarea" name="otherNotes" label="other.notes" max="500" cssClass=""/>
 				                            		</div>
 									 			<br/>
-				                            	<div class="box-footer">
-					                				<a class="btn btn-primary"  onclick='patientFn.setPrev("doc")' >Previous</a>
+				                            	<div class="">
+					                				<a class="btn btn-primary" style="margin-left: 21px;" onclick='patientFn.setPrev("doc")' >Previous</a>
 					              				</div>
 				                            	<div class="form-group col-md-12">
 				                                	<aui:button type="button" value="Submit"  cssClass="addPatientBtn btn btn-primary"/>
@@ -246,6 +250,59 @@ var resourceCount=0;
 var patientFn={};
 var patientRegistrationMouleNS =  '<portlet:namespace/>';
 AUI().use('aui-io-request', 'aui-autocomplete' ,'aui-base','aui-form-validator','autocomplete-list','autocomplete-filters', 'node-event-simulate' ,'autocomplete-highlighters','aui-datepicker', function(A) {
+	
+	var doctorLawyerValidator = new A.FormValidator({
+		boundingBox: document.<portlet:namespace/>createPatientForm,
+		rules: {
+			<portlet:namespace/>doctor: {
+				required: true
+			},
+			<portlet:namespace/>lawyer: {
+				required: true
+			}
+		},
+		fieldStrings: {
+			<portlet:namespace/>doctor: {
+				required: 'Please select Doctor'
+				},
+				<portlet:namespace/>lawyer: {
+				required: 'Please select Lawyer'
+			}
+		}
+	});
+	
+	
+	var procdeureValidator = new A.FormValidator({
+		boundingBox: document.<portlet:namespace/>createPatientForm,
+		rules: {
+			<portlet:namespace/>clinic: {
+				required: true
+			},
+			<portlet:namespace/>resource0: {
+				required: true
+			},
+			<portlet:namespace/>specification0: {
+				required: true
+			},
+			<portlet:namespace/>occurance0: {
+				required: true
+			}
+		},
+		fieldStrings: {
+			<portlet:namespace/>clinic: {
+				required: 'Please select Clinic'
+				},
+				<portlet:namespace/>resource0: {
+				required: 'Please select resource'
+				},
+				<portlet:namespace/>specification0: {
+					required: 'Please select specification'
+				},
+				<portlet:namespace/>occurance0: {
+				required: 'Please enter valid occurance'
+				}
+		}
+	});
 	
 	var addPatientBtn= A.one(".addPatientBtn");
 	addPatientBtn.on('click', function(e) {
@@ -364,8 +421,11 @@ AUI().use('aui-io-request', 'aui-autocomplete' ,'aui-base','aui-form-validator',
 
 	step1Content.show();
 
+	/*
 	step1Link.on('click', function(e) {
-		console.log("step1");
+		if(!patientFn.isFormValid()){
+			return false;
+		}
 		step1Content.show();
 		step2Content.hide();
 		step3Content.hide();
@@ -374,7 +434,9 @@ AUI().use('aui-io-request', 'aui-autocomplete' ,'aui-base','aui-form-validator',
 		this.ancestor('li').addClass("active");
 	});
 	step2Link.on('click', function(e) {
-		console.log("step2");
+		if(!patientFn.isFormValid()){
+			return false;
+		}		
 		step1Content.hide();
 		step2Content.show();
 		step3Content.hide();
@@ -383,7 +445,9 @@ AUI().use('aui-io-request', 'aui-autocomplete' ,'aui-base','aui-form-validator',
 		this.ancestor('li').addClass("active");
 	});
 	step3Link.on('click', function(e) {
-		console.log("step3");
+		if(!patientFn.isFormValid()){
+			return false;
+		}
 		step1Content.hide();
 		step2Content.hide();
 		step3Content.show();
@@ -392,14 +456,16 @@ AUI().use('aui-io-request', 'aui-autocomplete' ,'aui-base','aui-form-validator',
 		this.ancestor('li').addClass("active");
 	});
 	step4Link.on('click', function(e) {
-		console.log("step4");
+		if(!patientFn.isFormValid()){
+			return false;
+		}
 		step1Content.hide();
 		step2Content.hide();
 		step3Content.hide();
 		step4Content.show();
 		removeAllActiveClass();
 		this.ancestor('li').addClass("active");
-	});
+	});*/
 
 	var removeAllActiveClass = function(){
 		A.all('.link').each(
@@ -410,30 +476,94 @@ AUI().use('aui-io-request', 'aui-autocomplete' ,'aui-base','aui-form-validator',
 	}
 	
 	patientFn.setNext = function(currStep){
+		if(!patientFn.isFormValid()){
+			return false;
+		}
 		if(currStep==='pi'){
-			A.one('#step-2-link').simulate('click');
+			//A.one('#step-2-link').simulate('click');
+			step1Content.hide();
+			step2Content.show();
+			step3Content.hide();
+			step4Content.hide();
+			removeAllActiveClass();
+			//this.ancestor('li').addClass("active");
+			A.one(".doct").addClass("active");
 		}else if(currStep==='dl'){
-			A.one('#step-3-link').simulate('click');
+			// check doctor and lawyer detail
+			doctorLawyerValidator.validate();
+			if(doctorLawyerValidator.hasErrors()){
+				return false;
+			}
+			//A.one('#step-3-link').simulate('click');
+			
+			step1Content.hide();
+			step2Content.hide();
+			step3Content.show();
+			step4Content.hide();
+			removeAllActiveClass();
+			A.one(".cap").addClass("active");
+			
 		}else if(currStep==='proc'){
-			A.one('#step-4-link').simulate('click');
+			// Check procedure and resource
+			procdeureValidator.validate();
+			if(procdeureValidator.hasErrors()){
+				return false;	
+			}
+			//A.one('#step-4-link').simulate('click');
+			
+			step1Content.hide();
+			step2Content.hide();
+			step3Content.hide();
+			step4Content.show();
+			removeAllActiveClass();
+			A.one(".docu").addClass("active");
 		}
 	}
 	
 	patientFn.setPrev = function(currStep){
+		if(!patientFn.isFormValid()){
+			return false;
+		}
 		if(currStep==='dl'){
-			A.one('#step-1-link').simulate('click');
+			//A.one('#step-1-link').simulate('click');
+			step1Content.show();
+			step2Content.hide();
+			step3Content.hide();
+			step4Content.hide();
+			removeAllActiveClass();
+			A.one(".pi").addClass("active");
 		}else if(currStep==='proc'){
-			A.one('#step-2-link').simulate('click');
+			//A.one('#step-2-link').simulate('click');
+			step1Content.hide();
+			step2Content.show();
+			step3Content.hide();
+			step4Content.hide();
+			removeAllActiveClass();
+			A.one(".doct").addClass("active");
 		}else if(currStep==='doc'){
-			A.one('#step-3-link').simulate('click');
+			//A.one('#step-3-link').simulate('click');
+			step1Content.hide();
+			step2Content.hide();
+			step3Content.show();
+			step4Content.hide();
+			removeAllActiveClass();
+			A.one(".cap").addClass("active");
 		}
 	}
 
+	patientFn.isFormValid =  function(){
+		var myFormValidator = Liferay.Form.get('<portlet:namespace />createPatientForm').formValidator;
+		myFormValidator.validate();
+		if(myFormValidator.hasErrors()){
+			return false;
+		}else{
+			return true;
+		}
+	}
 
 });
 </aui:script>
 <script>
-var ss;
 jQuery.noConflict();
 (function($) {
     $(function() {

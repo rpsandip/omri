@@ -2,6 +2,8 @@
 <liferay-ui:success key="appointment-created-successfully" message="appointment-created-successfully"/>
 <liferay-ui:error key="error-create-appointment" message="error-create-appointment"/>
 <liferay-ui:error key="clinic-resource-error" message="clinic-resource-error"/>
+<liferay-ui:error key="no-available-slot-appointment" message="no-available-slot-appointment"/>
+
 <portlet:actionURL var="addAppointmentURL" name="/patient/add_appointment">
 </portlet:actionURL>
 <portlet:resourceURL id="/getAppointmentList" var="getAppointmentListURL" />
@@ -29,7 +31,7 @@
  </section>
  <section class="content calender-page-view">
  	 <div class="row">
-	        <div class="col-md-3">
+	        <div class="col-md-4">
 	          <div class="box box-body box-solid">
 	          	<div>
 	          		First Name : </strong><span style="padding-left: 10px;">${patientBean.firstName }
@@ -101,15 +103,15 @@
 	          </div>
 	         </div>
 	         
-	         <div class="col-md-9">
+	         <div class="col-md-8">
 	          <div class="box box-primary">
 	            <div class="box-body no-padding">
 	              <form id="searchcal">
 	              	<div class="form-group col-md-3">
-	                  <input type="text" name="filterDate" id="filterDate" class="form-control"/>
+	                  <input type="text" class="form-control" name="filterDate" id="filterDate"/>
 	                </div>
 	              	<div class="form-group col-md-3">
-	                  <select name="clinic" id="filterClinic">
+	                  <select name="clinic" id="filterClinic" class="form-control">
 						<option value="0">Select Clinic</option>
 							<c:forEach items="${clinicList }" var="clinicMaster">
 								<option value="${clinicMaster.clinicId }">${clinicMaster.clinicName }</option>
@@ -117,7 +119,7 @@
 						</select>
 	                </div>
 	                <div class="form-group col-md-3">
-	                  <select name="resource" id="filterResource">
+	                  <select name="resource" id="filterResource" class="form-control">
 						<option value="0">Select Resource</option>
 						<c:forEach items="${resourceList }" var="resourceMaster">
 							<option value="${resourceMaster.resourceId }">${resourceMaster.resourceName }</option>

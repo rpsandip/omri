@@ -62,6 +62,7 @@
 		        </div>
 		        <div class="col-sm-4 invoice-col">
 		          <b>Physician : ${procedureBean.appointmentList[0].doctorName }</b><br>
+		          <b>Lawyer : ${procedureBean.appointmentList[0].lawyerName }</b><br>
 		        </div>
 		      </div>
 		      <div class="row">

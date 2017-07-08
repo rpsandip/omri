@@ -18,11 +18,16 @@ import aQute.bnd.annotation.ProviderType;
 
 import java.util.List;
 
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.omri.service.common.exception.NoSuchCustomUserException;
 import com.omri.service.common.model.CustomUser;
 import com.omri.service.common.service.CustomUserLocalServiceUtil;
@@ -74,4 +79,19 @@ public class OMRICommonLocalServiceImpl extends OMRICommonLocalServiceBaseImpl {
 		}
 		 return orgGroupId; 
 	 }
+	 
+	 public String getDLFileAbsPath(FileEntry fileEntry) 
+			 throws PortalException, SystemException {
+			   return PropsUtil.get("dl.hook.file.system.root.dir") + "/"
+			     + fileEntry.getCompanyId() + "/"
+			     + fileEntry.getFolderId() + "/"
+			     + ((DLFileEntry) fileEntry.getModel()).getName() + "/"
+			     + fileEntry.getVersion();
+	 }
+	 
+	 public String getDLFileURL(DLFileEntry file) {
+		     return "/documents/" + file.getGroupId() + StringPool.SLASH + file.getFolderId() + StringPool.SLASH
+		             + file.getTitle() + StringPool.SLASH + file.getUuid();
+	 }	 
+	 
 }

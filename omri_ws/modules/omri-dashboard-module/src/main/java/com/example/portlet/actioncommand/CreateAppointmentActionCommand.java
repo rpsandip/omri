@@ -108,15 +108,24 @@ public class CreateAppointmentActionCommand  extends BaseMVCActionCommand{
 				Clinic_Resource clinicResource = Clinic_ResourceLocalServiceUtil.getClinic_Resource(clinicResourcePK);
 				//appointmentProcessTime = patientClinicResource.getNoOfOccurance()*clinicResource.getOperationTime();
 				appointmentProcessTime = clinicResource.getOperationTime();
+				Date appointmentEndDate = new Date(appointmentDate.getTime()+(60000*appointmentProcessTime));
+				boolean isAppoitnementAvailable = checkAvailableSlot(appointmentDate, clinicId, patientId, resource.getResourceId(), specification.getSpecificationId());
+				if(isAppoitnementAvailable){
 				Appointment appointment = AppointmentLocalServiceUtil.createAppointment(patientId, clinicId,
-						resource.getResourceId(), specification.getSpecificationId(), procedure.getProcedureId(), clinicResource.getPrice(),patientClinic.getDoctorId(),
-						appointmentDate, appointmentProcessTime, Integer.parseInt(resourceSpeficiationArray[2]), themeDisplay.getUserId(), themeDisplay.getUserId(),
+						resource.getResourceId(), specification.getSpecificationId(), procedure.getProcedureId(), clinicResource.getPrice(),patientClinic.getDoctorId(),patientClinic.getLawyerId(),
+						appointmentDate, appointmentEndDate,appointmentProcessTime, Integer.parseInt(resourceSpeficiationArray[2]), themeDisplay.getUserId(), themeDisplay.getUserId(),
 						new Date(), new Date());
 				checkProcedureComplete(appointment);
 				actionResponse.setRenderParameter("mvcRenderCommandName", "/schedule_patient");
 				actionResponse.setRenderParameter("patientId", String.valueOf(patientClinic.getPatientId()));
 				actionResponse.setRenderParameter("clinicId",  String.valueOf(patientClinic.getClinicId()));
 				SessionMessages.add(actionRequest, "appointment-created-successfully");
+				}else{
+					actionResponse.setRenderParameter("mvcRenderCommandName", "/schedule_patient");
+					actionResponse.setRenderParameter("patientId", String.valueOf(patientClinic.getPatientId()));
+					actionResponse.setRenderParameter("clinicId",  String.valueOf(patientClinic.getClinicId()));
+					SessionErrors.add(actionRequest, "no-available-slot-appointment");
+				}
 			} catch (ParseException e) {
 				actionResponse.setRenderParameter("mvcRenderCommandName", "/schedule_patient");
 				actionResponse.setRenderParameter("patientId", String.valueOf(patientClinic.getPatientId()));
@@ -140,6 +149,18 @@ public class CreateAppointmentActionCommand  extends BaseMVCActionCommand{
 				}
 				_log.error(e.getMessage(), e);
 			}
+	}
+	
+	private boolean  checkAvailableSlot(Date appointmentStartDateTime, long clinicId, long patientId, long resourceId, long specificationId){
+		boolean isAppointmentAvaialbel = true;
+		List<Appointment> appointmentList =  AppointmentLocalServiceUtil.getAppoinmentsByDateAndClinic(appointmentStartDateTime,clinicId, resourceId, specificationId);
+		for(Appointment appointment : appointmentList){
+			if(appointment.getPatientId()!=patientId){
+				isAppointmentAvaialbel= false;
+				break;
+			}
+		}
+		return isAppointmentAvaialbel;
 	}
 	
 	private boolean checkProcedureComplete(Appointment appointment){

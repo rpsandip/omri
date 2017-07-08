@@ -18,7 +18,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.omri.service.common.model.Clinic_Resource;
+import com.omri.service.common.model.Resource_Specification;
 import com.omri.service.common.model.Specification;
 import com.omri.service.common.service.Clinic_ResourceLocalServiceUtil;
 import com.omri.service.common.service.Resource_SpecificationLocalServiceUtil;
@@ -45,9 +47,12 @@ public class GetSpecificationResourceCommand implements MVCResourceCommand{
 			JSONObject specificationJsonObject = JSONFactoryUtil.createJSONObject();
 			Specification specification;
 			try {
+				
 				specification = SpecificationLocalServiceUtil.getSpecification(clinicResource.getSpecificationId());
+				Resource_Specification resourceSpecification =  Resource_SpecificationLocalServiceUtil.getResourceSpecification(resourceId, specification.getSpecificationId());
+				
 				specificationJsonObject.put("specificationId", specification.getSpecificationId());
-				specificationJsonObject.put("specificationName", specification.getSpecificationName());
+				specificationJsonObject.put("specificationName", specification.getSpecificationName()+StringPool.OPEN_PARENTHESIS+resourceSpecification.getCptCode()+StringPool.CLOSE_PARENTHESIS);
 				specificationJsonArray.put(specificationJsonObject);
 			} catch (PortalException e) {
 				_log.error(e.getMessage(), e);

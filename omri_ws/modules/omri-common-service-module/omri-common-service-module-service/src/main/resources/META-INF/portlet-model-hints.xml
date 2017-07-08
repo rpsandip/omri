@@ -6,10 +6,12 @@
 		<field name="patientId" type="long" />
 		<field name="clinicId" type="long" />
 		<field name="doctorId" type="long" />
+		<field name="lawyerId" type="long" />
 		<field name="resourceId" type="long" />
 		<field name="specificationId" type="long" />
 		<field name="noOfOccurance" type="int" />
 		<field name="appointmetDate" type="Date" />
+		<field name="appointmetEndDate" type="Date" />
 		<field name="appointmetProcessTime" type="int" />
 		<field name="status" type="int" />
 		<field name="price" type="double" />

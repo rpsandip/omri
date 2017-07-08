@@ -272,10 +272,12 @@
 		<column name="patientId" type="long" />
 		<column name="clinicId" type="long" />
 		<column name="doctorId" type="long" />
+		<column name="lawyerId" type="long" />
 		<column name="resourceId" type="long" />
 		<column name="specificationId" type="long" />
 		<column name="noOfOccurance" type="int" />
 		<column name="appointmetDate" type="Date" />
+		<column name="appointmetEndDate" type="Date" />
 		<column name="appointmetProcessTime" type="int" />
 		<column name="status" type="int" />
 		<column name="price" type="double" />

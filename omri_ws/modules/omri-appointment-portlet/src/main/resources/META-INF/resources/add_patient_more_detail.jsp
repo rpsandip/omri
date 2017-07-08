@@ -25,10 +25,6 @@
 									</aui:input>
                            </div>
                            <div class="form-group col-md-6">
-                                    <aui:input name="cptCode" label="patient.cptCode"  value="${patient.cptCode }">
-									</aui:input>
-                           </div>
-                           <div class="form-group col-md-6">
                                 	<label for="<portlet:namespace />patientDOB"><liferay-ui:message key="patient.dob"></liferay-ui:message></label>
                                 	<fmt:formatDate pattern="MM/dd/yyyy" value="${patient.dob}"  var="patientDOB"/>
                                     <aui:input type="text"  cssClass="form-control" label="" name="patientDOB" id="<portlet:namespace />patientDOB" size="30" value="${patientDOB }" placeholder="MM/DD/YYYY"/>
@@ -62,7 +58,7 @@
 									</aui:input>
                             </div>
 	                         <br/>
-							<div class="form-group col-md-12">
+							<div class="form-group col-md-6">
                          			<liferay-ui:message key="mribefore"></liferay-ui:message>
                          			<p>
                          				<aui:input id="mriBeforeYes" name="mriBefore" label="" type="radio" value="true" 
@@ -75,7 +71,7 @@
 										<label for="<portlet:namespace/>mriBeforeNo">No</label>
 									</p>
                          	</div>
-                         	<div class="form-group col-md-12">
+                         	<div class="form-group col-md-6">
                          		    <liferay-ui:message key="Claustrophobic"></liferay-ui:message>
                          			<p>
                          				<aui:input id="claustrophobicYes" name="claustrophobic" label="" type="radio"  value="true"
@@ -91,7 +87,7 @@
 										<aui:input type="text" name="claustrophobicDetail" label="claustrophobicDetail"/>
 									</div>
                          	</div>
-                         	<div class="form-group col-md-12">
+                         	<div class="form-group col-md-6">
                          			<liferay-ui:message key="300lbs"></liferay-ui:message>
                          			<p>
                          			<aui:input id="300lbsYes" name="300lbs" label="" type="radio"  value="true" checked='${patientDetail.under300lbs eq true ? true : false }'>
@@ -104,7 +100,7 @@
 									<label for="<portlet:namespace/>300lbsNo">No</label>
 									</p>
                          	</div>
-                         	<div class="form-group col-md-12">
+                         	<div class="form-group col-md-6">
                          			<liferay-ui:message key="prevPatient"></liferay-ui:message>
                          			<p>
                          				<aui:input id="prevPatientYes" name="prevPatient" label="" type="radio"  value="true" checked='${patientDetail.previousPatient eq true ? true : false }'>
@@ -117,7 +113,7 @@
 										<label for="<portlet:namespace/>prevPatientNo">No</label>
 									</p>
                          	</div>
-                         	<div class="form-group col-md-12">
+                         	<div class="form-group col-md-6">
                          			<liferay-ui:message key="paceMaker"></liferay-ui:message>
                          			<p>
                          				<aui:input id="paceMakerYes" name="paceMaker" label="" type="radio"  value="true" checked='${patientDetail.previousPatient eq true ? true : false }'>
@@ -133,7 +129,7 @@
 										<aui:input type="text" name="pacemakerDetail" label="" style="display:none"/>
 									</p>
                          	</div>
-                         	<div class="form-group col-md-12">
+                         	<div class="form-group col-md-6">
                          			<liferay-ui:message key="metalInBody"></liferay-ui:message>
                          			<p>
                          				<aui:input id="metalInBodyYes" name="metalInBody" label="" type="radio"  value="true" checked='${patientDetail.metalInBody eq true ? true : false }'>
@@ -149,7 +145,7 @@
 										<aui:input type="text" name="metalInBodyDetail" label="" style="display:none"/>
 									</p>
                          	</div>
-                         	<div class="form-group col-md-12">
+                         	<div class="form-group col-md-6">
                          			<liferay-ui:message key="priorSurgery"></liferay-ui:message>
                          			<p>
 	                         			<aui:input id="priorSurgeryYes" name="priorSurgery" label="" type="radio"  value="true" checked='${patientDetail.priorSurgery eq true ? true : false }'>
@@ -165,7 +161,7 @@
 										<aui:input type="text" name="priorSurgeryDetail" label="" style="display:none"/>
 									</p>
                          	</div>
-                         	<div class="form-group col-md-12">
+                         	<div class="form-group col-md-6">
                          			<liferay-ui:message key="chanceOfPregent"></liferay-ui:message>
                          			<p>
                          				<aui:input id="chanceOfPregentYes" name="chanceOfPregent" label="" type="radio"  value="true" checked='${patientDetail.chanceOfPregnent eq true ? true : false }'>
@@ -178,7 +174,7 @@
 										<label for="<portlet:namespace/>chanceOfPregentNo">No</label>
 									</p>
                          	</div>
-                         	<div class="form-group col-md-12">
+                         	<div class="form-group col-md-6">
                          			<liferay-ui:message key="overAgeof60"></liferay-ui:message>
                          			<p>
                          			<aui:input id="overAgeof60Yes" name="overAgeof60" label="" type="radio"  value="true" checked='${patientDetail.overAge60 eq true ? true : false }'>
@@ -191,7 +187,7 @@
 									<label for="<portlet:namespace/>overAgeof60No">No</label>
 									</p>
                          	</div>
-                         	<div class="form-group col-md-12">
+                         	<div class="form-group col-md-6">
                          			<liferay-ui:message key="labsDone"></liferay-ui:message>
                          			<p>
                          				<aui:input id="labsDoneYes" name="labsDone" label="" type="radio"  value="true" checked='${patientDetail.labsDone eq true ? true : false }'>
@@ -204,7 +200,7 @@
 									<label for="<portlet:namespace/>labsDoneNo">No</label>
 									</p>
                          	</div>
-                         	<div class="form-group col-md-12">
+                         	<div class="form-group col-md-6">
                          			<liferay-ui:message key="allergic"></liferay-ui:message>
                          			<p>
                          			<aui:input id="allergicYes" name="allergic" label="" type="radio"   value="true" checked='${patientDetail.allergic eq true ? true : false }'>
@@ -220,7 +216,7 @@
 										<aui:input type="text" name="alergicDetail" label="" style="display:none"/>
 									</p>
                          	</div>
-                         	<div class="form-group col-md-12">
+                         	<div class="form-group col-md-6">
                          			<liferay-ui:message key="diabetic"></liferay-ui:message>
                          			<p>
                          			<aui:input id="diabeticYes" name="diabetic" label="" type="radio"  value="true" checked='${patientDetail.diabetic eq true ? true : false }'>
@@ -236,8 +232,7 @@
 										<aui:input type="text" name="diabeticDetail" label="" style="display:none"/>
 									</p>
                          	</div>
-                         	<div class="form-group col-md-12">
-                         		<div class="input-group">
+                         	<div class="form-group col-md-6">
                          			<liferay-ui:message key="hypertension"></liferay-ui:message>
                          			<p>
                          				<aui:input id="hypertensionYes" name="hypertension" label="" type="radio"  value="true" checked='${patientDetail.hyperTension eq true ? true : false }'>
@@ -249,9 +244,8 @@
 										</aui:input>
 										<label for="<portlet:namespace/>hypertensionNo">No</label>
 									</p>
-                         		</div>
                          	</div>
-                         	<div class="form-group col-md-12">
+                         	<div class="form-group col-md-6">
                          			<liferay-ui:message key="cancer"></liferay-ui:message>
                          			<p>
                          			<aui:input id="cancerYes" name="cancer" label="" type="radio"  value="true" checked='${patientDetail.cancer eq true ? true : false }'>
@@ -264,7 +258,7 @@
 									<label for="<portlet:namespace/>cancerNo">No</label>
 									</p>
                          	</div>
-                         	<div class="form-group col-md-12">
+                         	<div class="form-group col-md-6">
                          			
                          			<liferay-ui:message key="allergicToIdodine"></liferay-ui:message>
                          			<p>
@@ -281,7 +275,7 @@
 										<aui:input type="text" name="allergicToIdodineDetail" label="" style="display:none"/>
 									</p>
                          	</div>
-                         	<div class="form-group col-md-12">
+                         	<div class="form-group col-md-6">
                          			<liferay-ui:message key="bloodthinners"></liferay-ui:message>
                          			<p>
                          			<aui:input id="bloodthinnersYes" name="bloodthinners" label="" type="radio"  value="true" checked='${patientDetail.bloodthinners eq true ? true : false }'>

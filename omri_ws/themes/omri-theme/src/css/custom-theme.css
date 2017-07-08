@@ -94,7 +94,7 @@ body {
 }
 .content-wrapper,
 .right-side {
-  min-height: 100%;
+  min-height: calc(100vh - 52px);
   background-color: #ecf0f5;
   z-index: 800;
 }
@@ -4943,12 +4943,22 @@ table.text-center th {
   }
 }
 @media (min-width: 1200px) {
-	.container{width:85%}
+	.container{width:85%;}
 }
 .divider-line{padding : 0}
 .divider-line hr{margin:7px 0}
 .add-res-btn a{ margin: 30px 5px 0 0;}
 .appointment-list{max-height:250px;overflow-y:scroll}
 .app-time{padding:0 15px 0 5px}
-.calender-page-view{width:85%;margin:0 auto}
+.calender-page-view{width:95%;margin:0 auto}
 #searchcal{padding:15px 0px 30px 0px}
+
+.setup-content .row {
+	margin-right: 0px !important;
+    margin-left: 0px !important;
+}
+
+.lfr-form-row:hover {
+    background-color: #eee !important;
+    border-color: #eee !important;
+}

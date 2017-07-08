@@ -51,7 +51,7 @@ import com.omri.service.common.util.AppointmentStatus;
 @ProviderType
 public class AppointmentLocalServiceImpl extends AppointmentLocalServiceBaseImpl {
 	private static Log _log = LogFactoryUtil.getLog(AppointmentLocalServiceImpl.class);
-	public Appointment createAppointment(long patientId, long clinicId, long resourceId, long specificationId, long procedureId,double price,long doctorId,Date appointmentDate,int appointmentProcessTime,int noOfOccurance,
+	public Appointment createAppointment(long patientId, long clinicId, long resourceId, long specificationId, long procedureId,double price,long doctorId, long lawyerId, Date appointmentDate, Date appointmentEndDate,int appointmentProcessTime,int noOfOccurance,
 			long createdBy, long modifiedBy, Date createdDate, Date modifiedDate){
 		Appointment appointment = AppointmentLocalServiceUtil.createAppointment(CounterLocalServiceUtil.increment());
 		appointment.setPatientId(patientId);
@@ -61,7 +61,9 @@ public class AppointmentLocalServiceImpl extends AppointmentLocalServiceBaseImpl
 		appointment.setProcedureId(procedureId);
 		appointment.setPrice(price);
 		appointment.setDoctorId(doctorId);
+		appointment.setLawyerId(lawyerId);
 		appointment.setAppointmetDate(appointmentDate);
+		appointment.setAppointmetEndDate(appointmentEndDate);
 		appointment.setAppointmetProcessTime(appointmentProcessTime);
 		appointment.setCreatedBy(createdBy);
 		appointment.setNoOfOccurance(noOfOccurance);
@@ -159,6 +161,18 @@ public class AppointmentLocalServiceImpl extends AppointmentLocalServiceBaseImpl
 	public List<Appointment> getAppointmentsByStatusAndPatientId(long patientId, int status){
 		List<Appointment> appointmentList = new ArrayList<Appointment>();
 		appointmentList = appointmentPersistence.findByStatusAndPatientId(patientId, status);
+		return appointmentList;
+	}
+	
+	public List<Appointment> getAppoinmentsByDateAndClinic(Date appointmentDateTime,long clinicId, long resourceId, long specificationId){
+		List<Appointment> appointmentList = new ArrayList<Appointment>();
+		DynamicQuery dynamicQuery = AppointmentLocalServiceUtil.dynamicQuery();
+		dynamicQuery.add(PropertyFactoryUtil.forName("appointmetDate").le(appointmentDateTime));
+		dynamicQuery.add(PropertyFactoryUtil.forName("appointmetEndDate").gt(appointmentDateTime));
+		dynamicQuery.add(PropertyFactoryUtil.forName("clinicId").eq(clinicId));
+		dynamicQuery.add(PropertyFactoryUtil.forName("resourceId").eq(resourceId));
+		dynamicQuery.add(PropertyFactoryUtil.forName("specificationId").eq(specificationId));
+		appointmentList = AppointmentLocalServiceUtil.dynamicQuery(dynamicQuery);
 		return appointmentList;
 	}
 	

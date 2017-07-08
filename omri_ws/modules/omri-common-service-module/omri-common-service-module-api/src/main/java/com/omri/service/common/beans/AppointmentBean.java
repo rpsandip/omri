@@ -28,7 +28,9 @@ public class AppointmentBean {
 		private long clinicId;
 		private String clinicName;
 		private long doctorId;
+		private long lawyerId;
 		private String doctorName;
+		private String lawyerName;
 		private long resourceId;
 		private long procedureId;
 		private double price;
@@ -37,6 +39,7 @@ public class AppointmentBean {
 		private long specificationId;
 		private String specificationName;
 		private Date appointmentDate;
+		private Date appointmentEndDate;
 		private int appointmetProcessTime;
 		private long createdBy;
 		private long modifiedBy;
@@ -59,9 +62,18 @@ public class AppointmentBean {
 				User doctor = UserLocalServiceUtil.getUser(doctorId);
 				this.doctorName = doctor.getFirstName()+StringPool.SPACE+doctor.getLastName();
 			} catch (PortalException e) {
-				_log.error(e.getMessage(), e);
+				this.doctorName = StringPool.BLANK;
+				_log.error(e.getMessage());
 			}
 			
+			this.lawyerId = appointment.getLawyerId();
+			try {
+				User lawyer = UserLocalServiceUtil.getUser(lawyerId);
+				this.lawyerName = lawyer.getFirstName()+StringPool.SPACE+lawyer.getLastName();
+			} catch (PortalException e) {
+				_log.error(e.getMessage());
+				this.lawyerName = StringPool.BLANK;
+			}
 			
 			
 			if(Validator.isNotNull(resource)){
@@ -76,6 +88,7 @@ public class AppointmentBean {
 				this.appointmentId = appointment.getAppointmentId();
 				this.patientId = appointment.getPatientId();
 				this.appointmentDate = appointment.getAppointmetDate();
+				this.appointmentEndDate = appointment.getAppointmetEndDate();
 				this.appointmetProcessTime = appointment.getAppointmetProcessTime();
 				this.createdBy = appointment.getCreatedBy();
 				this.procedureId = appointment.getProcedureId();
@@ -222,7 +235,32 @@ public class AppointmentBean {
 		public void setPrice(double price) {
 			this.price = price;
 		}
-		
+		public long getLawyerId() {
+			return lawyerId;
+		}
+		public void setLawyerId(long lawyerId) {
+			this.lawyerId = lawyerId;
+		}
+		public String getLawyerName() {
+			return lawyerName;
+		}
+		public void setLawyerName(String lawyerName) {
+			this.lawyerName = lawyerName;
+		}
+
+
+
+
+		public Date getAppointmentEndDate() {
+			return appointmentEndDate;
+		}
+
+
+
+
+		public void setAppointmentEndDate(Date appointmentEndDate) {
+			this.appointmentEndDate = appointmentEndDate;
+		}
 		
 
  }

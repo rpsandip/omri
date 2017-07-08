@@ -22,10 +22,12 @@
 		<property name="patientId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="clinicId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="doctorId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="lawyerId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="resourceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="specificationId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="noOfOccurance" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="appointmetDate" type="org.hibernate.type.TimestampType" />
+		<property name="appointmetEndDate" type="org.hibernate.type.TimestampType" />
 		<property name="appointmetProcessTime" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="price" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />

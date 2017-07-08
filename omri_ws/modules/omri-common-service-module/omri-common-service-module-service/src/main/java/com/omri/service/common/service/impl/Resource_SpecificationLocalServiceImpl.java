@@ -22,6 +22,7 @@ import java.util.List;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.omri.service.common.exception.NoSuchResource_SpecificationException;
 import com.omri.service.common.model.Resource_Specification;
 import com.omri.service.common.model.Specification;
 import com.omri.service.common.service.SpecificationLocalServiceUtil;
@@ -59,5 +60,9 @@ public class Resource_SpecificationLocalServiceImpl
 			}
 		}
 		return specificationList;
+	}
+	
+	public Resource_Specification getResourceSpecification(long resourceId, long specificationId) throws NoSuchResource_SpecificationException{
+		return resource_SpecificationPersistence.findByresourceIdAndSpecificationId(resourceId, specificationId);
 	}
 }

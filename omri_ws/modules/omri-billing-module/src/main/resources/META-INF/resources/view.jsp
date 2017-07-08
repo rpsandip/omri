@@ -49,7 +49,7 @@
        					 <portlet:param name="mvcRenderCommandName" value="/generateProcedureBill" />
        					 <portlet:param name="procedureId" value="${procedureBean.procedureId }" />
 					</portlet:renderURL>
-            	 	<a href="${generateBillURL }">Generate Report</a>
+            	 	 <a href="${generateBillURL }" class="btn btn-block btn-primary">Generate Report</a>
             	 </td>
             </tr>
            </c:forEach>

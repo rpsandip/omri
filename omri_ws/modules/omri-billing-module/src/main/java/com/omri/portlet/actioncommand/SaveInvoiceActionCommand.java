@@ -57,12 +57,14 @@ import com.omri.service.common.model.Clinic;
 import com.omri.service.common.model.Patient;
 import com.omri.service.common.model.Procedure;
 import com.omri.service.common.model.Resource;
+import com.omri.service.common.model.Resource_Specification;
 import com.omri.service.common.model.Specification;
 import com.omri.service.common.service.AppointmentLocalServiceUtil;
 import com.omri.service.common.service.ClinicLocalServiceUtil;
 import com.omri.service.common.service.PatientLocalServiceUtil;
 import com.omri.service.common.service.ProcedureLocalServiceUtil;
 import com.omri.service.common.service.ResourceLocalServiceUtil;
+import com.omri.service.common.service.Resource_SpecificationLocalServiceUtil;
 import com.omri.service.common.service.SpecificationLocalServiceUtil;
 
 @Component(
@@ -152,10 +154,16 @@ public class SaveInvoiceActionCommand extends BaseMVCActionCommand {
 			            
 			            // Doctor Detail
 			            
-			            
 			            Paragraph doctorDetail = new Paragraph("Physician : ",clinicTitleFont);
 			            document.add(doctorDetail);
 			            document.add(new Chunk(appointmentBean.getDoctorName()));
+			            
+			            // LAwyer Detail
+			            
+			            Paragraph lawyerDetail = new Paragraph("Lawyer : ",clinicTitleFont);
+			            document.add(lawyerDetail);
+			            document.add(new Chunk(appointmentBean.getLawyerName()));
+			            
 			            
 			            // Invoice detail
 			            
@@ -193,10 +201,11 @@ public class SaveInvoiceActionCommand extends BaseMVCActionCommand {
 							 clinic = ClinicLocalServiceUtil.getClinic(appointment.getClinicId());
 							 Resource resource = ResourceLocalServiceUtil.getResource(appointment.getResourceId());
 							 Specification specification = SpecificationLocalServiceUtil.getSpecification(appointment.getSpecificationId());
-                             totalAmount += appointment.getPrice();
+							 Resource_Specification resourceSpecification =  Resource_SpecificationLocalServiceUtil.getResourceSpecification(resource.getResourceId(), specification.getSpecificationId());
+							 totalAmount += appointment.getPrice();
 							  dateCell = new PdfPCell(new Paragraph(dateformat.format(appointment.getAppointmetDate())));
 					          resourceCell = new PdfPCell(new Paragraph(resource.getResourceName()+"("+ specification.getSpecificationName() +")"));
-					          cptCodeCell = new PdfPCell(new Paragraph(patient.getCptCode()));
+					          cptCodeCell = new PdfPCell(new Paragraph(resourceSpecification.getCptCode()));
 					          amountCell = new PdfPCell(new Paragraph("$"+String.valueOf(appointment.getPrice())));
 					          
 					          table.addCell(dateCell);
