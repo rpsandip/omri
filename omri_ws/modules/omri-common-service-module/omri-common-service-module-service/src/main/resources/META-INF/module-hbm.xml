@@ -67,6 +67,8 @@
 		</composite-id>
 		<property name="operationTime" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="price" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="specificationName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="resourceName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.omri.service.common.model.impl.CustomUserImpl" table="OMRI_CustomUser">
 		<id name="customUserId" type="long">

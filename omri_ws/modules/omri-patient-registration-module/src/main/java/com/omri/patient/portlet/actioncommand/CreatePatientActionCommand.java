@@ -15,11 +15,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.imageio.spi.IIOServiceProvider;
 import javax.mail.internet.InternetAddress;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
 
+import org.bouncycastle.jce.provider.JDKPSSSigner.PSSwithRSA;
 import org.osgi.service.component.annotations.Component;
 
 import com.itextpdf.text.Chunk;
@@ -70,6 +72,7 @@ import com.omri.patient.portlet.resourcecommand.GetClinicResourcesResourceComman
 import com.omri.service.common.model.Clinic;
 import com.omri.service.common.model.Patient;
 import com.omri.service.common.model.Patient_Clinic;
+import com.omri.service.common.model.Patient_Clinic_Resource;
 import com.omri.service.common.model.Procedure;
 import com.omri.service.common.model.Resource;
 import com.omri.service.common.model.Specification;
@@ -99,32 +102,53 @@ public class CreatePatientActionCommand extends BaseMVCActionCommand{
 	protected void doProcessAction(ActionRequest actionRequest, ActionResponse actionResponse){
 		ThemeDisplay themeDisplay = (ThemeDisplay) actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		String procedureDetail = StringPool.BLANK;
+		boolean isEdit = false;
+		long patientId = ParamUtil.getLong(actionRequest, "patientId");
+		if(patientId>0){
+			isEdit = true;
+		}
 		try {
-			Patient patient = addPatient(actionRequest);
+			Patient patient = addUpdatePatient(actionRequest,isEdit);
 			if(Validator.isNotNull(patient)){
-				Patient_Clinic patientClinic = addPatientClinic(actionRequest, patient);
-				Procedure procedure = addPatientProcedure(patientClinic);
+				Patient_Clinic patientClinic = addUpdatePatientClinic(actionRequest, patient,isEdit);
+				Procedure procedure = null;
+				if(!isEdit){
+					procedure = addPatientProcedure(patientClinic);
+				}else{
+					procedure = ProcedureLocalServiceUtil.getProcedureByPatientIdAndClinicId(patientClinic.getPatientId(), patientClinic.getClinicId());
+				}
 				if(Validator.isNotNull(patientClinic)){
-					procedureDetail = addPatientClinicResource(actionRequest, patientClinic, procedure.getProcedureId());
+					if(!isEdit){
+						procedureDetail = addPatientClinicResource(actionRequest, patientClinic, procedure.getProcedureId());
+					}else{
+						deleteExistingPatientClinicResource(patientClinic);
+						procedureDetail = addPatientClinicResource(actionRequest, patientClinic, procedure.getProcedureId());
+					}
 				}
+				
 			    addPatientDocuments(actionRequest,patient);
-			    
-			    try {
-						generateLOPRequest(actionRequest,patient,procedureDetail);
-				} catch (FileNotFoundException e) {
-					LOG.error(e.getMessage(), e);
-				}catch (IOException e) {
-					LOG.error(e.getMessage(), e);
-				}
-				SessionMessages.add(actionRequest, "patient.added.successfully");
+			    if(!isEdit){
+				    try {
+							generateLOPRequest(actionRequest,patient,procedureDetail);
+					} catch (FileNotFoundException e) {
+						LOG.error(e.getMessage(), e);
+					}catch (IOException e) {
+						LOG.error(e.getMessage(), e);
+					}
+			    }
+			    if(!isEdit){
+			    	SessionMessages.add(actionRequest, "patient.added.successfully");
+			    }else{
+			    	SessionMessages.add(actionRequest, "patient.updated.successfully");
+			    }
 			}
-		} catch (ParseException e) {
+		} catch (ParseException | PortalException e) {
 			actionResponse.setRenderParameter("mvcPath", "/user/create_user.jsp");
 			LOG.error(e.getMessage(), e);
 		}
 	}
 	
-	private Patient addPatient(ActionRequest actionRequest) throws ParseException{
+	private Patient addUpdatePatient(ActionRequest actionRequest, boolean isEdit) throws ParseException{
 		ThemeDisplay themeDisplay = (ThemeDisplay) actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		String firstName = ParamUtil.getString(actionRequest, "firstName");
 		String lastName = ParamUtil.getString(actionRequest, "lastName");
@@ -143,11 +167,17 @@ public class CreatePatientActionCommand extends BaseMVCActionCommand{
 		String otherNotes = ParamUtil.getString(actionRequest, "otherNotes");
 		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 		Date dob = dateFormat.parse(patientDOB);
-		Patient patient = PatientLocalServiceUtil.createPatient(firstName, lastName, cptCode,dob, phoneNo,address1, address2, city, state, country, zip, lopNotes, orderNotes,invoiceNotes,otherNotes,themeDisplay.getUserId(), themeDisplay.getUserId());
-		return patient;
+		if(!isEdit){
+			Patient patient = PatientLocalServiceUtil.createPatient(firstName, lastName, cptCode,dob, phoneNo,address1, address2, city, state, country, zip, lopNotes, orderNotes,invoiceNotes,otherNotes,themeDisplay.getUserId(), themeDisplay.getUserId());
+			return patient;
+		}else{
+			long patientId = ParamUtil.getLong(actionRequest, "patientId");
+			Patient patient = PatientLocalServiceUtil.updatePatient(patientId, firstName, lastName, cptCode, dob, phoneNo, address1, address2, city, state, country, zip, lopNotes, orderNotes, invoiceNotes, otherNotes, themeDisplay.getUserId());
+			return patient;
+		}
 	}
 
-	private Patient_Clinic addPatientClinic(ActionRequest actionRequest, Patient patient){
+	private Patient_Clinic addUpdatePatientClinic(ActionRequest actionRequest, Patient patient, boolean isEdit){
 		ThemeDisplay themeDisplay = (ThemeDisplay) actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		long  doctorId = ParamUtil.getLong(actionRequest, "doctor");
 		long  lawyerId = ParamUtil.getLong(actionRequest, "lawyer");
@@ -161,8 +191,11 @@ public class CreatePatientActionCommand extends BaseMVCActionCommand{
 			User lawyerUser = UserLocalServiceUtil.getUser(lawyerId);
 			String lawyerPhoneNo = ParamUtil.getString(actionRequest, "lawyerPhone");
 			
-			patientClinic = Patient_ClinicLocalServiceUtil.addPatient_Clinic(patient.getPatientId(), clinicId, doctorId, doctorUser.getFirstName()+StringPool.BLANK+doctorUser.getLastName(), doctorPhonNo, lawyerId, lawyerUser.getFirstName()+StringPool.BLANK+lawyerUser.getLastName(), lawyerPhoneNo,status,themeDisplay.getUserId(), themeDisplay.getUserId());
-			
+			if(!isEdit){
+				patientClinic = Patient_ClinicLocalServiceUtil.addPatient_Clinic(patient.getPatientId(), clinicId, doctorId, doctorUser.getFirstName()+StringPool.BLANK+doctorUser.getLastName(), doctorPhonNo, lawyerId, lawyerUser.getFirstName()+StringPool.BLANK+lawyerUser.getLastName(), lawyerPhoneNo,status,themeDisplay.getUserId(), themeDisplay.getUserId());
+			}else{
+				patientClinic = Patient_ClinicLocalServiceUtil.updatePatient_Clinic(patient.getPatientId(), clinicId, doctorId, doctorUser.getFirstName()+StringPool.BLANK+doctorUser.getLastName(), doctorPhonNo, lawyerId, lawyerUser.getFirstName()+StringPool.BLANK+lawyerUser.getLastName(), lawyerPhoneNo, themeDisplay.getUserId());
+			}
 		} catch (PortalException e) {
 			LOG.error(e.getMessage(), e);
 		}
@@ -177,7 +210,7 @@ public class CreatePatientActionCommand extends BaseMVCActionCommand{
 		int resourcesCounts =  ParamUtil.getInteger(actionRequest, "resourceCount");
 		resourcesCounts++;
 		String procedureDetail= StringPool.BLANK;
-		for (int i=0; i<=resourcesCounts;i++) {
+		for (int i=1; i<=resourcesCounts;i++) {
 			long resourceId = ParamUtil.getLong(actionRequest, "resource" + i);
 			long specificationId = ParamUtil.getLong(actionRequest, "specification" + i);
 			int occurance = ParamUtil.getInteger(actionRequest, "occurance"+i);
@@ -190,13 +223,20 @@ public class CreatePatientActionCommand extends BaseMVCActionCommand{
 			}
 			if(resourceId!=0 && specificationId!=0){
 				try{
-				Patient_Clinic_ResourceLocalServiceUtil.addPatientClinicResource(patientClinic.getPatientId(), resourceId, patientClinic.getClinicId(), specificationId, procedureId,occurance, themeDisplay.getUserId(), themeDisplay.getUserId() );
+					Patient_Clinic_ResourceLocalServiceUtil.addPatientClinicResource(patientClinic.getPatientId(), resourceId, patientClinic.getClinicId(), specificationId, procedureId,occurance, themeDisplay.getUserId(), themeDisplay.getUserId());
 				}catch(Exception e){
 					LOG.error(e.getMessage(), e);
 				}
 			}
 		}
 		return procedureDetail;
+	}
+	
+	private void deleteExistingPatientClinicResource(Patient_Clinic patientClinic){
+		List<Patient_Clinic_Resource> patientClinicResourceList = Patient_Clinic_ResourceLocalServiceUtil.getPatientClinicByPatiendIdAndClinicId(patientClinic.getPatientId(), patientClinic.getClinicId());
+		for(Patient_Clinic_Resource patientClinicResource : patientClinicResourceList){
+			Patient_Clinic_ResourceLocalServiceUtil.deletePatient_Clinic_Resource(patientClinicResource);
+		}
 	}
 	
 	private void addPatientDocuments(ActionRequest actionRequest,Patient patient){

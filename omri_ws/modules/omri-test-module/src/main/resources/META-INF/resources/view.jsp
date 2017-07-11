@@ -100,19 +100,6 @@
 
 <h3>Data table</h3>
 
-<script>
-    define._amd = define.amd;
-    define.amd = false;
-</script>
-
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css" type="text/css">
-</link>
-<script>
-    define.amd = define._amd;
-</script>
-
 <div>
 	<table id="users" class="display" cellspacing="0" width="100%">
 		<thead>

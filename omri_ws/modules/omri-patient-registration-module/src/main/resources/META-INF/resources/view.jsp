@@ -4,20 +4,10 @@
         <portlet:param name="mvcRenderCommandName" value="/create-patient" />
 </portlet:renderURL>
 <liferay-ui:success key="patient.added.successfully" message="patient.added.successfully"></liferay-ui:success>
+<liferay-ui:success key="patient.updated.successfully" message="patient.updated.successfully"></liferay-ui:success>
+
 <aui:button name="createPatient" value="Create Patient" href="${createPatientURL}" cssClass="btn btn-primary"/>
 <br/>
-<script>
-    define._amd = define.amd;
-    define.amd = false;
-</script>
-
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css" type="text/css">
-</link>
-<script>
-    define.amd = define._amd;
-</script>
 <br/>
 <div>
 	<table id="example" class="display" cellspacing="0" width="100%">
@@ -27,6 +17,7 @@
                 <th>LastName</th>
                 <th>Phone No</th>
 				<th>Procedure</th>
+				<th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -44,6 +35,13 @@
                 		</li>
                 	</c:forEach>
                 	</ul>
+                </td>
+                <td>
+                	<portlet:renderURL var="editPatientURL">
+       					 <portlet:param name="mvcRenderCommandName" value="/create-patient" />
+       					  <portlet:param name="patientId" value="${ patientBean.patientId}" />
+					</portlet:renderURL>
+					 <a href="${editPatientURL }" class="btn btn-block btn-primary">Edit</a>
                 </td>
             </tr>
            </c:forEach>

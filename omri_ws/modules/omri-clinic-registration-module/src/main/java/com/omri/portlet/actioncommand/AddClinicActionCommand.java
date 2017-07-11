@@ -24,8 +24,12 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.omri.service.common.model.Clinic;
+import com.omri.service.common.model.Resource;
+import com.omri.service.common.model.Specification;
 import com.omri.service.common.service.ClinicLocalServiceUtil;
 import com.omri.service.common.service.Clinic_ResourceLocalServiceUtil;
+import com.omri.service.common.service.ResourceLocalServiceUtil;
+import com.omri.service.common.service.SpecificationLocalServiceUtil;
 
 
 @Component(
@@ -101,9 +105,16 @@ public class AddClinicActionCommand extends BaseMVCActionCommand{
 			long specificationId = ParamUtil.getLong(actionRequest, "specification" + i);
 			int operationTime = ParamUtil.getInteger(actionRequest, "operationTime"+i);
 			int price = ParamUtil.getInteger(actionRequest, "price"+i);
-			if(resourceId!=0 && specificationId!=0 && operationTime!=0){
-				Clinic_ResourceLocalServiceUtil.addClinic_Resource(clinic.getClinicId(), resourceId, specificationId, operationTime, price);
+			try {
+				Resource resource = ResourceLocalServiceUtil.getResource(resourceId);
+				Specification specification = SpecificationLocalServiceUtil.getSpecification(specificationId);
+				if(resourceId!=0 && specificationId!=0 && operationTime!=0){
+					Clinic_ResourceLocalServiceUtil.addClinic_Resource(clinic.getClinicId(), resourceId, resource.getResourceName(),specificationId, specification.getSpecificationName(),operationTime, price);
+				}
+			} catch (PortalException e) {
+				_log.error(e.getMessage(), e);
 			}
+			
 		}
 	}
 }

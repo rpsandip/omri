@@ -48,7 +48,7 @@ public class Clinic_ResourceLocalServiceImpl
 	 * Never reference this class directly. Always use {@link com.omri.service.common.service.Clinic_ResourceLocalServiceUtil} to access the clinic_ resource local service.
 	 */
 	
-	public Clinic_Resource addClinic_Resource(long clinicId, long resourceId, long specificationId, int operationTime, int price){
+	public Clinic_Resource addClinic_Resource(long clinicId, long resourceId, String resourceName,long specificationId, String specificationName,int operationTime, int price){
 		Clinic_ResourcePK clinicResourcePK = new Clinic_ResourcePK();
 		clinicResourcePK.setClinicId(clinicId);
 		clinicResourcePK.setResourceId(resourceId);
@@ -56,6 +56,8 @@ public class Clinic_ResourceLocalServiceImpl
 		Clinic_Resource clinicResource = Clinic_ResourceLocalServiceUtil.createClinic_Resource(clinicResourcePK);
 		clinicResource.setOperationTime(operationTime);
 		clinicResource.setPrice(price);
+		clinicResource.setResourceName(resourceName);
+		clinicResource.setSpecificationName(specificationName);
 		clinicResource = Clinic_ResourceLocalServiceUtil.addClinic_Resource(clinicResource);
 		return clinicResource;
 	}

@@ -1,17 +1,5 @@
 <%@ include file="/init.jsp" %>
 <%@ page import="com.omri.service.common.model.Appointment" %>
-<script>
-    define._amd = define.amd;
-    define.amd = false;
-</script>
-
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css" type="text/css">
-</link>
-<script>
-    define.amd = define._amd;
-</script>
 <liferay-ui:success key="patient-scheduled-techonologist-succesfully" message="patient-scheduled-techonologist-succesfully"></liferay-ui:success>
 <liferay-ui:success key="patient-updated-sucessfully" message="patient-updated-sucessfully"></liferay-ui:success>
 <liferay-ui:success key="report-submitte-successfully" message="report-submitte-successfully"></liferay-ui:success>

@@ -108,7 +108,7 @@ public class CreateAppointmentActionCommand  extends BaseMVCActionCommand{
 				Clinic_Resource clinicResource = Clinic_ResourceLocalServiceUtil.getClinic_Resource(clinicResourcePK);
 				//appointmentProcessTime = patientClinicResource.getNoOfOccurance()*clinicResource.getOperationTime();
 				appointmentProcessTime = clinicResource.getOperationTime();
-				Date appointmentEndDate = new Date(appointmentDate.getTime()+(60000*appointmentProcessTime));
+				Date appointmentEndDate = new Date(appointmentDate.getTime()+(60000*appointmentProcessTime)); // 60000 = 1 minute's milliseconds
 				boolean isAppoitnementAvailable = checkAvailableSlot(appointmentDate, clinicId, patientId, resource.getResourceId(), specification.getSpecificationId());
 				if(isAppoitnementAvailable){
 				Appointment appointment = AppointmentLocalServiceUtil.createAppointment(patientId, clinicId,

@@ -23,6 +23,9 @@ import java.util.List;
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.omri.service.common.model.Patient;
 import com.omri.service.common.service.PatientLocalServiceUtil;
 import com.omri.service.common.service.base.PatientLocalServiceBaseImpl;
@@ -43,6 +46,8 @@ import com.omri.service.common.service.base.PatientLocalServiceBaseImpl;
  */
 @ProviderType
 public class PatientLocalServiceImpl extends PatientLocalServiceBaseImpl {
+	Log _log = LogFactoryUtil.getLog(PatientLocalServiceImpl.class.getName());
+	
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -64,12 +69,43 @@ public class PatientLocalServiceImpl extends PatientLocalServiceBaseImpl {
 		patient.setZip(zip);
 		patient.setCptCode(cptCode);
 		patient.setLopNotes(lopNotes);
+		patient.setOrderNotes(orderNotes);
+		patient.setInvoiceNotes(invoiceNotes);
 		patient.setOtherNotes(otherNotes);
 		patient.setCreatedBy(createdBy);
 		patient.setModifiedBy(modifiedBy);
 		patient.setCreateDate(new Date());
 		patient.setModifiedDate(new Date());
 		patient = PatientLocalServiceUtil.addPatient(patient);
+		return patient;
+	}
+	
+	public Patient updatePatient(long patientId, String firstName,String lastName, String cptCode,Date dob, String phoneNo,String addressLine1, String addressLine2,
+			String city, String state, String country, String zip, String lopNotes, String orderNotes, String invoiceNotes,String otherNotes, long modifiedBy){
+		Patient patient =null;
+		try {
+			patient = PatientLocalServiceUtil.getPatient(patientId);
+			patient.setFirstName(firstName);
+			patient.setLastName(lastName);
+			patient.setDob(dob);
+			patient.setAddressLine1(addressLine1);
+			patient.setAddressLine2(addressLine2);
+			patient.setPhoneNo(phoneNo);
+			patient.setCity(city);
+			patient.setState(state);
+			patient.setCountry(country);
+			patient.setZip(zip);
+			patient.setCptCode(cptCode);
+			patient.setLopNotes(lopNotes);
+			patient.setOtherNotes(otherNotes);
+			patient.setOrderNotes(orderNotes);
+			patient.setInvoiceNotes(invoiceNotes);
+			patient.setModifiedBy(modifiedBy);
+			patient.setModifiedDate(new Date());
+			patient = PatientLocalServiceUtil.updatePatient(patient);
+		} catch (PortalException e) {
+			_log.error(e);
+		}
 		return patient;
 	}
 	

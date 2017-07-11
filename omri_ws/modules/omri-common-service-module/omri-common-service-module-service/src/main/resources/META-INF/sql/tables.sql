@@ -46,6 +46,8 @@ create table OMRI_Clinic_Resource (
 	resourceId LONG not null,
 	operationTime INTEGER,
 	price INTEGER,
+	specificationName VARCHAR(75) null,
+	resourceName VARCHAR(75) null,
 	primary key (clinicId, specificationId, resourceId)
 );
 

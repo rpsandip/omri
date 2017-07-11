@@ -47,6 +47,8 @@
 		<field name="resourceId" type="long" />
 		<field name="operationTime" type="int" />
 		<field name="price" type="int" />
+		<field name="specificationName" type="String" />
+		<field name="resourceName" type="String" />
 	</model>
 	<model name="com.omri.service.common.model.CustomUser">
 		<field name="customUserId" type="long" />

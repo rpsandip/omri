@@ -24,6 +24,9 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Order;
 import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.omri.service.common.exception.NoSuchPatient_ClinicException;
 import com.omri.service.common.model.Patient_Clinic;
 import com.omri.service.common.service.PatientLocalServiceUtil;
@@ -53,6 +56,7 @@ public class Patient_ClinicLocalServiceImpl
 	 *
 	 * Never reference this class directly. Always use {@link com.omri.service.common.service.Patient_ClinicLocalServiceUtil} to access the patient_ clinic local service.
 	 */
+	Log _log = LogFactoryUtil.getLog(Patient_ClinicLocalServiceImpl.class.getName());
 	
 	public Patient_Clinic addPatient_Clinic(long patientId, long clinicId, long doctorId, String doctorName
 			, String doctorPhoneNo,long lawyerId, String lawyerName, String lawyerPhoneNo, int patientStatus,long createdBy, long modifiedBy){
@@ -75,6 +79,30 @@ public class Patient_ClinicLocalServiceImpl
 		patientClinic = Patient_ClinicLocalServiceUtil.addPatient_Clinic(patientClinic);
 		return patientClinic;
 	}
+	
+	public Patient_Clinic updatePatient_Clinic(long patientId, long clinicId, long doctorId, String doctorName
+			, String doctorPhoneNo,long lawyerId, String lawyerName, String lawyerPhoneNo, long modifiedBy){
+		Patient_Clinic patientClinic = null;
+		Patient_ClinicPK patientClinicPK = new Patient_ClinicPK();
+		patientClinicPK.setClinicId(clinicId);
+		patientClinicPK.setPatientId(patientId);
+		try {
+			 patientClinic = Patient_ClinicLocalServiceUtil.getPatient_Clinic(patientClinicPK);
+			 patientClinic.setDoctorName(doctorName);
+			 patientClinic.setDoctorId(doctorId);
+			 patientClinic.setDoctorPhoneNo(doctorPhoneNo);
+			 patientClinic.setLawyerId(lawyerId);
+			 patientClinic.setLawyerName(lawyerName);
+			 patientClinic.setLawyerPhoneNo(lawyerPhoneNo);
+			 patientClinic.setModifiedDate(new Date());
+			 patientClinic.setModifiedBy(modifiedBy);
+			 Patient_ClinicLocalServiceUtil.updatePatient_Clinic(patientClinic);
+		} catch (PortalException e) {
+			_log.error(e);
+		}
+		return patientClinic;
+	}
+	
 	public Patient_Clinic getPatientClinicByPatientIdandCreatorUserId(long patiendId, long userId) throws NoSuchPatient_ClinicException{
 		return patient_ClinicPersistence.findByPatientIdAndCreatedUserId(patiendId, userId);
 	}

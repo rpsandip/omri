@@ -23,7 +23,13 @@ public class PatientBean{
 	private Date modifiedDate;
 	private long createdBy;
 	private long modifiedBy;
-
+	private String lopNotes;
+	private String orderNotes;
+	private String invoiceNotes;
+	private String otherNotes;
+	
+	
+	
 	private Patient_Clinic patientClinic;
 	private List<PatientResourceBean> resourceBeanList;
 	private List<DocumentBean> lopDocuments;
@@ -53,6 +59,10 @@ public class PatientBean{
 		this.modifiedBy  = patient.getModifiedBy();
 		this.resourceBeanList = resourceBeanList;
 		this.patientClinic = patientClinic;
+		this.lopNotes = patient.getLopNotes();
+		this.orderNotes = patient.getOrderNotes();
+		this.invoiceNotes = patient.getInvoiceNotes();
+		this.otherNotes = patient.getOrderNotes();
 	}
 	
 	public long getPatientId() {
@@ -197,4 +207,38 @@ public class PatientBean{
 	public void setLopRequestDocuments(List<DocumentBean> lopRequestDocuments) {
 		this.lopRequestDocuments = lopRequestDocuments;
 	}
+
+	public String getLopNotes() {
+		return lopNotes;
+	}
+
+	public void setLopNotes(String lopNotes) {
+		this.lopNotes = lopNotes;
+	}
+
+	public String getOrderNotes() {
+		return orderNotes;
+	}
+
+	public void setOrderNotes(String orderNotes) {
+		this.orderNotes = orderNotes;
+	}
+
+	public String getInvoiceNotes() {
+		return invoiceNotes;
+	}
+
+	public void setInvoiceNotes(String invoiceNotes) {
+		this.invoiceNotes = invoiceNotes;
+	}
+
+	public String getOtherNotes() {
+		return otherNotes;
+	}
+
+	public void setOtherNotes(String otherNotes) {
+		this.otherNotes = otherNotes;
+	}
+	
+	
 }

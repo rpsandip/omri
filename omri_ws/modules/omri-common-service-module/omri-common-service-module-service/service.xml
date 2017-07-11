@@ -106,6 +106,8 @@
 		<column name="resourceId" primary="true" type="long" />
 		<column name="operationTime" type="int" />
 		<column name="price" type="int" />
+		<column name="specificationName"  type="String" />
+		<column name="resourceName"  type="String" />
 		
 		<finder return-type="Collection" name="ClinicId">
 			<finder-column name="clinicId"></finder-column>

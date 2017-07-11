@@ -39,8 +39,9 @@
 		display: none;
 	}
 	</style>
-
-    <script>
+	
+	
+<script>
 	    define._amd = define.amd;
 	    define.amd = false;
 	</script>
@@ -49,17 +50,17 @@
 	<script src="${javascript_folder}/jquery-2.2.3.min.js"></script>
 	<!-- Bootstrap 3.3.6 -->
 	<script src="${javascript_folder}/bootstrap.min.js"></script>
+	 <script src="${javascript_folder}/moment.min.js"></script>
 	<!-- DataTables -->
 	<script src="${javascript_folder}/jquery.dataTables.min.js"></script>
 	<script src="${javascript_folder}/dataTables.bootstrap.min.js"></script>
-    <script src="${javascript_folder}/bootstrap-datepicker.js"></script>
-    <script src="${javascript_folder}/moment.min.js"></script>
     <script src="${javascript_folder}/fullcalendar.min.js"></script>
+    <script src="${javascript_folder}/bootstrap-datepicker.js"></script>
     <script src="${javascript_folder}/bootstrap-timepicker.min.js"></script>
-    <script>
-	    define.amd = define._amd;
-	</script>
-    
+<script>
+	define.amd = define._amd;
+</script>
+
 </head>
 
 <body class="${css_class} default about_page hold-transition skin-blue layout-top-nav">
@@ -96,12 +97,12 @@
 </div>
 <@liferay_util["include"] page=body_bottom_include />
 <@liferay_util["include"] page=bottom_include />
+
 <footer class="main-footer">
     <div class="container">
       <strong>Copyright &copy; 2017 <a href="index.html">OMRI</a>.</strong> All rights
       reserved.
     </div>
-    <!-- /.container -->
 </footer>
 </div>
 </body>
