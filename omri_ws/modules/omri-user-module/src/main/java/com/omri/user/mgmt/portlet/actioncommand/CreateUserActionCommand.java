@@ -138,7 +138,7 @@ public class CreateUserActionCommand extends BaseMVCActionCommand{
 				CustomUserLocalServiceUtil.deleteCustomUser(customUser);
 			}
 			SessionErrors.add(actionRequest,"error-user-create");
-			actionResponse.setRenderParameter("mvcPath", "/user/create_user.jsp");
+			actionResponse.setRenderParameter("mvcRenderCommandName", "/create-user");
 		}
 	}
 	

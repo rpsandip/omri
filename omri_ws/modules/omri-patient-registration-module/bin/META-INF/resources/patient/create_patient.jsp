@@ -129,7 +129,7 @@
 					                                    <aui:input name="doctorPhone" label="doctor.phone" cssClass="form-control" readonly="true" placeholder="Doctor Phone" value="${patientBean.patientClinic.doctorPhoneNo }"></aui:input>
 					                            </div>
 					                            <div class="form-group col-md-6">
-					                                    <aui:input name="doctorFax" label="doctor.fax" cssClass="form-control" readonly="true" placeholder="Doctor Fax"></aui:input>
+					                                    <aui:input name="doctorFax" label="doctor.fax" cssClass="form-control" readonly="true" placeholder="Doctor Fax" value="${doctorFax}"></aui:input>
 					                            </div>
 					                            <br/><br/>
 					                            
@@ -145,7 +145,7 @@
 					                                    <aui:input name="lawyerPhone" label="lawyer.phone" readonly="true" cssClass="form-control" placeholder="Lawyer Phone" value="${patientBean.patientClinic.lawyerPhoneNo }"></aui:input>
 					                            </div>
 					                            <div class="form-group col-md-6">
-					                                    <aui:input name="lawyerFax" label="lawyer.fax" readonly="true" cssClass="form-control" placeholder="Lawyer Fax"></aui:input>
+					                                    <aui:input name="lawyerFax" label="lawyer.fax" readonly="true" cssClass="form-control" placeholder="Lawyer Fax" value="${lawyerFax}"></aui:input>
 					                            </div>
 					                            
 					                            
@@ -329,6 +329,11 @@ jQuery.noConflict();
 	  //Date picker
 	  $('#'+ '<portlet:namespace/>' + 'patientDOB').datepicker({
 	    autoclose: true
+	  }).on('changeDate', function(ev) {
+		  AUI().use('aui-base','aui-form-validator', function(A) {
+				var myFormValidator = Liferay.Form.get('<portlet:namespace />createPatientForm').formValidator;
+				myFormValidator.validateField('<portlet:namespace />patientDOB');
+			});
 	  });
     });
 

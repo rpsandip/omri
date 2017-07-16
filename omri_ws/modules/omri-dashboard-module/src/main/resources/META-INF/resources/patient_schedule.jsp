@@ -3,7 +3,6 @@
 <liferay-ui:error key="error-create-appointment" message="error-create-appointment"/>
 <liferay-ui:error key="clinic-resource-error" message="clinic-resource-error"/>
 <liferay-ui:error key="no-available-slot-appointment" message="no-available-slot-appointment"/>
-
 <portlet:actionURL var="addAppointmentURL" name="/patient/add_appointment">
 </portlet:actionURL>
 <portlet:resourceURL id="/getAppointmentList" var="getAppointmentListURL" />
@@ -165,7 +164,12 @@ jQuery.noConflict();
 				        todayHighlight: true,
 				        autoclose: true,
 				      };
-				appountmentDate.datepicker(options);
+				appountmentDate.datepicker(options).on('changeDate', function(ev) {
+					  AUI().use('aui-base','aui-form-validator', function(A) {
+							var myFormValidator = Liferay.Form.get('<portlet:namespace />crateAppointmentFrm').formValidator;
+							myFormValidator.validateField('<portlet:namespace />appointmentDate');
+						});
+				  });
 				filterDate.datepicker(options);
 				
 				$('#'+'<portlet:namespace/>'+'appointmentTime').timepicker({
@@ -219,6 +223,9 @@ jQuery.noConflict();
 						   }
 						});
 				});
+				
+				$(".container").css("width","100%");
+				
     });
 })(jQuery);
 </script>

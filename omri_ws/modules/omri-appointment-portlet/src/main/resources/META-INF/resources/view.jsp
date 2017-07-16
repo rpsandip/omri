@@ -8,7 +8,7 @@
   <h3>Appointments</h3>
 </div>
 <div>
-	<table id="example" class="display" cellspacing="0" width="100%">
+	<table id="example" class="display table table-bordered table-hover table-striped" cellspacing="0" width="100%">
 		<thead>
             <tr>
                 <th>FirstName</th>
@@ -28,7 +28,7 @@
                 <td>${appointmentBean.patientPhoneNo }</td>
                 <td>${appointmentBean.resourceName }</td>
                 <td><fmt:formatDate pattern="MM/dd/yyyy hh:mm a" value="${appointmentBean.appointmentDate}" /></td>
-                <td>${appointmentBean.appointmentStatus }</td>
+                <td class="text-red">${appointmentBean.appointmentStatus }</td>
                 <td>
                     <c:if test="${hasPatientAddMoreDetailPermission }">
 	                	<portlet:renderURL var="addPatientMoreDetailURL">

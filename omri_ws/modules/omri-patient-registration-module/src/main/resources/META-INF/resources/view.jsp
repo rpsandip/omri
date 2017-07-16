@@ -7,10 +7,18 @@
 <liferay-ui:success key="patient.updated.successfully" message="patient.updated.successfully"></liferay-ui:success>
 
 <aui:button name="createPatient" value="Create Patient" href="${createPatientURL}" cssClass="btn btn-primary"/>
-<br/>
-<br/>
-<div>
-	<table id="example" class="display" cellspacing="0" width="100%">
+
+<section class="content-header">
+  <h1>
+    Patients
+  </h1>
+</section>
+<section class="content">
+ <div class="row">
+ 	 <div class="col-xs-12">
+     	<div class="box">
+            <div class="box-body">
+	<table id="example" class="display table table-bordered table-hover table-striped" cellspacing="0" width="100%">
 		<thead>
             <tr>
                 <th>FirstName</th>
@@ -47,7 +55,10 @@
            </c:forEach>
 	</table>
 </div>
-
+ </div>
+</div> 	
+</div>
+</section>
 
 <script type="text/javascript">
         jQuery.noConflict();

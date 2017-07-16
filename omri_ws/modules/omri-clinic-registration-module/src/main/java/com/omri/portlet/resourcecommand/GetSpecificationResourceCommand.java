@@ -17,6 +17,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.omri.service.common.exception.NoSuchResource_SpecificationException;
+import com.omri.service.common.model.Resource_Specification;
 import com.omri.service.common.model.Specification;
 import com.omri.service.common.service.Resource_SpecificationLocalServiceUtil;
 
@@ -39,9 +41,15 @@ public class GetSpecificationResourceCommand implements MVCResourceCommand{
 		JSONArray specificationJsonArray = JSONFactoryUtil.createJSONArray();
 		for(Specification specification : specificationList){
 			JSONObject specificationJsonObject = JSONFactoryUtil.createJSONObject();
-			specificationJsonObject.put("specificationId", specification.getSpecificationId());
-			specificationJsonObject.put("specificationName", specification.getSpecificationName());
-			specificationJsonArray.put(specificationJsonObject);
+			try {
+				Resource_Specification resourceSpecification =  Resource_SpecificationLocalServiceUtil.getResourceSpecification(resourceId, specification.getSpecificationId());
+				specificationJsonObject.put("specificationId", specification.getSpecificationId());
+				specificationJsonObject.put("specificationName", specification.getSpecificationName()+"("+resourceSpecification.getCptCode()+")");
+				specificationJsonArray.put(specificationJsonObject);
+			} catch (NoSuchResource_SpecificationException e) {
+				_log.error(e);
+			}
+			
 		}
 		try {
 			resourceResponse.getWriter().write(specificationJsonArray.toString());

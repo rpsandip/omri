@@ -34,13 +34,22 @@
 		                    </a>
 		                </li>
 				</#list>
-				<#if is_signed_in>
-					<li class="dropdown">
-						<a class="link-3" href="/c/portal/logout">Log out</a>
-					</li>
-				</#if>
 			</ul>
 	    </div>
+	   <#if is_signed_in>
+	    <div class="navbar-custom-menu">
+	          <ul class="nav navbar-nav">
+	          	<li class="dropdown omri-profile-menu"> 
+              		<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Profile<span class="caret"></span></a>
+              			<ul class="dropdown-menu" role="menu">
+                			<li><a href="#">${user.getFirstName()} ${user.getLastName()}</a></li>
+                			<li class="divider"></li>
+                			<li><a class="link-3" href="/c/portal/logout">Log out</a></li>
+             			</ul>
+            	</li>
+	          </ul>
+	        </div>
+	     </#if>   
 	</div>
 </nav>
  </header>

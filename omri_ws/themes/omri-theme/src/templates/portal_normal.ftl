@@ -40,8 +40,7 @@
 	}
 	</style>
 	
-	
-<script>
+	<script>
 	    define._amd = define.amd;
 	    define.amd = false;
 	</script>
@@ -57,10 +56,10 @@
     <script src="${javascript_folder}/fullcalendar.min.js"></script>
     <script src="${javascript_folder}/bootstrap-datepicker.js"></script>
     <script src="${javascript_folder}/bootstrap-timepicker.min.js"></script>
-<script>
-	define.amd = define._amd;
-</script>
-
+	<script>
+		define.amd = define._amd;
+	`</script>
+	
 </head>
 
 <body class="${css_class} default about_page hold-transition skin-blue layout-top-nav">
@@ -104,6 +103,15 @@
       reserved.
     </div>
 </footer>
+<script>
+	    define._amd = define.amd;
+	    define.amd = false;
+</script>
+<script src="${javascript_folder}/custom.js"></script>
+<script>
+	define.amd = define._amd;
+</script>
 </div>
+
 </body>
 </html>

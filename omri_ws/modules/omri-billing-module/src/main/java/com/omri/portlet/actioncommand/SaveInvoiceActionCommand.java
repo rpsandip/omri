@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.omri.portlet.util.PortletCommonUtil;
 import com.omri.service.common.beans.AppointmentBean;
 import com.omri.service.common.beans.ProcedureBean;
 import com.omri.service.common.model.Appointment;
@@ -85,14 +86,8 @@ public class SaveInvoiceActionCommand extends BaseMVCActionCommand {
 		Patient patient = null;
 		Clinic clinic=null;
 		AppointmentBean appointmentBean =null;
-		SimpleDateFormat dateformat = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
-		SimpleDateFormat dateformat2 = new SimpleDateFormat("MM/dd/yyyy");
-		int totalAmount=0;
 		long repositoryId = themeDisplay.getCompanyGroupId();
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		try {
 			procedure = ProcedureLocalServiceUtil.getProcedure(procedureId);
-			ProcedureBean procedureBean = new ProcedureBean(procedure.getProcedureId());
 			List<Appointment> procedureAppointmentList = AppointmentLocalServiceUtil.getAppointmentByProcedureId(procedure.getProcedureId());
 			List<AppointmentBean> procedureAppointmentBeanList = new ArrayList<AppointmentBean>();
 			for(Appointment appointment : procedureAppointmentList){
@@ -107,157 +102,37 @@ public class SaveInvoiceActionCommand extends BaseMVCActionCommand {
 					_log.error(e.getMessage(), e);
 				}
 			}
-			String fileName = patient.getFirstName()+StringPool.UNDERLINE+patient.getLastName() + StringPool.UNDERLINE + patient.getPatientId() +".pdf";
+			String fileName = patient.getFirstName()+StringPool.UNDERLINE+patient.getLastName() +".pdf";
 			fileName = fileName.replace(StringPool.SPACE, StringPool.UNDERLINE);
 			File file = new File(System.getProperty("catalina.home")+"/temp/"+fileName);
 			
 			if(Validator.isNotNull(clinic) && Validator.isNotNull(patient) && Validator.isNotNull(appointmentBean)){
-				Document document = new Document();
 				 try {
-					    PdfWriter pdfWriter = PdfWriter.getInstance(document, new FileOutputStream(file));
 					   
-			            //open
-			            document.open();
-			            
-			            Font invoiceTitle = new Font();
-			            invoiceTitle.setStyle(Font.BOLD);
-			            invoiceTitle.setSize(24);
-			            
-			            Font clinicTitleFont = new Font();
-			            clinicTitleFont.setStyle(Font.BOLD);
-			            clinicTitleFont.setSize(16);
-			            
-		
-			            Paragraph invoice = new Paragraph("Invoice",invoiceTitle);
-			            invoice.setAlignment(Element.ALIGN_CENTER);
-		
-			            document.add(invoice);
-		
-			            // Clinic Detail
-			            Paragraph clinicTitle = new Paragraph("Clinic:",clinicTitleFont);
-			            document.add(clinicTitle);
-			            
-			            document.add(new Chunk(clinic.getClinicName()));document.add(Chunk.NEWLINE);
-			            document.add(new Chunk(clinic.getAddressLine1()));document.add(Chunk.NEWLINE);
-			            document.add(new Chunk(clinic.getAddressLine2()));document.add(Chunk.NEWLINE);
-			            document.add(new Chunk(clinic.getCity()+StringPool.COMMA+clinic.getState()));document.add(Chunk.NEWLINE);
-			            
-			            // Patient Detail
-			            
-			            Paragraph patientTitle = new Paragraph("Patient :",clinicTitleFont);
-			            document.add(patientTitle);
-			            
-			            document.add(new Chunk(patient.getFirstName()+StringPool.SPACE+patient.getLastName()));document.add(Chunk.NEWLINE);
-			            document.add(new Chunk(patient.getAddressLine1()));document.add(Chunk.NEWLINE);
-			            document.add(new Chunk(patient.getAddressLine2()));document.add(Chunk.NEWLINE);
-			            document.add(new Chunk(patient.getCity()+StringPool.COMMA+patient.getState()));document.add(Chunk.NEWLINE);
-			            
-			            // Doctor Detail
-			            
-			            Paragraph doctorDetail = new Paragraph("Physician : ",clinicTitleFont);
-			            document.add(doctorDetail);
-			            document.add(new Chunk(appointmentBean.getDoctorName()));
-			            
-			            // LAwyer Detail
-			            
-			            Paragraph lawyerDetail = new Paragraph("Lawyer : ",clinicTitleFont);
-			            document.add(lawyerDetail);
-			            document.add(new Chunk(appointmentBean.getLawyerName()));
-			            
-			            
-			            // Invoice detail
-			            
-			            Paragraph invoiceDate = new Paragraph("Invoice Date",clinicTitleFont);
-			            invoiceDate.setAlignment(Element.ALIGN_RIGHT);
-			            document.add(invoiceDate);
-			            Paragraph dateDetail = new Paragraph(dateformat2.format(new Date()));
-			            dateDetail.setAlignment(Element.ALIGN_RIGHT);
-			            document.add(dateDetail);
-			            
-			            
-			            Paragraph appointmentDetail = new Paragraph("Appointments : ",clinicTitleFont);
-			            document.add(appointmentDetail);
-			            document.add(Chunk.NEWLINE);
-			            // Appointment Detail
-			            PdfPTable table = new PdfPTable(4);
-			            PdfPCell dateCell = new PdfPCell(new Paragraph("Date and Time"));
-			            PdfPCell resourceCell = new PdfPCell(new Paragraph("Resource"));
-			            PdfPCell cptCodeCell = new PdfPCell(new Paragraph("CPT Code"));
-			            PdfPCell amountCell = new PdfPCell(new Paragraph("Amount"));
-			            
-			            table.addCell(dateCell);
-			            table.addCell(resourceCell);
-			            table.addCell(cptCodeCell);
-			            table.addCell(amountCell);
-			            
-			            float[] columnWidths = {1f, 1f, 1f, 1f};
-
-			            table.setWidths(columnWidths);
-			            
-			            
-			            for(Appointment appointment : procedureAppointmentList){
-							try{
-							 patient = PatientLocalServiceUtil.getPatient(appointment.getPatientId());
-							 clinic = ClinicLocalServiceUtil.getClinic(appointment.getClinicId());
-							 Resource resource = ResourceLocalServiceUtil.getResource(appointment.getResourceId());
-							 Specification specification = SpecificationLocalServiceUtil.getSpecification(appointment.getSpecificationId());
-							 Resource_Specification resourceSpecification =  Resource_SpecificationLocalServiceUtil.getResourceSpecification(resource.getResourceId(), specification.getSpecificationId());
-							 totalAmount += appointment.getPrice();
-							  dateCell = new PdfPCell(new Paragraph(dateformat.format(appointment.getAppointmetDate())));
-					          resourceCell = new PdfPCell(new Paragraph(resource.getResourceName()+"("+ specification.getSpecificationName() +")"));
-					          cptCodeCell = new PdfPCell(new Paragraph(resourceSpecification.getCptCode()));
-					          amountCell = new PdfPCell(new Paragraph("$"+String.valueOf(appointment.getPrice())));
-					          
-					          table.addCell(dateCell);
-					            table.addCell(resourceCell);
-					            table.addCell(cptCodeCell);
-					            table.addCell(amountCell);
-							
-							}catch(PortalException e){
-								_log.error(e.getMessage(), e);
-							}
-						}
-			            
-			              dateCell = new PdfPCell(new Paragraph(""));
-				          resourceCell = new PdfPCell(new Paragraph(""));
-				          cptCodeCell = new PdfPCell(new Paragraph("Total"));
-				          amountCell = new PdfPCell(new Paragraph("$"+String.valueOf(totalAmount)));
-				          
-				          table.addCell(dateCell);
-				            table.addCell(resourceCell);
-				            table.addCell(cptCodeCell);
-				            table.addCell(amountCell);
-			            
-			            document.add(table);
-			            
-			            //close
-			            document.close();
-			        } catch (DocumentException e) {
-			            e.printStackTrace();
-			        } 
-				 
+				 PortletCommonUtil.generatePdf(file, null, themeDisplay, clinic, patient, appointmentBean, procedureAppointmentList);
+					 
 				 // Save file to patient folder
 				 Folder patientFolder = getFolder(actionRequest, PARENT_FOLDER_ID,String.valueOf(patient.getPatientId()));
 				 Folder folder = getFolder(actionRequest, patientFolder.getFolderId(),"Invoice Documents"); 
 				 
 				 ServiceContext serviceContext = ServiceContextFactory.getInstance(DLFileEntry.class.getName(), actionRequest); 
-				 InputStream dlFileIs = new FileInputStream(file);
 				 try{
 					 DLAppServiceUtil.addFileEntry(repositoryId, folder.getFolderId(),  file.getName(), MimeTypesUtil.getContentType(file),  file.getName(), "Patient Invoice" , "", file, serviceContext);
 				 }catch(DuplicateFileEntryException e){
-					 DLAppServiceUtil.addFileEntry(repositoryId, folder.getFolderId(), fileName+ StringPool.UNDERLINE + new Date().getTime(), MimeTypesUtil.getContentType(file), fileName+ StringPool.UNDERLINE + new Date().getTime(), "Patient Invoice", "", dlFileIs, file.getTotalSpace(), serviceContext);
+					 fileName = patient.getFirstName()+StringPool.UNDERLINE+patient.getLastName() + StringPool.UNDERLINE + new Date().getTime() + ".pdf";
+					 DLAppServiceUtil.addFileEntry(repositoryId, folder.getFolderId(), fileName, MimeTypesUtil.getContentType(file), fileName, "Patient Invoice", "", file, serviceContext);
 				 }
 				 
 				 actionResponse.setRenderParameter("mvcRenderCommandName", "/generateProcedureBill");
 				 actionResponse.setRenderParameter("procedureId", String.valueOf(procedureId));
 				 SessionMessages.add(actionRequest, "invoice.save.successfully");
-		     }
-		} catch (PortalException e) {
-			_log.error(e.getMessage(), e);
-			actionResponse.setRenderParameter("mvcRenderCommandName", "/generateProcedureBill");
-			actionResponse.setRenderParameter("procedureId", String.valueOf(procedureId));
-			SessionErrors.add(actionRequest, "error-save-invoice");
-		}
+				} catch (PortalException e) {
+					_log.error(e.getMessage(), e);
+					actionResponse.setRenderParameter("mvcRenderCommandName", "/generateProcedureBill");
+					actionResponse.setRenderParameter("procedureId", String.valueOf(procedureId));
+					SessionErrors.add(actionRequest, "error-save-invoice");
+				}
+			}
 	}
 
 	private boolean isFolderExist(ThemeDisplay themeDisplay,long parentFolderId,String folderName){

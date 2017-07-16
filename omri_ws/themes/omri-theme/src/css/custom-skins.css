@@ -6,9 +6,10 @@
   background-color: #3c8dbc;
 }
 .skin-blue .main-header .navbar .nav > li > a {
-  color: #ffffff;
-  font-size: 18px;
-  line-height: 40px
+    color: #ffffff;
+    font-size: 16px;
+    line-height: 40px;
+    font-weight: 600;
 }
 .skin-blue .main-header .navbar .nav > li > a:hover,
 .skin-blue .main-header .navbar .nav > li > a:active,

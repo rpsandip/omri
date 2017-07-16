@@ -37,6 +37,7 @@ import com.omri.service.common.exception.NoSuchClinicException;
 import com.omri.service.common.exception.NoSuchResource_SpecificationException;
 import com.omri.service.common.model.Clinic;
 import com.omri.service.common.model.Clinic_Resource;
+import com.omri.service.common.model.CustomUser;
 import com.omri.service.common.model.Patient;
 import com.omri.service.common.model.Patient_Clinic;
 import com.omri.service.common.model.Patient_Clinic_Resource;
@@ -45,6 +46,7 @@ import com.omri.service.common.model.Resource_Specification;
 import com.omri.service.common.model.Specification;
 import com.omri.service.common.service.ClinicLocalServiceUtil;
 import com.omri.service.common.service.Clinic_ResourceLocalServiceUtil;
+import com.omri.service.common.service.CustomUserLocalServiceUtil;
 import com.omri.service.common.service.OMRICommonLocalServiceUtil;
 import com.omri.service.common.service.PatientLocalServiceUtil;
 import com.omri.service.common.service.Patient_ClinicLocalServiceUtil;
@@ -168,6 +170,11 @@ public class CreatePatientRenderCommand implements MVCRenderCommand{
 			setClinicResourcesForEditPatient(patientClinic, renderRequest);
 			renderRequest.setAttribute("patientBean", patientBean);
 			renderRequest.setAttribute("resourceIdDetail", resourceIdDetail);
+			
+			CustomUser doctorUser = CustomUserLocalServiceUtil.getCustomUserByLRUserId(patientClinic.getDoctorId());
+			CustomUser lawyerUser = CustomUserLocalServiceUtil.getCustomUserByLRUserId(patientClinic.getLawyerId());
+			renderRequest.setAttribute("doctorFax", doctorUser.getFax());
+			renderRequest.setAttribute("lawyerFax", lawyerUser.getFax());
 		} catch (PortalException e) {
 			_log.error(e.getMessage(), e);
 		}

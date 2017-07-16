@@ -58,8 +58,9 @@
 						<div id="resources">
 							<div class="lfr-form-row lfr-form-row-inline">
 								<div class="row-fields">
-										<div class="form-group col-md-6">
+										<div class="form-group col-md-12">
 								                <aui:select name="resource0" id="resource0" label="Resource" cssClass="resourceItem form-control patient_select">
+							               			 <aui:option value="">Select Resource</aui:option>
 							               			 <c:forEach items="${resourceList }" var="resource">
 							                  			 <aui:option value="${resource.resourceId }">${resource.resourceName }</aui:option>
 							               			 </c:forEach>
@@ -132,9 +133,25 @@ var resourceCount=0;
 AUI().use('aui-io-request', 'aui-autocomplete' ,'aui-base','aui-form-validator','autocomplete-list','autocomplete-filters','autocomplete-highlighters', function(A) {
 	var createClinicBtn= A.one(".createClinicBtn");
 	 A.one("#"+clinicRegistrationModuleNs+"resourceCount").val(resourceCount);
+	 
+	 var clinicResourceValidator = new A.FormValidator({
+			boundingBox: document.<portlet:namespace/>addClinicForm,
+			rules: {
+				<portlet:namespace/>resource0: {
+					required: true
+				}
+			},
+			fieldStrings: {
+				<portlet:namespace/>doctor: {
+					required: 'Please select Resource'
+					}
+			}
+		});
+	 
 	createClinicBtn.on('click', function(e) {
 		var myFormValidator = Liferay.Form.get('<portlet:namespace />addClinicForm').formValidator;
 		myFormValidator.validate();
+		clinicResourceValidator.validate();
 		if(!myFormValidator.hasErrors()){
 			document.<portlet:namespace />addClinicForm.submit();
 		}
