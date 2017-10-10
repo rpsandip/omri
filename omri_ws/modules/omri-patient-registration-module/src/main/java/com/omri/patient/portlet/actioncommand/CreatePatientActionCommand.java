@@ -257,7 +257,7 @@ public class CreatePatientActionCommand extends BaseMVCActionCommand{
 		if (!defaultFolderExist) {
 			long repositoryId = themeDisplay.getCompanyGroupId();
 			try {
-				ServiceContext serviceContext = ServiceContextFactory.getInstance(DLFolder.class.getName(), actionRequest); 
+				ServiceContext serviceContext =   ServiceContextFactory.getInstance(DLFolder.class.getName(), actionRequest); 
 				patientFolder = DLAppServiceUtil.addFolder(repositoryId,parentFolderId, folderName,"", serviceContext);
 			} catch (PortalException e1) { 
 				LOG.error(e1.getMessage(), e1);

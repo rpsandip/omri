@@ -64,13 +64,15 @@ public class OmriPatientRegistrationModulemvcportletPortlet extends MVCPortlet {
 		ThemeDisplay themdeDisplay = (ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		boolean hasAdminRole = false;
 		boolean hasSystemAdminRole = false;
+		String roleType="Other";
 		List<PatientBean> patientBeanList = new ArrayList<PatientBean>();
 		// For Admin
 			try {
 				Role adminRole = RoleLocalServiceUtil.getRole(themdeDisplay.getCompanyId(), RoleConstants.ADMINISTRATOR);
 				hasAdminRole = RoleLocalServiceUtil.hasUserRole(themdeDisplay.getUserId(), adminRole.getRoleId());
 				if(hasAdminRole){
-					patientBeanList = getAdminPatientList(renderRequest, renderResponse);
+					//patientBeanList = getAdminPatientList(renderRequest, renderResponse);
+					roleType="Admin";
 				}
 			} catch (PortalException e) {
 				_log.error(e.getMessage(), e);
@@ -81,7 +83,8 @@ public class OmriPatientRegistrationModulemvcportletPortlet extends MVCPortlet {
 				Role systemAdminRole = RoleLocalServiceUtil.getRole(themdeDisplay.getCompanyId(), "System Admin");
 				hasSystemAdminRole = RoleLocalServiceUtil.hasUserRole(themdeDisplay.getUserId(), systemAdminRole.getRoleId());
 				if(hasSystemAdminRole){
-					patientBeanList = getAdminPatientList(renderRequest, renderResponse);
+					//patientBeanList = getAdminPatientList(renderRequest, renderResponse);
+					roleType="Admin";
 				}
 			} catch (PortalException e) {
 				_log.error(e.getMessage(), e);
@@ -89,14 +92,14 @@ public class OmriPatientRegistrationModulemvcportletPortlet extends MVCPortlet {
 		
 			// get List of patient created by login user
 			if(!hasAdminRole && !hasSystemAdminRole){
-				patientBeanList = otherUserPatientList(renderRequest, renderResponse);
+				//patientBeanList = otherUserPatientList(renderRequest, renderResponse);
 			}
 			renderRequest.setAttribute("patientBeanList", patientBeanList);
 		
 			include(viewTemplate, renderRequest, renderResponse);
 		
 	}
-	
+	/*
 	private List<PatientBean> getAdminPatientList(RenderRequest renderRequest, RenderResponse renderResponse){
 		ThemeDisplay themdeDisplay = (ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		List<PatientBean> patientBeanList = new ArrayList<PatientBean>();
@@ -162,5 +165,5 @@ public class OmriPatientRegistrationModulemvcportletPortlet extends MVCPortlet {
 			}
 		}
 		return patientBeanList;
-	}
+	}*/
 }

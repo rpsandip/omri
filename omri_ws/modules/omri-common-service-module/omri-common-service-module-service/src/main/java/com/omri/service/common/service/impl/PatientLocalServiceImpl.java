@@ -20,12 +20,23 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.xml.bind.ValidationEvent;
+
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
+import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Order;
+import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.ProjectionFactory;
+import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.omri.service.common.model.Patient;
 import com.omri.service.common.service.PatientLocalServiceUtil;
 import com.omri.service.common.service.base.PatientLocalServiceBaseImpl;
@@ -121,6 +132,28 @@ public class PatientLocalServiceImpl extends PatientLocalServiceBaseImpl {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("createdBy", createdByUserId));
 		dynamicQuery.add(RestrictionsFactoryUtil.between("createDate",startDate, endDate));
 		patientList = PatientLocalServiceUtil.dynamicQuery(dynamicQuery);
+		return patientList;
+	}
+	
+	public List<Patient> getPatientList(int start, int end, String keyword,long createdByUserId){
+		List<Patient> patientList = new ArrayList<Patient>();
+		
+		DynamicQuery dynamicQuery = PatientLocalServiceUtil.dynamicQuery();
+		if(createdByUserId>0){
+			dynamicQuery.add(PropertyFactoryUtil.forName("createdBy").eq(createdByUserId));
+		}
+		if(Validator.isNotNull(keyword)){
+			Criterion keywordCriterion =  RestrictionsFactoryUtil.like("firstName", StringPool.PERCENT+keyword+StringPool.PERCENT);
+			keywordCriterion = RestrictionsFactoryUtil.or(keywordCriterion, RestrictionsFactoryUtil.like("lastName", StringPool.PERCENT+keyword+StringPool.PERCENT));
+			keywordCriterion = RestrictionsFactoryUtil.or(keywordCriterion, RestrictionsFactoryUtil.like("phoneNo", StringPool.PERCENT+keyword+StringPool.PERCENT));
+			dynamicQuery.add(keywordCriterion);
+		}
+		dynamicQuery.setLimit(start, end);
+		Order defaultOrder = OrderFactoryUtil.desc("createDate");
+	    dynamicQuery.addOrder(defaultOrder);
+	    
+	    patientList = PatientLocalServiceUtil.dynamicQuery(dynamicQuery);
+	    
 		return patientList;
 	}
 	

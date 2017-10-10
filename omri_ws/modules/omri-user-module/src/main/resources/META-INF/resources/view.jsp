@@ -32,6 +32,7 @@
                 <td>${userBean.entity }</td> 
             </tr>
            </c:forEach>
+         </tbody>  
 	</table>
 </div>
  </div>

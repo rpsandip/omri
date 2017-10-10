@@ -1,5 +1,7 @@
 <%@ include file="/init.jsp" %>
-
+<portlet:resourceURL id="/getPaginatedPatientList" var="getPaginatedPatientListURL">
+	 <portlet:param name="roleType" value="${roleType }" />
+</portlet:resourceURL>
 <portlet:renderURL var="createPatientURL">
         <portlet:param name="mvcRenderCommandName" value="/create-patient" />
 </portlet:renderURL>
@@ -19,17 +21,8 @@
      	<div class="box">
             <div class="box-body">
 	<table id="example" class="display table table-bordered table-hover table-striped" cellspacing="0" width="100%">
-		<thead>
-            <tr>
-                <th>FirstName</th>
-                <th>LastName</th>
-                <th>Phone No</th>
-				<th>Procedure</th>
-				<th>Action</th>
-            </tr>
-        </thead>
         <tbody>
-            <c:forEach items="${patientBeanList }" var="patientBean">
+           <%--  <c:forEach items="${patientBeanList }" var="patientBean">
             <tr>
                 <td>${patientBean.firstName }</td>
                 <td>${patientBean.lastName }</td>
@@ -52,7 +45,8 @@
 					 <a href="${editPatientURL }" class="btn btn-block btn-primary">Edit</a>
                 </td>
             </tr>
-           </c:forEach>
+           </c:forEach> --%>
+          </tbody> 
 	</table>
 </div>
  </div>
@@ -61,13 +55,55 @@
 </section>
 
 <script type="text/javascript">
+        var ss="";
         jQuery.noConflict();
         (function($) {
             $(function() {  
+            	 AUI().use('aui-base','liferay-portlet-url', function(A) {
             	 $('#example').DataTable({
-            		 "order": []
+            		 "processing": true,
+            	     "serverSide": true,
+            	     "ajax": '${getPaginatedPatientListURL}',
+            		 "order": [],
+            		 "columns": [
+            	                    { "data": "firstName", "name" : "FirstName", "title" : "FirstName"  },
+            	                    { "data": "lastName", "name" : "LastName" , "title" : "LastName"},
+            	                    { "data": "phoneNo", "name" : "Phone No" , "title" : "Phone No"},
+            	                    { "data": "procedure", "name" : "Procedure" , "title" : "Procedure",
+            	                    	"render": function(data, type, row, meta){
+            	                            if(type === 'display'){
+            	                            	var prodArray = data.split("~");
+            	                            	var displayData = '<ul>';
+            	                            	prodArray.forEach(function(entry) {
+            	                            		if(entry.length>0){
+            	                            			displayData = displayData + '<li>' + entry + '</li>';
+            	                            		}
+            	                            	});
+            	                            	displayData+="</ul>";
+            	                                data = displayData;
+            	                            }
+            	                            return data;
+            	                         }
+            	                    	
+            	                    },
+            	                    { "data": "action", "name" : "Action" , "title" : "Action",
+            	                    	"render": function(data, type, row, meta){
+            	                    		var displayData="";
+            	                    		//AUI().use('aui-base','liferay-portlet-url', function(A) {
+            	                    			var editPatientURL = Liferay.PortletURL.createRenderURL();
+            	                    			editPatientURL.setParameter("patientId",row.patientId);
+            	                    			editPatientURL.setPortletId("<%=themeDisplay.getPortletDisplay().getId() %>");
+            	                    			editPatientURL.setParameter("mvcRenderCommandName","/create-patient");
+            	                    			displayData = '<a href="'+editPatientURL+'" class="btn btn-block btn-primary">Edit</a>';
+            	                    		//});
+            	                    		console.log("displayDate ->"+ displayData);
+            	                    		return displayData;
+            	                    	 }
+            	                    }
+            	                ]
             	 });
             	//console.log("example->" + $("#example").val());
             });
+          });
         })(jQuery);
     </script>
