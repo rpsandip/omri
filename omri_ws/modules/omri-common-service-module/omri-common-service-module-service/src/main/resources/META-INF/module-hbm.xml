@@ -52,6 +52,7 @@
 		<property column="state_" name="state" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="zipcode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="country" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="emailAddress" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="phoneNo" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="faxNo" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
@@ -94,14 +95,17 @@
 		<id name="patientId" type="long">
 			<generator class="assigned" />
 		</id>
+		<property name="customPatientId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="firstName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="lastName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="dob" type="org.hibernate.type.TimestampType" />
+		<property name="dos" type="org.hibernate.type.TimestampType" />
+		<property name="doi" type="org.hibernate.type.TimestampType" />
+		<property name="payee" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="gender" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="addressLine1" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="addressLine2" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="phoneNo" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="cptCode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="city" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property column="state_" name="state" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="country" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -123,12 +127,15 @@
 			<key-property name="patientId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		</composite-id>
 		<property name="patient_status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="documentStatus" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="doctorId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="doctorName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="doctorPhoneNo" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="doctorEmail" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="lawyerId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="lawyerName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="lawyerPhoneNo" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="lawyerEmail" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="createdBy" type="com.liferay.portal.dao.orm.hibernate.LongType" />

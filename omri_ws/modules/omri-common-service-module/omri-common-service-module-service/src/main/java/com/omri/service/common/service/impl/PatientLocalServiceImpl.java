@@ -34,11 +34,19 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.omri.service.common.exception.NoSuchCustomUserException;
+import com.omri.service.common.exception.NoSuchPatientException;
+import com.omri.service.common.model.CustomUser;
 import com.omri.service.common.model.Patient;
+import com.omri.service.common.model.Patient_Clinic;
+import com.omri.service.common.service.CustomUserLocalServiceUtil;
 import com.omri.service.common.service.PatientLocalServiceUtil;
+import com.omri.service.common.service.Patient_ClinicLocalServiceUtil;
+import com.omri.service.common.service.Patient_Clinic_ResourceLocalServiceUtil;
 import com.omri.service.common.service.base.PatientLocalServiceBaseImpl;
 
 /**
@@ -58,19 +66,18 @@ import com.omri.service.common.service.base.PatientLocalServiceBaseImpl;
 @ProviderType
 public class PatientLocalServiceImpl extends PatientLocalServiceBaseImpl {
 	Log _log = LogFactoryUtil.getLog(PatientLocalServiceImpl.class.getName());
-	
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.omri.service.common.service.PatientLocalServiceUtil} to access the patient local service.
-	 */
-	
-	public Patient createPatient(String firstName,String lastName, String cptCode,Date dob, String phoneNo,String addressLine1, String addressLine2,
+
+	public Patient createPatient(String customPatientId, String firstName,String lastName,Date dob, Date dos, Date doi, String payee,String phoneNo,String addressLine1, String addressLine2,
 			String city, String state, String country, String zip, String lopNotes, String orderNotes, String invoiceNotes,String otherNotes,long createdBy, long modifiedBy){
+		
 		Patient patient = PatientLocalServiceUtil.createPatient(CounterLocalServiceUtil.increment());
+		patient.setCustomPatientId(customPatientId);
 		patient.setFirstName(firstName);
 		patient.setLastName(lastName);
 		patient.setDob(dob);
+		patient.setDos(dos);
+		patient.setDoi(doi);
+		patient.setPayee(payee);
 		patient.setAddressLine1(addressLine1);
 		patient.setAddressLine2(addressLine2);
 		patient.setPhoneNo(phoneNo);
@@ -78,7 +85,6 @@ public class PatientLocalServiceImpl extends PatientLocalServiceBaseImpl {
 		patient.setState(state);
 		patient.setCountry(country);
 		patient.setZip(zip);
-		patient.setCptCode(cptCode);
 		patient.setLopNotes(lopNotes);
 		patient.setOrderNotes(orderNotes);
 		patient.setInvoiceNotes(invoiceNotes);
@@ -91,14 +97,18 @@ public class PatientLocalServiceImpl extends PatientLocalServiceBaseImpl {
 		return patient;
 	}
 	
-	public Patient updatePatient(long patientId, String firstName,String lastName, String cptCode,Date dob, String phoneNo,String addressLine1, String addressLine2,
+	public Patient updatePatient(long patientId, String customPatientId,String firstName,String lastName,Date dob, Date dos, Date doi, String payee,String phoneNo,String addressLine1, String addressLine2,
 			String city, String state, String country, String zip, String lopNotes, String orderNotes, String invoiceNotes,String otherNotes, long modifiedBy){
 		Patient patient =null;
 		try {
 			patient = PatientLocalServiceUtil.getPatient(patientId);
+			patient.setCustomPatientId(customPatientId);
 			patient.setFirstName(firstName);
 			patient.setLastName(lastName);
 			patient.setDob(dob);
+			patient.setDos(dos);
+			patient.setDoi(doi);
+			patient.setPayee(payee);
 			patient.setAddressLine1(addressLine1);
 			patient.setAddressLine2(addressLine2);
 			patient.setPhoneNo(phoneNo);
@@ -106,7 +116,6 @@ public class PatientLocalServiceImpl extends PatientLocalServiceBaseImpl {
 			patient.setState(state);
 			patient.setCountry(country);
 			patient.setZip(zip);
-			patient.setCptCode(cptCode);
 			patient.setLopNotes(lopNotes);
 			patient.setOtherNotes(otherNotes);
 			patient.setOrderNotes(orderNotes);
@@ -157,4 +166,162 @@ public class PatientLocalServiceImpl extends PatientLocalServiceBaseImpl {
 		return patientList;
 	}
 	
+	public Patient importPatient(String customPatientId, Date dos, String firstName, String lastName,
+			Date dob, String phoneNo, String address, String city, String zipcode,long clinicId,long resourceId, long specificationId,
+		    String payee, User doctor, User lawyer, long createdBy) throws NoSuchCustomUserException{
+		
+		// Add Patient master record
+		Patient patient = PatientLocalServiceUtil.createPatient(CounterLocalServiceUtil.increment());
+		patient.setCustomPatientId(customPatientId);
+		patient.setFirstName(firstName);
+		patient.setLastName(lastName);
+		patient.setDob(dob);
+		patient.setDos(dos);
+		patient.setAddressLine1(address);
+		patient.setCity(city);
+		patient.setZip(zipcode);
+		patient.setPhoneNo(phoneNo);
+		
+		patient.setCreatedBy(createdBy);
+		patient.setModifiedBy(createdBy);
+		patient.setCreateDate(new Date());
+		patient.setModifiedDate(new Date());
+		
+		patient = PatientLocalServiceUtil.addPatient(patient);
+		
+		//Add Patient Clinic Data
+		long doctorId = 0;
+		String doctorName = StringPool.BLANK;
+		String doctorPhone = StringPool.BLANK;
+		String doctorEmail = StringPool.BLANK;
+		long lawyerId=0;
+		String lawyerName = StringPool.BLANK;
+		String lawyerPhone = StringPool.BLANK;
+		String lawyerEmail = StringPool.BLANK;
+		
+		if(Validator.isNotNull(doctor)){
+			doctorId=doctor.getUserId();
+		    doctorName = doctor.getFirstName()+StringPool.BLANK+doctor.getLastName();
+		    doctorEmail  = doctor.getEmailAddress();
+		    	CustomUser customUser = CustomUserLocalServiceUtil.getCustomUserByLRUserId(doctor.getUserId());
+		    	doctorPhone = customUser.getPhone();
+		   
+		}
+		if(Validator.isNotNull(lawyer)){
+			lawyerId = lawyer.getUserId();
+			lawyerName = lawyer.getFirstName()+StringPool.SPACE+lawyer.getLastName();
+			lawyerEmail = lawyer.getEmailAddress();
+		    	CustomUser customUser = CustomUserLocalServiceUtil.getCustomUserByLRUserId(lawyer.getUserId());
+		    	lawyerPhone = customUser.getPhone();
+		    
+		}
+		
+		
+		if(Validator.isNotNull(patient) ){
+			
+			// Add Patient Clinic
+			Patient_ClinicLocalServiceUtil.addPatient_Clinic(patient.getPatientId(), clinicId, doctorId,
+					doctorName, doctorPhone, doctorEmail,lawyerId, lawyerName, lawyerPhone, lawyerEmail, 0,
+					createdBy, createdBy);
+			
+			// Add Patient Clinic Resource
+			Patient_Clinic_ResourceLocalServiceUtil.addPatientClinicResource(patient.getPatientId(), 
+					resourceId, clinicId, specificationId, 0, 1, 
+					createdBy, createdBy);
+		}
+		
+		
+		return patient;
+		
+	}
+	
+	public Patient getPatientByCustomPatientId(String cusomPatientId) throws NoSuchPatientException{
+		return patientPersistence.findBycustomPatientId(cusomPatientId);
+	}
+	
+	public int searchPatientCount(long clinicId, Date startDate, Date endDate, String payee, long doctorId, long lawyerId, boolean searchByCreatedDate, long userId){
+		List<Patient> patientList = searchPatient(clinicId, startDate, endDate, payee, doctorId, lawyerId, searchByCreatedDate, userId,-1, -1);
+		return patientList.size();
+	}
+	
+	public List<Patient> searchPatient(long clinicId, Date startDate, Date endDate, String payee, long doctorId, long lawyerId, boolean searchByCreatedDate, long userId, int start, int end){
+		List<Patient> patientList = new ArrayList<Patient>();
+		
+		
+		// Patient Clinic query
+		DynamicQuery patientClinicQuery = Patient_ClinicLocalServiceUtil.dynamicQuery();
+		patientClinicQuery.setProjection(ProjectionFactoryUtil.property("primaryKey.patientId"));
+		
+		Criterion patientClinicCriteria = null;
+		if(clinicId>0){
+			patientClinicCriteria = RestrictionsFactoryUtil.eq("primaryKey.clinicId", clinicId);
+		}
+		
+		if(lawyerId>0){
+			if(Validator.isNotNull(patientClinicCriteria)){
+				patientClinicCriteria = RestrictionsFactoryUtil.and(patientClinicCriteria,RestrictionsFactoryUtil.eq("lawyerId", lawyerId));
+			}else{
+				patientClinicCriteria = RestrictionsFactoryUtil.eq("lawyerId", lawyerId);
+			}
+		}
+		
+		if(doctorId>0){
+			if(Validator.isNotNull(patientClinicCriteria)){
+				patientClinicCriteria = RestrictionsFactoryUtil.and(patientClinicCriteria,RestrictionsFactoryUtil.eq("doctorId", doctorId));
+			}else{
+				patientClinicCriteria = RestrictionsFactoryUtil.eq("doctorId", doctorId);
+			}
+		}
+		
+		if(Validator.isNotNull(patientClinicCriteria)){
+			patientClinicQuery.setProjection(ProjectionFactoryUtil.property("primaryKey.patientId"));
+			patientClinicQuery.add(patientClinicCriteria);
+		}
+		
+		
+		// Patient Query
+		DynamicQuery dynamicQuery = PatientLocalServiceUtil.dynamicQuery();
+		Criterion criteria = null;
+		
+		if(Validator.isNotNull(patientClinicCriteria)){
+			criteria = PropertyFactoryUtil.forName("patientId").in(patientClinicQuery);
+		}
+		
+		if(Validator.isNotNull(startDate) && Validator.isNotNull(endDate)){
+			if(Validator.isNotNull(criteria)){
+				criteria = RestrictionsFactoryUtil.and(criteria, RestrictionsFactoryUtil.between("dos", startDate, endDate));
+			}else{
+				criteria =  RestrictionsFactoryUtil.between("dos", startDate, endDate);
+			}
+		}
+		
+		if(Validator.isNotNull(payee)){
+			if(Validator.isNotNull(criteria)){
+				criteria = RestrictionsFactoryUtil.and(criteria, RestrictionsFactoryUtil.eq("payee", payee));
+			}else{
+				criteria = RestrictionsFactoryUtil.eq("payee", payee);
+			}
+		}
+		
+		if(searchByCreatedDate && userId>0){
+			if(Validator.isNotNull(criteria)){
+				criteria = RestrictionsFactoryUtil.and(criteria, RestrictionsFactoryUtil.eq("createdBy", userId));
+			}else{
+				criteria = RestrictionsFactoryUtil.eq("createdBy", userId); 
+			}
+		}
+		
+		if(Validator.isNotNull(criteria)){
+			dynamicQuery.add(criteria);
+		}
+		
+		Order defaultOrder = OrderFactoryUtil.desc("dos");
+		dynamicQuery.addOrder(defaultOrder);
+		dynamicQuery.setLimit(start, end);
+		 
+		 patientList = PatientLocalServiceUtil.dynamicQuery(dynamicQuery);
+		 
+		 
+		return patientList;
+	}
 }

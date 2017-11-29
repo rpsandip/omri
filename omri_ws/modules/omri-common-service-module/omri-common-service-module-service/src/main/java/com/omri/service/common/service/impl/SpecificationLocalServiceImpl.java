@@ -16,6 +16,8 @@ package com.omri.service.common.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.omri.service.common.exception.NoSuchSpecificationException;
+import com.omri.service.common.model.Specification;
 import com.omri.service.common.service.base.SpecificationLocalServiceBaseImpl;
 
 /**
@@ -35,9 +37,9 @@ import com.omri.service.common.service.base.SpecificationLocalServiceBaseImpl;
 @ProviderType
 public class SpecificationLocalServiceImpl
 	extends SpecificationLocalServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.omri.service.common.service.SpecificationLocalServiceUtil} to access the specification local service.
-	 */
+	
+	public Specification getSpecificationByName(String specificationName) throws NoSuchSpecificationException{
+		return specificationPersistence.findByspecificationName(specificationName);
+	}
+	
 }

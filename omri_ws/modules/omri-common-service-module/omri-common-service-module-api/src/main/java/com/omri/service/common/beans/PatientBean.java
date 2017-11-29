@@ -1,15 +1,28 @@
 package com.omri.service.common.beans;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
+import com.omri.service.common.model.Clinic;
 import com.omri.service.common.model.Patient;
 import com.omri.service.common.model.Patient_Clinic;
 import com.omri.service.common.model.Resource;
+import com.omri.service.common.service.ClinicLocalServiceUtil;
 
 public class PatientBean{
+	
+	Log _log = LogFactoryUtil.getLog(PatientBean.class.getName());
+	
 	private long patientId;
+	private String customPatientId;
 	private String firstName;
+	private String clinicName=StringPool.BLANK;
 	private String lastName;
 	private Date dob;
 	private String addressLine1;
@@ -27,25 +40,34 @@ public class PatientBean{
 	private String orderNotes;
 	private String invoiceNotes;
 	private String otherNotes;
+	private Date dos;
+	private Date doi;
+	private String payee;
 	
 	
 	
 	private Patient_Clinic patientClinic;
-	private List<PatientResourceBean> resourceBeanList;
-	private List<DocumentBean> lopDocuments;
-	private List<DocumentBean> invoiceDocuments;
-	private List<DocumentBean> orderDocuments;
-	private List<DocumentBean> procedureDocumnts;
-	private List<DocumentBean> lopRequestDocuments;
+	private List<PatientResourceBean> resourceBeanList = new ArrayList<PatientResourceBean>();
+	private List<DocumentBean> lopDocuments= new ArrayList<DocumentBean>();
+	private List<DocumentBean> invoiceDocuments= new ArrayList<DocumentBean>();
+	private List<DocumentBean> orderDocuments= new ArrayList<DocumentBean>();
+	private List<DocumentBean> procedureDocumnts= new ArrayList<DocumentBean>();
+	private List<DocumentBean> lopRequestDocuments= new ArrayList<DocumentBean>();
+	
  	public PatientBean(){
 		
 	}
 	
 	public PatientBean(Patient patient, Patient_Clinic patientClinic ,List<PatientResourceBean> resourceBeanList){
 		this.patientId = patient.getPatientId();
+		this.customPatientId = patient.getCustomPatientId();
 		this.firstName = patient.getFirstName();
 		this.lastName = patient.getLastName();
 		this.dob = patient.getDob();
+		/*Date of Service*/
+		this.dos= patient.getDos();
+		/* Date of Injury*/
+		this.doi = patient.getDoi();
 		this.addressLine1 = patient.getAddressLine1();
 		this.addressLine2 = patient.getAddressLine2();
 		this.city = patient.getCity();
@@ -63,6 +85,16 @@ public class PatientBean{
 		this.orderNotes = patient.getOrderNotes();
 		this.invoiceNotes = patient.getInvoiceNotes();
 		this.otherNotes = patient.getOrderNotes();
+		this.payee = patient.getPayee();
+		
+		if(Validator.isNotNull(this.patientClinic)){
+			try {
+				Clinic clinic = ClinicLocalServiceUtil.getClinic(this.patientClinic.getClinicId());
+				this.clinicName = clinic.getClinicName();
+			} catch (PortalException e) {
+				_log.error(e.getMessage());
+			}
+		}
 	}
 	
 	public long getPatientId() {
@@ -239,6 +271,47 @@ public class PatientBean{
 	public void setOtherNotes(String otherNotes) {
 		this.otherNotes = otherNotes;
 	}
+
+	public String getCustomPatientId() {
+		return customPatientId;
+	}
+
+	public void setCustomPatientId(String customPatientId) {
+		this.customPatientId = customPatientId;
+	}
+
+	public Date getDos() {
+		return dos;
+	}
+
+	public void setDos(Date dos) {
+		this.dos = dos;
+	}
+
+	public Date getDoi() {
+		return doi;
+	}
+
+	public void setDoi(Date doi) {
+		this.doi = doi;
+	}
+
+	public String getPayee() {
+		return payee;
+	}
+
+	public void setPayee(String payee) {
+		this.payee = payee;
+	}
+
+	public String getClinicName() {
+		return clinicName;
+	}
+
+	public void setClinicName(String clinicName) {
+		this.clinicName = clinicName;
+	}
+	
 	
 	
 }

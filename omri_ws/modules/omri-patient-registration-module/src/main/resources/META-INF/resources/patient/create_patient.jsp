@@ -3,12 +3,18 @@
 <%@ include file="../init.jsp" %>
 <%@ page import="com.omri.service.common.beans.PatientBean" %>
 <%@ page import="com.omri.service.common.beans.PatientResourceBean" %>
+<%@ page import="com.liferay.portal.kernel.util.PortalUtil" %>
 <%@ page import="java.util.List" %>
+
+<liferay-ui:error key="patient-exists" message="patient-exists"></liferay-ui:error>
+<liferay-ui:error key="patient-request-error" message="patient-request-error"></liferay-ui:error>
+
 <portlet:actionURL var="createPatientActionURL" name="/user/create_patient">
 </portlet:actionURL>
 <portlet:resourceURL id="/getSpecificationList" var="getSpecificationListURL" />
 <portlet:resourceURL id="/getClinicResources" var="getClinicResources" />
 <portlet:resourceURL id="/getDoctorDetail" var="getDoctorDetailURL" />
+
 
 <section class="content-header">
   <h1>
@@ -40,63 +46,96 @@
 								<div class="box-body">
 										<div class="row m0 setup-content" id="step-1">
 										    <div class="row">
-											    <div class="form-group col-md-6">
+											     <div class="form-group col-md-3">
+					                            	<aui:input name="customPatientId" label="patient.patientId" cssClass="form-control" placeholder="Patient Id" value="${patientBean.customPatientId }">
+														<aui:validator name="required" />
+													</aui:input>
+					                          	</div>
+											    <div class="form-group col-md-3">
 					                            	<aui:input name="firstName" label="patient.firstName" cssClass="form-control" placeholder="First Name" value="${patientBean.firstName }">
 														<aui:validator name="required" />
 													</aui:input>
 					                          	</div>
-					                          	<div class="form-group col-md-6">
+					                          	<div class="form-group col-md-3">
 					                            	<aui:input name="lastName" label="patient.lastName" cssClass="form-control" placeholder="Last Name" value="${patientBean.lastName }">
 															<aui:validator name="required" />
 													</aui:input>
 					                           </div>
-				                           </div>
-				                            <div class="row">
-				                           <div class="form-group col-md-4">
+					                           <div class="form-group col-md-3">
 				                                 <fmt:formatDate pattern = "MM/dd/yyyy" value = "${patientBean.dob}" var="patientDob"/>
 				                                <aui:input type="text"  cssClass="form-control" label="patient.dob"  name="patientDOB" placeholder="MM/DD/YYYY" value="${patientDob }"> 
 				                                	<aui:validator name="required" />
 				                                </aui:input>
 				                            </div>
-				                            <div class="form-group col-md-4">
-				                                <aui:input name="phoneNo" label="patient.phone" cssClass="form-control" value="${patientBean.phoneNo }" placeholder="(XXX)-XXX-XXXX">
-				                                	<aui:validator name="required" />
-				                                	<aui:validator name="custom" errorMessage="err-valid-regex-mobile">
-														function(val, fieldNode, ruleValue) {
-															var regex = /(\(\d{3}\)-)\d{3}-\d{4}/g;
-															return regex.test(val);
-														}
-													</aui:validator>
-				                                </aui:input>
-				                                <aui:script>
-													new Formatter(document.getElementById('<portlet:namespace/>'+'phoneNo'), {
-														'pattern': '({{999}})-{{999}}-{{9999}}',
-														'persistent': false
-													});
-												</aui:script>
+				                           </div>
+				                            <div class="row">
+					                            <div class="form-group col-md-3">
+					                                 <fmt:formatDate pattern = "MM/dd/yyyy" value = "${patientBean.dos}" var="patientDos"/>
+					                                <aui:input type="text"  cssClass="form-control" label="patient.dos"  name="patientDOS" placeholder="MM/DD/YYYY" value="${patientDos }"> 
+					                                	<aui:validator name="required" />
+					                                </aui:input>
+					                            </div>
+					                            <div class="form-group col-md-3">
+					                                 <fmt:formatDate pattern = "MM/dd/yyyy" value = "${patientBean.doi}" var="patientDoi"/>
+					                                <aui:input type="text"  cssClass="form-control" label="patient.doi"  name="patientDOI" placeholder="MM/DD/YYYY" value="${patientDoi }"> 
+					                                	<aui:validator name="required" />
+					                                </aui:input>
+					                            </div>
+					                            <div class="form-group col-md-3">
+					                                <aui:input name="phoneNo" label="patient.phone" cssClass="form-control" value="${patientBean.phoneNo }" placeholder="(XXX)-XXX-XXXX">
+					                                	<aui:validator name="required" />
+					                                	<aui:validator name="custom" errorMessage="err-valid-regex-mobile">
+															function(val, fieldNode, ruleValue) {
+																var regex = /(\(\d{3}\)-)\d{3}-\d{4}/g;
+																return regex.test(val);
+															}
+														</aui:validator>
+					                                </aui:input>
+					                                <aui:script>
+														new Formatter(document.getElementById('<portlet:namespace/>'+'phoneNo'), {
+															'pattern': '({{999}})-{{999}}-{{9999}}',
+															'persistent': false
+														});
+													</aui:script>
+					                            </div>
+					                             <div class="form-group col-md-3" cssClass="form-control patient_select">
+					                                <aui:select name="payee" label="patient.payee" >
+					                                	<aui:option value="Attorney">Attorney</aui:option>
+					                                	<aui:option value="Cash">Cash</aui:option>
+					                                	<aui:option value="Doctor">Doctor</aui:option>
+					                                	<aui:option value="Free">Free</aui:option>
+					                                	<aui:option value="Insurance">Insurance</aui:option>
+					                                	<aui:option value="LOP">LOP</aui:option>
+					                                	<aui:option value="Raheel">Raheel</aui:option>
+					                                	<aui:option value="Transferred">Transferred</aui:option>
+					                                	<aui:option value="Funding">Funding</aui:option>
+					                                </aui:select>
+					                            </div>
 				                            </div>
-				                            <div class="form-group col-md-4">
-				                                <aui:input name="address1" label="patient.address1" cssClass="form-control" placeholder="Address1" value="${ patientBean.addressLine1}"></aui:input>
+				                            <div class="row">
+				                            	<div class="form-group col-md-4">
+				                                	<aui:input name="address1" label="patient.address1" cssClass="form-control" placeholder="Address1" value="${ patientBean.addressLine1}"></aui:input>
+				                           		 </div>
+												<div class="form-group col-md-4">
+					                                <aui:input name="address2" label="patient.address2" cssClass="form-control" placeholder="Address2" value="${ patientBean.addressLine2}"></aui:input>
+					                            </div>
+					                            <div class="form-group col-md-4">
+				                              		<aui:input name="zip" label="patient.zip" cssClass="form-control" placeholder="Zip" value="${ patientBean.zip}"></aui:input>
+				                            	</div>
 				                            </div>
-				                            </div>
-											<div class="form-group col-md-4">
-				                                <aui:input name="address2" label="patient.address2" cssClass="form-control" placeholder="Address2" value="${ patientBean.addressLine2}"></aui:input>
-				                            </div>
-				                            <div class="form-group col-md-4">
-				                               <aui:input name="city" label="patient.city" cssClass="form-control" placeholder="City" value="${ patientBean.city}"></aui:input>
-				                            </div>
-				                            <div class="form-group col-md-4">
-				                                <aui:input name="state" label="patient.state" cssClass="form-control" placeholder="State" value="${ patientBean.state}"></aui:input>
-				                            </div>
-				                            <br/>
-											<div class="form-group col-md-4">
-				                                <aui:input name="country" label="patient.country" cssClass="form-control" placeholder="Country" value="${ patientBean.country}"></aui:input>
-				                            </div>
-				                            <div class="form-group col-md-4">
-				                               <aui:input name="zip" label="patient.zip" cssClass="form-control" placeholder="Zip" value="${ patientBean.zip}"></aui:input>
+				                            <div class="row">
+					                            <div class="form-group col-md-4">
+						                               <aui:input name="city" label="patient.city" cssClass="form-control" placeholder="City" value="${ patientBean.city}"></aui:input>
+						                            </div>
+					                            <div class="form-group col-md-4">
+					                                <aui:input name="state" label="patient.state" cssClass="form-control" placeholder="State" value="${ patientBean.state}"></aui:input>
+					                            </div>
+												<div class="form-group col-md-4">
+					                                <aui:input name="country" label="patient.country" cssClass="form-control" placeholder="Country" value="${ patientBean.country}"></aui:input>
+					                            </div>
 				                            </div>
 					                         <br/>
-					                         <div class="form-group col-md-12">
+					                         <div class="form-group col-md-6">
 												<aui:select name="patient_status" label="Patient Status" cssClass="patient_select">
 													<aui:option value="0" selected='${patientBean.patientClinic.patient_status == "0" ? true : false }'>Referral Received</aui:option>
 													<aui:option value="1" selected='${patientBean.patientClinic.patient_status == "1" ? true : false }'>Lop Received</aui:option>
@@ -125,10 +164,13 @@
 															</c:forEach>
 														</aui:select>
 					                            </div>
-					                            <div class="form-group col-md-6">
+					                            <div class="form-group col-md-4">
 					                                    <aui:input name="doctorPhone" label="doctor.phone" cssClass="form-control" readonly="true" placeholder="Doctor Phone" value="${patientBean.patientClinic.doctorPhoneNo }"></aui:input>
 					                            </div>
-					                            <div class="form-group col-md-6">
+					                            <div class="form-group col-md-4">
+					                                    <aui:input name="doctorEmail" label="doctor.email" cssClass="form-control" readonly="true" placeholder="Doctor Email" value="${patientBean.patientClinic.doctorEmail }"></aui:input>
+					                            </div>
+					                            <div class="form-group col-md-4">
 					                                    <aui:input name="doctorFax" label="doctor.fax" cssClass="form-control" readonly="true" placeholder="Doctor Fax" value="${doctorFax}"></aui:input>
 					                            </div>
 					                            <br/><br/>
@@ -137,14 +179,17 @@
 					                                    <aui:select name="lawyer" label="lawyer" cssClass="form-control patient_select">
 																<aui:option value=""> Select Lawyer</aui:option>
 															<c:forEach items="${lawyerAdminList }" var="lawyer"> 
-																<aui:option value="${lawyer.userId }" selected='${patientBean.patientClinic.lawyerId == lawyer.userId ? true : false }'>  ${lawyer.firstName } ${lawyer.lastName }</aui:option>
+																<aui:option value="${lawyer.userId }" selected='${patientBean.patientClinic.lawyerId == lawyer.userId ? true : false }'>  ${lawyer.firstName }</aui:option>
 															</c:forEach>
 														</aui:select>
 					                            </div>
-					                            <div class="form-group col-md-6">
+					                            <div class="form-group col-md-4">
 					                                    <aui:input name="lawyerPhone" label="lawyer.phone" readonly="true" cssClass="form-control" placeholder="Lawyer Phone" value="${patientBean.patientClinic.lawyerPhoneNo }"></aui:input>
 					                            </div>
-					                            <div class="form-group col-md-6">
+					                            <div class="form-group col-md-4">
+					                                    <aui:input name="lawyerEmail" label="lawyer.email" readonly="true" cssClass="form-control" placeholder="Lawyer Email" value="${patientBean.patientClinic.lawyerEmail }"></aui:input>
+					                            </div>
+					                            <div class="form-group col-md-4">
 					                                    <aui:input name="lawyerFax" label="lawyer.fax" readonly="true" cssClass="form-control" placeholder="Lawyer Fax" value="${lawyerFax}"></aui:input>
 					                            </div>
 					                            
@@ -335,6 +380,22 @@ jQuery.noConflict();
 				myFormValidator.validateField('<portlet:namespace />patientDOB');
 			});
 	  });
+	  $('#'+ '<portlet:namespace/>' + 'patientDOS').datepicker({
+		    autoclose: true
+		  }).on('changeDate', function(ev) {
+			  AUI().use('aui-base','aui-form-validator', function(A) {
+					var myFormValidator = Liferay.Form.get('<portlet:namespace />createPatientForm').formValidator;
+					myFormValidator.validateField('<portlet:namespace />patientDOS');
+				});
+		  });
+	  $('#'+ '<portlet:namespace/>' + 'patientDOI').datepicker({
+		    autoclose: true
+		  }).on('changeDate', function(ev) {
+			  AUI().use('aui-base','aui-form-validator', function(A) {
+					var myFormValidator = Liferay.Form.get('<portlet:namespace />createPatientForm').formValidator;
+					myFormValidator.validateField('<portlet:namespace />patientDOI');
+				});
+		  });
     });
 
 })(jQuery);
@@ -428,6 +489,7 @@ AUI().use('aui-io-request', 'aui-autocomplete' ,'aui-base','aui-form-validator',
                     console.log("docotrDetail ->" +docotrDetail.phone);
                     A.one("#"+patientRegistrationMouleNS+"doctorPhone").val(docotrDetail.phone);
                     A.one("#"+patientRegistrationMouleNS+"doctorFax").val(docotrDetail.fax);
+                    A.one("#"+patientRegistrationMouleNS+"doctorEmail").val(docotrDetail.email);
                 }
              }
 		 });
@@ -452,6 +514,7 @@ AUI().use('aui-io-request', 'aui-autocomplete' ,'aui-base','aui-form-validator',
                     console.log("docotrDetail ->" +docotrDetail.phone);
                     A.one("#"+patientRegistrationMouleNS+"lawyerPhone").val(docotrDetail.phone);
                     A.one("#"+patientRegistrationMouleNS+"lawyerFax").val(docotrDetail.fax);
+                    A.one("#"+patientRegistrationMouleNS+"lawyerEmail").val(docotrDetail.email);
                 }
              }
 		 });

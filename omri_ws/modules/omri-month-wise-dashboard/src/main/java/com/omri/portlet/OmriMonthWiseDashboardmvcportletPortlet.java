@@ -1,8 +1,15 @@
 package com.omri.portlet;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.omri.service.common.service.OMRICommonLocalServiceUtil;
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -32,10 +39,37 @@ public class OmriMonthWiseDashboardmvcportletPortlet extends MVCPortlet {
 	@Override
 	public void doView(RenderRequest renderRequest, RenderResponse renderResponse)
 			throws IOException, PortletException {
-		renderRequest.setAttribute("startYear", PortletContstant.START_YEAR);
-		Calendar c = Calendar.getInstance();
-	    int endYear = c.get(Calendar.YEAR);
-	    renderRequest.setAttribute("endYear", endYear+PortletContstant.NEXT_YEARS_DELTA);
+		
+	  ThemeDisplay themdeDisplay = (ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+		
+		
+	   OMRICommonLocalServiceUtil.setDoctorList(renderRequest);
+	   OMRICommonLocalServiceUtil.setLayerList(renderRequest);
+	   
+	   long userAssociatedOrgId = OMRICommonLocalServiceUtil.getUserAssociatedOrgId(themdeDisplay.getUserId());
+	   long userAssociatedOrgGroupId = OMRICommonLocalServiceUtil.getOrganizationGroupId(userAssociatedOrgId);
+		
+		boolean isClinicAdmin = false;
+		boolean isDoctorAdmin = false;
+		boolean isLawyerAdmin = false;
+		
+		try{
+		Role clinicAdminRole = RoleLocalServiceUtil.getRole(themdeDisplay.getCompanyId(), "Clinic Admin");
+		Role doctorAdminRole = RoleLocalServiceUtil.getRole(themdeDisplay.getCompanyId(), "Doctor Admin");
+		Role lawyerAdminRole = RoleLocalServiceUtil.getRole(themdeDisplay.getCompanyId(), "Lawyer Admin");
+		
+		isClinicAdmin = UserGroupRoleLocalServiceUtil.hasUserGroupRole(themdeDisplay.getUserId(), userAssociatedOrgGroupId, clinicAdminRole.getRoleId());
+		isDoctorAdmin = UserGroupRoleLocalServiceUtil.hasUserGroupRole(themdeDisplay.getUserId(), userAssociatedOrgGroupId, doctorAdminRole.getRoleId());
+		isLawyerAdmin = UserGroupRoleLocalServiceUtil.hasUserGroupRole(themdeDisplay.getUserId(), userAssociatedOrgGroupId, lawyerAdminRole.getRoleId());
+	
+		}catch(PortalException e){
+			_log.error(e.getMessage(), e);
+		}
+		
+		renderRequest.setAttribute("isClinicAdmin", isClinicAdmin);
+		renderRequest.setAttribute("isDoctorAdmin", isDoctorAdmin);
+		renderRequest.setAttribute("isLawyerAdmin", isLawyerAdmin);
+		
 		include(viewTemplate, renderRequest, renderResponse);
 	}
 	

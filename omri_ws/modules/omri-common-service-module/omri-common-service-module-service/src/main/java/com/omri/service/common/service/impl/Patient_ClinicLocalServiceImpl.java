@@ -33,6 +33,7 @@ import com.omri.service.common.service.PatientLocalServiceUtil;
 import com.omri.service.common.service.Patient_ClinicLocalServiceUtil;
 import com.omri.service.common.service.base.Patient_ClinicLocalServiceBaseImpl;
 import com.omri.service.common.service.persistence.Patient_ClinicPK;
+import com.omri.service.common.util.PatientDocumentStatus;
 
 /**
  * The implementation of the patient_ clinic local service.
@@ -59,7 +60,7 @@ public class Patient_ClinicLocalServiceImpl
 	Log _log = LogFactoryUtil.getLog(Patient_ClinicLocalServiceImpl.class.getName());
 	
 	public Patient_Clinic addPatient_Clinic(long patientId, long clinicId, long doctorId, String doctorName
-			, String doctorPhoneNo,long lawyerId, String lawyerName, String lawyerPhoneNo, int patientStatus,long createdBy, long modifiedBy){
+			, String doctorPhoneNo, String doctorEmail,long lawyerId, String lawyerName, String lawyerPhoneNo, String lawyerEmail,int patientStatus,long createdBy, long modifiedBy){
 		Patient_ClinicPK patientClinicPK = new Patient_ClinicPK();
 		patientClinicPK.setClinicId(clinicId);
 		patientClinicPK.setPatientId(patientId);
@@ -67,10 +68,13 @@ public class Patient_ClinicLocalServiceImpl
 		patientClinic.setDoctorName(doctorName);
 		patientClinic.setDoctorId(doctorId);
 		patientClinic.setPatient_status(patientStatus);
+		patientClinic.setDocumentStatus(PatientDocumentStatus.PENDING.getValue());
 		patientClinic.setDoctorPhoneNo(doctorPhoneNo);
+		patientClinic.setDoctorEmail(doctorEmail);
 		patientClinic.setLawyerId(lawyerId);
 		patientClinic.setLawyerName(lawyerName);
 		patientClinic.setLawyerPhoneNo(lawyerPhoneNo);
+		patientClinic.setLawyerEmail(lawyerEmail);
 		patientClinic.setCreatedBy(createdBy);
 		patientClinic.setModifiedBy(modifiedBy);
 		patientClinic.setCreateDate(new Date());
@@ -81,7 +85,8 @@ public class Patient_ClinicLocalServiceImpl
 	}
 	
 	public Patient_Clinic updatePatient_Clinic(long patientId, long clinicId, long doctorId, String doctorName
-			, String doctorPhoneNo,long lawyerId, String lawyerName, String lawyerPhoneNo, long modifiedBy){
+			, String doctorPhoneNo,  String doctorEmail,long lawyerId, String lawyerName, String lawyerPhoneNo,
+			String lawyerEmail,long modifiedBy){
 		Patient_Clinic patientClinic = null;
 		Patient_ClinicPK patientClinicPK = new Patient_ClinicPK();
 		patientClinicPK.setClinicId(clinicId);
@@ -91,9 +96,11 @@ public class Patient_ClinicLocalServiceImpl
 			 patientClinic.setDoctorName(doctorName);
 			 patientClinic.setDoctorId(doctorId);
 			 patientClinic.setDoctorPhoneNo(doctorPhoneNo);
+			 patientClinic.setDoctorEmail(doctorEmail);
 			 patientClinic.setLawyerId(lawyerId);
 			 patientClinic.setLawyerName(lawyerName);
 			 patientClinic.setLawyerPhoneNo(lawyerPhoneNo);
+			 patientClinic.setLawyerEmail(lawyerEmail);
 			 patientClinic.setModifiedDate(new Date());
 			 patientClinic.setModifiedBy(modifiedBy);
 			 Patient_ClinicLocalServiceUtil.updatePatient_Clinic(patientClinic);
@@ -127,4 +134,5 @@ public class Patient_ClinicLocalServiceImpl
 		patientLClinicList = Patient_ClinicLocalServiceUtil.dynamicQuery(dynamicQuery);
 		return patientLClinicList;
 	}
+	
 }

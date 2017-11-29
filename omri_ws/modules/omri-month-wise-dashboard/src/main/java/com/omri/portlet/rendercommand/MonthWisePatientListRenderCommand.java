@@ -65,6 +65,7 @@ public class MonthWisePatientListRenderCommand implements MVCRenderCommand{
 	Log _log = LogFactoryUtil.getLog(MonthWisePatientListRenderCommand.class.getName());
 	@Override
 	public String render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException {
+		
 		ThemeDisplay themdeDisplay = (ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		int month = ParamUtil.getInteger(renderRequest, "month");
 		int year = ParamUtil.getInteger(renderRequest, "year");

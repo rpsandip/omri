@@ -8,11 +8,14 @@ import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.omri.service.common.exception.NoSuchCustomUserException;
 import com.omri.service.common.model.CustomUser;
@@ -34,10 +37,11 @@ public class GetDoctorDetailResourceCommand implements MVCResourceCommand{
 		JSONObject jsoObj = JSONFactoryUtil.createJSONObject();
 		try {
 			CustomUser customUser = CustomUserLocalServiceUtil.getCustomUserByLRUserId(userId);
-			
+			User lrUser = UserLocalServiceUtil.getUser(customUser.getLrUserId());
 			jsoObj.put("phone", customUser.getPhone());
 			jsoObj.put("fax", customUser.getFax());
-		} catch (NoSuchCustomUserException e) {
+			jsoObj.put("email", lrUser.getEmailAddress());
+		} catch (PortalException e) {
 			LOG.error(e.getMessage(), e);
 		}
 		try {

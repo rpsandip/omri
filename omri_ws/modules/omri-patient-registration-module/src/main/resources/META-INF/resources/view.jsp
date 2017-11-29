@@ -5,10 +5,16 @@
 <portlet:renderURL var="createPatientURL">
         <portlet:param name="mvcRenderCommandName" value="/create-patient" />
 </portlet:renderURL>
+<portlet:renderURL var="importPatientURL">
+        <portlet:param name="mvcRenderCommandName" value="/import-patient" />
+</portlet:renderURL>
+
 <liferay-ui:success key="patient.added.successfully" message="patient.added.successfully"></liferay-ui:success>
 <liferay-ui:success key="patient.updated.successfully" message="patient.updated.successfully"></liferay-ui:success>
 
 <aui:button name="createPatient" value="Create Patient" href="${createPatientURL}" cssClass="btn btn-primary"/>
+
+<aui:button name="importPatiens" value="Import Patients" href="${importPatientURL}" cssClass="btn btn-primary"/>
 
 <section class="content-header">
   <h1>

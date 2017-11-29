@@ -42,7 +42,7 @@ import com.omri.service.common.service.base.ClinicLocalServiceBaseImpl;
 public class ClinicLocalServiceImpl extends ClinicLocalServiceBaseImpl {
 	
 	public Clinic addClinic(String clinicName, String addressLine1, String addressLine2, String city, String state,
-			String zip, String phone, String fax, long createdBy, long modifiedBy){
+			String zip, String phone, String emailAddress,String fax, long createdBy, long modifiedBy){
 		Clinic clinic = ClinicLocalServiceUtil.createClinic(CounterLocalServiceUtil.increment());
 		clinic.setClinicName(clinicName);
 		clinic.setAddressLine1(addressLine1);
@@ -51,6 +51,7 @@ public class ClinicLocalServiceImpl extends ClinicLocalServiceBaseImpl {
 		clinic.setState(state);
 		clinic.setZipcode(zip);
 		clinic.setPhoneNo(phone);
+		clinic.setEmailAddress(emailAddress);
 		clinic.setFaxNo(fax);
 		clinic.setClinicorganizationId(0l);
 		clinic.setClinicorganizationGroupId(0l);
@@ -64,5 +65,9 @@ public class ClinicLocalServiceImpl extends ClinicLocalServiceBaseImpl {
 	
 	public Clinic getClinicByClinicOrganizationId(long clinicOrgId) throws NoSuchClinicException{
 		return clinicPersistence.findByclinicorganizationId(clinicOrgId);
+	}
+	
+	public Clinic getClinicByName(String clinicName) throws NoSuchClinicException{
+		return clinicPersistence.findByname(clinicName);
 	}
 }

@@ -97,7 +97,7 @@ public class GetPaginatedPatientListResourceCommand implements MVCResourceComman
 			patientObj.put("patientId", patient.getPatientId());
 			patientObj.put("action", StringPool.BLANK);
 			String procedureDetail = StringPool.BLANK;
-			List<PatientResourceBean> patientResourceBeanList = new ArrayList<PatientResourceBean>();
+			//List<PatientResourceBean> patientResourceBeanList = new ArrayList<PatientResourceBean>();
 			Patient_Clinic patientClinc = null;
 			try {
 				if(roleType.equals("Admin")){
@@ -114,16 +114,16 @@ public class GetPaginatedPatientListResourceCommand implements MVCResourceComman
 					}
 					for(Patient_Clinic_Resource patientClinicResource : patientClinicResourceList){
 						try {
-							Clinic clinic = ClinicLocalServiceUtil.getClinic(patientClinc.getClinicId());
+							//Clinic clinic = ClinicLocalServiceUtil.getClinic(patientClinc.getClinicId());
 							Resource resource = ResourceLocalServiceUtil.getResource(patientClinicResource.getResourceId());
 							Specification specification = SpecificationLocalServiceUtil.getSpecification(patientClinicResource.getSpecificationId());
-							PatientResourceBean patientResourceBean = new PatientResourceBean(patient, clinic, resource, specification,patientClinicResource);
-							patientResourceBeanList.add(patientResourceBean);
+							//PatientResourceBean patientResourceBean = new PatientResourceBean(patient, clinic, resource, specification,patientClinicResource);
+							//patientResourceBeanList.add(patientResourceBean);
 							procedureDetail+= resource.getResourceName()+StringPool.OPEN_PARENTHESIS+specification.getSpecificationName()+ StringPool.CLOSE_PARENTHESIS+
 									StringPool.SPACE+ StringPool.COLON + StringPool.SPACE +  patientClinicResource.getNoOfOccurance() + StringPool.TILDE;
 							
 						} catch (PortalException e) {
-							LOG.error(e.getMessage(), e);
+							LOG.error(e.getMessage());
 						}
 					}
 					patientObj.put("procedure", procedureDetail);

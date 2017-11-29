@@ -45,7 +45,6 @@ public class AddPatientMoreDetailActionCommand extends BaseMVCActionCommand{
 			String state = ParamUtil.getString(actionRequest, "state");
 			String country = ParamUtil.getString(actionRequest, "country");
 			String zip = ParamUtil.getString(actionRequest, "zip");
-			String cptCode = ParamUtil.getString(actionRequest, "cptCode");
 			
 			SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 			try {
@@ -60,7 +59,6 @@ public class AddPatientMoreDetailActionCommand extends BaseMVCActionCommand{
 				patient.setState(state);
 				patient.setCountry(country);
 				patient.setZip(zip);
-				patient.setCptCode(cptCode);
 
 				PatientLocalServiceUtil.updatePatient(patient);
 				addPatientMoreDetail(actionRequest, patientId);

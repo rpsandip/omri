@@ -44,6 +44,11 @@
 								</aui:input>
                           </div>
                           <div class="form-group col-md-6">
+                            	<aui:input name="emailAddress" label="clinic.email" cssClass="form-control">
+									<aui:validator name="required" />
+								</aui:input>
+                          </div>
+                          <div class="form-group col-md-6">
                             	<aui:input name="phone" label="clinic.phone" cssClass="form-control">
 									<aui:validator name="required" />
 								</aui:input>

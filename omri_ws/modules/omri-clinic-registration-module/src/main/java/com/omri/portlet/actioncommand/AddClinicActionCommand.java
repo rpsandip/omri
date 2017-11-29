@@ -76,8 +76,9 @@ public class AddClinicActionCommand extends BaseMVCActionCommand{
 		String zip = ParamUtil.getString(actionRequest, "zip");
 		String phone = ParamUtil.getString(actionRequest, "phone");
 		String fax = ParamUtil.getString(actionRequest, "fax");
+		String emailAddress = ParamUtil.getString(actionRequest, "emailAddress");
 		
-		return ClinicLocalServiceUtil.addClinic(clinicName, addressLine1, addressLine2, city, state, zip, phone, fax, themeDisplay.getUserId(), themeDisplay.getUserId());
+		return ClinicLocalServiceUtil.addClinic(clinicName, addressLine1, addressLine2, city, state, zip, phone, emailAddress,fax, themeDisplay.getUserId(), themeDisplay.getUserId());
 		
 	}
 

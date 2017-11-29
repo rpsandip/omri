@@ -48,7 +48,6 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.instanceable=true",
 		"javax.portlet.display-name=omri-patient-registration-module Portlet",
 		"javax.portlet.init-param.template-path=/",
-		"com.liferay.portlet.action-url-redirect=true",
 		"com.liferay.portlet.footer-portlet-javascript=/js/jquery.formatter.js",
 		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.resource-bundle=content.Language",

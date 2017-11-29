@@ -16,6 +16,8 @@ package com.omri.service.common.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.omri.service.common.exception.NoSuchResourceException;
+import com.omri.service.common.model.Resource;
 import com.omri.service.common.service.base.ResourceLocalServiceBaseImpl;
 
 /**
@@ -34,9 +36,7 @@ import com.omri.service.common.service.base.ResourceLocalServiceBaseImpl;
  */
 @ProviderType
 public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.omri.service.common.service.ResourceLocalServiceUtil} to access the resource local service.
-	 */
+	public Resource getResourceByName(String resourceName) throws NoSuchResourceException{
+		return resourcePersistence.findByresourceName(resourceName);
+	}
 }

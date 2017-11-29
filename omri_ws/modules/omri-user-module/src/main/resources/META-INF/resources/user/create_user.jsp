@@ -27,7 +27,6 @@
                           </div>
                           <div class="form-group col-md-6">
                             	 <aui:input name="lastName" label="user.lastName" cssClass="form-control">
-									<aui:validator name="required" />
 								 </aui:input>
                           </div>
                           <div class="form-group col-md-6">
@@ -48,7 +47,6 @@
                           </div>	
 						 <div class="form-group col-md-6">
                             	<aui:input name="addressLine2" label="user.address2" cssClass="form-control">
-									<aui:validator name="required" />
 								</aui:input>
                           </div>
 						<div class="form-group col-md-6">

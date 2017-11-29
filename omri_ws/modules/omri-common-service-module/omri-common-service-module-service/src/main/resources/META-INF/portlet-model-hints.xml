@@ -34,6 +34,7 @@
 		<field name="state" type="String" />
 		<field name="zipcode" type="String" />
 		<field name="country" type="String" />
+		<field name="emailAddress" type="String" />
 		<field name="phoneNo" type="String" />
 		<field name="faxNo" type="String" />
 		<field name="createDate" type="Date" />
@@ -70,14 +71,17 @@
 	</model>
 	<model name="com.omri.service.common.model.Patient">
 		<field name="patientId" type="long" />
+		<field name="customPatientId" type="String" />
 		<field name="firstName" type="String" />
 		<field name="lastName" type="String" />
 		<field name="dob" type="Date" />
+		<field name="dos" type="Date" />
+		<field name="doi" type="Date" />
+		<field name="payee" type="String" />
 		<field name="gender" type="String" />
 		<field name="addressLine1" type="String" />
 		<field name="addressLine2" type="String" />
 		<field name="phoneNo" type="String" />
-		<field name="cptCode" type="String" />
 		<field name="city" type="String" />
 		<field name="state" type="String" />
 		<field name="country" type="String" />
@@ -97,12 +101,15 @@
 		<field name="clinicId" type="long" />
 		<field name="patientId" type="long" />
 		<field name="patient_status" type="int" />
+		<field name="documentStatus" type="int" />
 		<field name="doctorId" type="long" />
 		<field name="doctorName" type="String" />
 		<field name="doctorPhoneNo" type="String" />
+		<field name="doctorEmail" type="String" />
 		<field name="lawyerId" type="long" />
 		<field name="lawyerName" type="String" />
 		<field name="lawyerPhoneNo" type="String" />
+		<field name="lawyerEmail" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="createdBy" type="long" />

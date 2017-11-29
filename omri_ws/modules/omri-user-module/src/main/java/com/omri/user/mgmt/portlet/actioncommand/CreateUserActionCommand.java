@@ -39,6 +39,7 @@ import com.omri.service.common.model.Clinic;
 import com.omri.service.common.model.CustomUser;
 import com.omri.service.common.service.ClinicLocalServiceUtil;
 import com.omri.service.common.service.CustomUserLocalServiceUtil;
+import com.omri.service.common.util.OMRIConstants;
 import com.omri.user.mgmt.portlet.rendercommand.CreateUserRenderCommand;
 import com.omri.user.mgmt.portlet.util.UserModuleContstant;
 
@@ -147,7 +148,11 @@ public class CreateUserActionCommand extends BaseMVCActionCommand{
 		String firstName = ParamUtil.getString(actionRequest, "firstName");
 		String lastName = ParamUtil.getString(actionRequest, "lastName");
 		String emailAddress = ParamUtil.getString(actionRequest, "emailAddress");
+		String entity = ParamUtil.getString(actionRequest, "entity");
 		
+		if(entity.equals("lawyer")){
+			lastName = OMRIConstants.DEFAULT_USER_LASTNAME;
+		}
 		
 		ServiceContext serviceContext = new ServiceContext();
 		serviceContext.setUuid(UUID.randomUUID().toString());
